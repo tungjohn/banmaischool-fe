@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hệ thống trường liên cấp BMS</title>
+    <!-- Font Awesome cho Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- RESET & VARIABLES --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        :root {
+            --primary-blue: #2B3583;
+            --light-blue: #e8f4fa;
+            --orange: #F19F30;
+            --teal: #00C1D5;
+            --text-dark: #333333;
+            --text-light: #666666;
+            --white: #ffffff;
+            --border-color: #e0e0e0;
+        }
+
+        body {
+            color: var(--text-dark);
+            line-height: 1.6;
+            background-color: var(--white);
+        }
+
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        img { max-width: 100%; height: auto; display: block; }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .btn-orange {
+            background-color: var(--orange);
+            color: var(--white);
+        }
+
+        .btn-orange:hover { background-color: #d88922; }
+
+        .section-title {
+            color: var(--primary-blue);
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .text-center { text-align: center; }
+        .section-padding { padding: 60px 0; }
+
+        /* --- HEADER & NAVIGATION --- */
+		.top-bar {
+            display: flex;
+            justify-content: flex-end;
+            padding: 5px 20px;
+            font-size: 12px;
+            color: var(--text-light);
+            background-color: #fff;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .top-bar span, .top-bar a { padding: 0 10px; border-right: 1px solid #ccc;}
+        .top-bar span:last-child { border: none; }
+		
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            /* Tăng padding để có không gian cho gạch chân menu */
+            padding: 0 0; 
+        }
+
+        .logo { padding: 15px 0; }
+
+		
+        /* Chỉ áp dụng Flexbox dàn ngang cho thẻ ul cấp 1 (menu chính) */
+        .main-nav > ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Các thẻ li cấp 1 */
+        .main-nav > ul > li {
+            position: relative; /* Quan trọng để định vị menu con */
+        }
+
+        .main-nav a {
+            font-weight: 500;
+            font-size: 15px;
+            color: var(--text-dark);
+            display: block;
+            padding: 25px 5px; /* Căn chỉnh chiều dọc */
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        /* Hiệu ứng gạch chân màu cam khi hover hoặc đang active */
+        .main-nav > ul > li > a.active,
+        .main-nav > ul > li:hover > a {
+            color: var(--orange);
+        }
+
+        .main-nav > ul > li > a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--orange);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .main-nav > ul > li > a.active::after,
+        .main-nav > ul > li:hover > a::after {
+            transform: scaleX(1); /* Hiện gạch chân */
+        }
+
+        /* --- STYLES CHO MENU ĐA CẤP (DROPDOWN) --- */
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #fff;
+            min-width: 260px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 1px solid #eee;
+            border-top: 3px solid var(--orange);
+            padding: 10px 0;
+            
+            /* Ép menu con hiển thị dạng khối dọc (bỏ flex nếu đang bị ảnh hưởng) */
+            display: block; 
+            list-style: none;
+            margin: 0;
+            
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(15px);
+            transition: all 0.3s ease;
+            z-index: 1001;
+        }
+
+        /* Hiển thị menu khi hover vào thẻ li cha */
+        .has-dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        /* Tùy chỉnh các link bên trong menu con */
+        .dropdown-menu li {
+            width: 100%;
+            display: block;
+        }
+
+        .dropdown-menu a {
+            padding: 10px 25px; /* Khoảng cách chữ trong menu con */
+            font-weight: 400;
+            font-size: 14px;
+            color: #444;
+        }
+
+        /* Hiệu ứng hover cho menu con */
+        .dropdown-menu a:hover {
+            color: var(--orange);
+            background-color: #fafafa;
+            padding-left: 30px; /* Chữ thụt vào một chút tạo điểm nhấn */
+            transition: all 0.2s;
+        }
+
+        /* Tắt gạch chân cho link menu con */
+        .dropdown-menu a::after {
+            display: none; 
+        }
+
+        /* --- HERO BANNER --- */
+        .hero {
+            background-color: var(--light-blue);
+            background-image: url('https://www.transparenttextures.com/patterns/cubes.png'); /* Pattern giả lập */
+            padding: 80px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .hero-text { flex: 1; }
+        .hero-image { flex: 1; position: relative; min-height: 400px; display: flex; justify-content: center;}
+
+        .hero-badge-title {
+            background-color: var(--primary-blue);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            display: inline-block;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .hero-title {
+            font-size: 48px;
+            font-weight: 900;
+            color: var(--primary-blue);
+            line-height: 1.2;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 0px white;
+        }
+
+        .scholarship-box {
+            background: linear-gradient(to right, #ffd700, #ff8c00);
+            padding: 15px 25px;
+            border-radius: 10px;
+            display: inline-block;
+            color: white;
+            font-weight: bold;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .scholarship-box span { font-size: 32px; }
+
+        .program-list {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 5px solid var(--orange);
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+        
+        /* Placeholder cho hình ảnh phức tạp ở Hero */
+        .hero-mock-img {
+            width: 80%;
+            background: #ccc;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            border: 10px solid white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        /* --- ABOUT SECTION --- */
+        .about-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .about-img-container {
+            background: #f0f0f0;
+            height: 500px;
+            border-radius: 20px 20px 0 0;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            position: relative;
+        }
+        .about-img-container h2 { font-size: 40px; color: var(--text-light); text-align: center; position: absolute; top: 20px;}
+        .about-img-container h2 span { color: var(--orange); }
+
+        .about-content h3 { font-size: 16px; margin-bottom: 5px; color: var(--text-dark);}
+        .about-content p { font-size: 14px; margin-bottom: 15px; color: var(--text-light);}
+
+        .stats-row {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        .stat-item h4 { font-size: 36px; color: var(--teal); }
+        .stat-item p { font-size: 12px; color: var(--text-light); }
+
+        .cert-boxes {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .cert-box {
+            flex: 1; padding: 15px; text-align: center; color: white; font-weight: bold; border-radius: 8px; font-size: 13px;
+        }
+        .cert-bg-blue { background-color: var(--primary-blue); }
+        .cert-bg-orange { background-color: var(--orange); }
+
+        /* --- PROGRAMS SECTION --- */
+        .programs-section {
+            background-color: var(--primary-blue);
+            color: white;
+        }
+        .programs-section .section-title { color: white; }
+
+        .program-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .program-card {
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .program-card img { height: 180px; object-fit: cover; width: 100%; background: #ccc;}
+        .program-card-content {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 150px;
+        }
+        .program-card h4 { font-size: 24px; margin-bottom: 10px; }
+        .program-card a { font-size: 14px; text-decoration: underline; }
+
+        .bg-mam-non { background-color: #E25E5E; }
+        .bg-tieu-hoc { background-color: #F8B133; }
+        .bg-thcs { background-color: #00B1AF; }
+        .bg-thpt { background-color: #384EB6; }
+
+        /* --- NEWS SECTION --- */
+        .section-header-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 30px;
+            padding-bottom: 10px;
+        }
+
+        .filter-tabs { display: flex; gap: 20px; }
+        .filter-tabs span { font-size: 14px; font-weight: 500; cursor: pointer; color: var(--text-light);}
+        .filter-tabs span.active { color: var(--orange); border-bottom: 2px solid var(--orange); padding-bottom: 11px;}
+
+        .news-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 30px;
+        }
+
+        .news-main .news-img { height: 350px; background: #ddd; border-radius: 10px; margin-bottom: 15px; }
+        .news-date { font-size: 12px; color: var(--orange); margin-bottom: 5px; }
+        .news-title { font-size: 20px; font-weight: bold; margin-bottom: 10px; color: var(--primary-blue);}
+        .news-desc { font-size: 14px; color: var(--text-light); }
+
+        .news-list { display: flex; flex-direction: column; gap: 20px; }
+        .news-item-small { display: flex; gap: 15px; align-items: center;}
+        .news-item-small .news-img { width: 120px; height: 80px; background: #ddd; border-radius: 8px; flex-shrink: 0;}
+        .news-item-small .news-title { font-size: 15px; margin-bottom: 0;}
+
+        /* --- REGISTRATION FORM --- */
+        .register-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .reg-form {
+            background: white;
+            padding: 10px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        .form-control:focus { outline: none; border-color: var(--primary-blue); }
+        .btn-full { width: 100%; padding: 15px; font-size: 16px; margin-top: 10px;}
+
+        .reg-image {
+            background: #ccc;
+            border-radius: 10px;
+            min-height: 300px;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        /* --- TESTIMONIALS --- */
+        .testimonials { background-color: var(--white); }
+        .testi-subtitle { text-align: center; color: var(--text-light); margin-bottom: 40px; font-size: 14px;}
+
+        .testi-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .testi-card {
+            background: white;
+            border: 1px solid #eee;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            display: flex;
+            gap: 20px;
+            position: relative;
+        }
+
+        .quote-icon {
+            font-size: 60px;
+            color: var(--teal);
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            opacity: 0.2;
+            line-height: 1;
+        }
+
+        .testi-author-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: #ccc;
+            flex-shrink: 0;
+            z-index: 1;
+        }
+
+        .testi-content { z-index: 1; }
+        .testi-text { font-size: 14px; color: var(--text-light); margin-bottom: 15px; font-style: italic;}
+        .testi-name { font-weight: bold; font-size: 14px; color: var(--primary-blue);}
+        .testi-role { font-size: 12px; color: var(--text-light); }
+
+        .dots {
+            display: flex; justify-content: center; gap: 8px; margin-top: 30px;
+        }
+        .dot { width: 10px; height: 10px; background: #ccc; border-radius: 50%; }
+        .dot.active { background: var(--orange); }
+
+        /* --- FACILITIES --- */
+        .facilities-carousel {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .fac-card { flex: 1; }
+        .fac-img { height: 250px; background: #ddd; border-radius: 10px; margin-bottom: 15px;}
+        .fac-title { font-weight: bold; text-align: center; }
+        .carousel-arrow {
+            width: 40px; height: 40px; background: var(--primary-blue); color: white; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; cursor: pointer;
+        }
+
+        /* --- PARTNERS --- */
+        .partners-section { background-color: var(--light-blue); }
+        .partners-logos { display: flex; justify-content: center; gap: 40px; align-items: center; flex-wrap: wrap;}
+        .partner-logo { height: 50px; background: #fff; padding: 10px 20px; border-radius: 5px; color: var(--text-light); font-weight: bold; display: flex; align-items: center;}
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: var(--primary-blue);
+            color: white;
+            padding-top: 60px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .footer-logo { font-size: 32px; font-weight: 900; margin-bottom: 10px;}
+        .footer-logo span { display: block; font-size: 12px; font-weight: normal;}
+
+        .footer-contact h4 { font-size: 18px; margin-bottom: 20px; text-transform: uppercase;}
+        .contact-list li { margin-bottom: 10px; font-size: 13px; display: flex; gap: 10px;}
+        .contact-list i { margin-top: 4px; }
+
+        .footer-right { text-align: right; }
+        .footer-right .btn { margin-bottom: 20px; }
+        .social-icons { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;}
+        .social-icons a { width: 35px; height: 35px; background: white; color: var(--primary-blue); border-radius: 50%; display: flex; align-items: center; justify-content: center;}
+
+        .footer-bottom {
+            background-color: var(--orange);
+            text-align: center;
+            padding: 15px 0;
+            font-size: 12px;
+            color: white;
+        }
+
+        /* Floating Zalo */
+        .floating-zalo {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            color: #0088FF;
+            font-size: 30px;
+            border: 2px solid #0088FF;
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 992px) {
+            .about-section, .news-grid, .register-grid, .testi-grid, .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            .program-grid { grid-template-columns: repeat(2, 1fr); }
+            .hero-content { flex-direction: column; text-align: center; }
+            .hero-badge-title { margin: 0 auto 15px;}
+            .hero-image { margin-top: 30px; width: 100%;}
+            .main-nav { display: none; /* Hide nav on mobile for simplicity in this static mock */ }
+            .footer-right { text-align: left; margin-top: 20px;}
+            .social-icons { justify-content: flex-start;}
+            .section-header-flex { flex-direction: column; align-items: flex-start; gap: 10px;}
+        }
+
+        @media (max-width: 768px) {
+            .program-grid { grid-template-columns: 1fr; }
+            .form-row { grid-template-columns: 1fr; }
+            .testi-card { flex-direction: column; text-align: center; align-items: center;}
+            .quote-icon { left: 50%; transform: translateX(-50%); }
+            .facilities-carousel { flex-direction: column;}
+            .carousel-arrow { display: none; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Header Toàn Trang -->
+    <header id="main-header">
+        <div class="container nav-container">
+            
+            <!-- Cột Trái: LOGO -->
+            <div class="logo-wrapper">
+                <a href="#" class="logo">
+                    <h1 style="font-size: 36px; font-weight: 900; color: var(--primary-blue); margin: 0; display: flex; flex-direction: column; line-height: 1;">
+                        <span style="display: flex; align-items: center; gap: 5px;">
+                            <i class="fas fa-sun" style="color: var(--orange); font-size: 28px;"></i> bms
+                        </span>
+                        <span style="font-size: 11px; font-weight: normal; color: #666; letter-spacing: 1px; margin-top: 5px;">A member of IGC</span>
+                    </h1>
+                </a>
+            </div>
+
+            <!-- Cột Phải: Top Bar & Main Nav -->
+            <div class="header-right">
+                
+                <!-- Hàng trên: Top Bar -->
+                <div class="top-bar">
+                    <a href="#">Tuyển dụng</a>
+                    <a href="#">Liên hệ</a>
+                    <span>VN | EN</span>
+                    <a href="#"><i class="fas fa-search"></i></a>
+                    <a href="#" class="btn btn-orange" style="padding: 6px 18px; font-size: 13px; border-radius: 20px; color: white;">ĐĂNG KÝ TUYỂN SINH</a>
+                </div>
+
+                <!-- Hàng dưới: Main Nav -->
+                <nav class="main-nav">
+                    <ul class="nav-list">
+                        <li><a href="#" class="active">Trang chủ</a></li>
+                        <li><a href="#">Giới thiệu</a></li>
+                        
+                        <!-- Dropdown Menu -->
+                        <li class="has-dropdown">
+                            <a href="#">Chương trình giáo dục <i class="fas fa-angle-down" style="font-size: 12px; margin-left: 3px;"></i></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Chương trình Mầm non</a></li>
+                                <li><a href="#">Chương trình Tiền tiểu học</a></li>
+                                <li><a href="#">Chương trình Tiểu học</a></li>
+                                <li><a href="#">Chương trình THCS</a></li>
+                                <li><a href="#">Chương trình THPT</a></li>
+                            </ul>
+                        </li>
+                        
+                        <li><a href="#">Tin tức - Sự kiện</a></li>
+                        <li><a href="#">Tuyển sinh</a></li>
+                        <li><a href="#">Cuộc sống học đường</a></li>
+                        <li><a href="#">Hệ thống Trường liên cấp BMS</a></li>
+                    </ul>
+                </nav>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- Hero Banner -->
+    <section class="hero">
+        <div class="container hero-content">
+            <div class="hero-text">
+                <div class="hero-badge-title">HỆ THỐNG TRƯỜNG LIÊN CẤP BMS</div>
+                <h1 class="hero-title">THÔNG BÁO TUYỂN SINH<br>NĂM HỌC 2026 - 2027</h1>
+                
+                <div class="scholarship-box">
+                    HỌC BỔNG lên đến<br>
+                    <span>100%</span> HỌC PHÍ
+                </div>
+
+                <div class="program-list">
+                    <strong>TUYỂN SINH TỪ MẦM NON - LỚP 12</strong><br>
+                    • Chương trình Song ngữ Quốc tế Cambridge<br>
+                    • Chương trình Song ngữ Tài năng<br>
+                    • Chương trình Song ngữ Nâng cao
+                </div>
+
+                <a href="#" class="btn btn-orange" style="padding: 15px 30px; font-size: 18px;">ĐĂNG KÝ NGAY <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="hero-image">
+                <!-- Giữ chỗ cho hình ảnh học sinh cắt ghép phức tạp -->
+                <div class="hero-mock-img">
+                    Hình ảnh học sinh & Graphic
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section-padding container about-section">
+        <div class="about-img-container">
+            <!-- Hình giữ chỗ -->
+            <img src="https://via.placeholder.com/400x500/eeeeee/cccccc?text=Student+Image" alt="Students" style="mix-blend-mode: multiply;">
+            <h2>A Bright Future<br>in the <span>Open Word</span></h2>
+        </div>
+        <div class="about-content">
+            <h2 class="section-title">HỆ THỐNG TRƯỜNG<br>LIÊN CẤP BMS</h2>
+            <p>Hệ thống Trường liên cấp BMS là hệ thống giáo dục tư thục hàng đầu tại Hà Đông có 4 cấp học từ Mầm Non đến Trung học Phổ thông.</p>
+            
+            <h3>Triết lý giáo dục:</h3>
+            <p>Mỗi học sinh là một tài năng, có khả năng kiến tạo hạnh phúc cho bản thân và cộng đồng.</p>
+            
+            <h3>Tầm nhìn:</h3>
+            <p>Trở thành hệ thống trường liên cấp đáng tin cậy, là lựa chọn hàng đầu tại Việt Nam. Học sinh BMS là những thế hệ công dân toàn cầu, giàu bản sắc Việt, với tư duy mở, kiến thức vững chắc, kỹ năng thành thạo, thái độ chuẩn mực và sức khỏe bền bỉ.</p>
+            
+            <h3>Giá trị cốt lõi:</h3>
+            <p><span style="color:var(--orange)">Biết ơn</span> - <span style="color:var(--orange)">Yêu thương</span> - Tôn trọng - Trách nhiệm - Cống hiến</p>
+
+            <h3>Sứ mệnh:</h3>
+            <p>Truyền cảm hứng, trao yêu thương, tôn trọng sự khác biệt, giúp học sinh khai mở tiềm năng, phát triển toàn diện, thành công và hạnh phúc trong một thế giới mở.</p>
+
+            <h3 style="color:var(--primary-blue); margin-top:20px;">BMS qua những con số:</h3>
+            <div class="stats-row">
+                <div class="stat-item">
+                    <h4>18+</h4>
+                    <p>Năm phát triển</p>
+                </div>
+                <div class="stat-item">
+                    <h4>400+</h4>
+                    <p>Cán bộ Giáo viên</p>
+                </div>
+                <div class="stat-item">
+                    <h4>3000+</h4>
+                    <p>Học sinh mỗi năm</p>
+                </div>
+            </div>
+
+            <div class="cert-boxes">
+                <div class="cert-box cert-bg-blue">Thành viên Tập đoàn Giáo dục IGC</div>
+                <div class="cert-box cert-bg-orange">Trường Phổ thông Quốc tế Cambridge</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Educational Programs -->
+    <section class="section-padding programs-section">
+        <div class="container">
+            <h2 class="section-title text-center">CHƯƠNG TRÌNH GIÁO DỤC</h2>
+            <div class="program-grid">
+                <div class="program-card">
+                    <img src="https://via.placeholder.com/300x200/ddd/999?text=Mam+Non" alt="Mầm non">
+                    <div class="program-card-content bg-mam-non">
+                        <div>
+                            <p style="font-size:12px;">Chương trình</p>
+                            <h4>MẦM NON</h4>
+                            <p style="font-size:12px;">(Tiền tiểu học)</p>
+                        </div>
+                        <a href="#">Xem thêm <i class="fas fa-caret-right"></i></a>
+                    </div>
+                </div>
+                <div class="program-card">
+                    <img src="https://via.placeholder.com/300x200/ddd/999?text=Tieu+Hoc" alt="Tiểu học">
+                    <div class="program-card-content bg-tieu-hoc">
+                        <div>
+                            <p style="font-size:12px;">Chương trình</p>
+                            <h4>TIỂU HỌC</h4>
+                        </div>
+                        <a href="#">Xem thêm <i class="fas fa-caret-right"></i></a>
+                    </div>
+                </div>
+                <div class="program-card">
+                    <img src="https://via.placeholder.com/300x200/ddd/999?text=THCS" alt="THCS">
+                    <div class="program-card-content bg-thcs">
+                        <div>
+                            <p style="font-size:12px;">Chương trình</p>
+                            <h4>THCS</h4>
+                        </div>
+                        <a href="#">Xem thêm <i class="fas fa-caret-right"></i></a>
+                    </div>
+                </div>
+                <div class="program-card">
+                    <img src="https://via.placeholder.com/300x200/ddd/999?text=THPT" alt="THPT">
+                    <div class="program-card-content bg-thpt">
+                        <div>
+                            <p style="font-size:12px;">Chương trình</p>
+                            <h4>THPT</h4>
+                        </div>
+                        <a href="#">Xem thêm <i class="fas fa-caret-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- News Section -->
+    <section class="section-padding container">
+        <div class="section-header-flex">
+            <h2 class="section-title" style="margin-bottom:0;">TIN TỨC BMS</h2>
+            <div class="filter-tabs">
+                <span class="active">TẤT CẢ</span>
+                <span>MẦM NON</span>
+                <span>TIỂU HỌC</span>
+                <span>THCS - THPT</span>
+            </div>
+        </div>
+
+        <div class="news-grid">
+            <div class="news-main">
+                <div class="news-img"></div> <!-- Placeholder Image -->
+                <p class="news-date">07/04/2026 - THCS - THPT</p>
+                <h3 class="news-title">Khám phá cơ thể người qua trải nghiệm đa giác quan trong tiết học Khoa học tự nhiên 8 tại BMS</h3>
+                <p class="news-desc">Tiết học Khoa học tự nhiên 8 tại Ban Mai trở nên sinh động với chuỗi trải nghiệm đa giác quan, giúp học sinh khám phá hệ tuần hoàn, hiểu đúng về sức khỏe và chủ động vận dụng kiến thức vào cuộc sống.</p>
+            </div>
+            <div class="news-list">
+                <div class="news-item-small">
+                    <div class="news-img"></div>
+                    <div>
+                        <p class="news-date">07/04/2026 - THCS - THPT</p>
+                        <h4 class="news-title">Cùng nhìn lại những khoảnh khắc đáng nhớ tại BMS Edu Fair 2026 – Ngày hội tuyển...</h4>
+                    </div>
+                </div>
+                <div class="news-item-small">
+                    <div class="news-img"></div>
+                    <div>
+                        <p class="news-date">07/04/2026 - THCS - THPT</p>
+                        <h4 class="news-title">Đoàn viên trường THPT Ban mai "Sẵn sàng cống hiến - Tự tin trưởng thành"</h4>
+                    </div>
+                </div>
+                <div class="news-item-small">
+                    <div class="news-img"></div>
+                    <div>
+                        <p class="news-date">31/03/2026 - THCS - THPT</p>
+                        <h4 class="news-title">Trải nghiệm miễn phí: Tự tin làm học sinh lớp 6</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center" style="margin-top: 40px;">
+            <a href="#" class="btn btn-orange">XEM TẤT CẢ</a>
+        </div>
+    </section>
+
+    <!-- Ad Banner (Placeholder for middle Tuyển Sinh banner) -->
+    <section class="container" style="margin-bottom: 60px;">
+        <div class="section-header-flex">
+            <h2 class="section-title" style="margin-bottom:0;">TUYỂN SINH</h2>
+            <div class="filter-tabs">
+                <span class="active">HỆ THỐNG</span>
+                <span>MẦM NON</span>
+                <span>TIỂU HỌC</span>
+                <span>THCS - THPT</span>
+            </div>
+        </div>
+        <div style="background: var(--light-blue); height: 250px; border-radius: 10px; display: flex; align-items: center; justify-content: center; border: 1px solid #ccc;">
+            <h3 style="color:var(--primary-blue);">[Banner Quảng Cáo Tuyển Sinh]</h3>
+        </div>
+    </section>
+
+    <!-- Registration Form -->
+    <section class="section-padding container">
+        <h2 class="section-title">ĐĂNG KÝ TUYỂN SINH</h2>
+        <a href="#" class="btn btn-orange" style="margin-bottom: 30px; font-size: 12px; padding: 5px 15px;">Năm học 2026 - 2027</a>
+
+        <div class="register-grid">
+            <div class="reg-form">
+                <form action="#">
+                    <div class="form-row">
+                        <input type="text" class="form-control" placeholder="Họ và tên học sinh *">
+                        <input type="text" class="form-control" placeholder="Ngày tháng năm sinh *">
+                    </div>
+                    <div class="form-row">
+                        <input type="text" class="form-control" placeholder="Trường Học sinh đang học *">
+                        <input type="text" class="form-control" placeholder="Số điện thoại CMHS *">
+                    </div>
+                    <div class="form-row">
+                        <input type="email" class="form-control" placeholder="Email CMHS *">
+                        <select class="form-control">
+                            <option>Lớp dự tuyển *</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-orange btn-full">ĐĂNG KÝ NGAY</button>
+                </form>
+            </div>
+            <div class="reg-image">
+                <p style="color:#666;">[Video/Hình ảnh Học sinh thực hành khoa học]</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="section-padding testimonials">
+        <div class="container">
+            <h2 class="section-title text-center">CHA MẸ HỌC SINH NÓI VỀ BMS</h2>
+            <p class="testi-subtitle">Trân trọng cảm ơn Quý Cha mẹ và các em học sinh đã đồng hành cùng BMS trên hành trình nuôi dưỡng công dân toàn cầu!</p>
+
+            <div class="testi-grid">
+                <div class="testi-card">
+                    <i class="fas fa-quote-left quote-icon"></i>
+                    <div class="testi-author-img"></div>
+                    <div class="testi-content">
+                        <p class="testi-text">"Con rất hào hứng và yêu thích đến trường mỗi ngày"</p>
+                        <p class="testi-text" style="font-style: normal; font-size: 13px;">Thầy cô ở trường thực sự là những người truyền cảm hứng, luôn khiến các con hào hứng đến trường và nuôi dưỡng đam mê, theo đuổi mục tiêu, nỗ lực phấn đấu mỗi ngày. Môi trường giáo dục rất thân thiện, cởi mở cho các con không gian sáng tạo và phát huy sở trường, thể hiện cá tính riêng.</p>
+                        <p class="testi-name">Chị Phạm Lan Anh</p>
+                        <p class="testi-role">Phụ huynh Học sinh Nguyễn Đăng Bảo Lớp 8T</p>
+                    </div>
+                </div>
+                <div class="testi-card">
+                    <i class="fas fa-quote-left quote-icon"></i>
+                    <div class="testi-author-img"></div>
+                    <div class="testi-content">
+                        <p class="testi-text">"Học tại BMS giúp con phát triển toàn diện"</p>
+                        <p class="testi-text" style="font-style: normal; font-size: 13px;">Là phụ huynh của con học dưới mái trường BMS tôi rất hài lòng với môi trường giáo dục của nhà trường, chương trình giáo dục và sự tận tâm của các Thầy Cô tôi thấy con mình tiến bộ từng ngày. Trường học không chỉ để học mà còn giúp con tôi rèn luyện đạo đức, tư tưởng và tình yêu thương.</p>
+                        <p class="testi-name">Chị Nguyễn Thị Thân</p>
+                        <p class="testi-role">Phụ huynh Học sinh Trần Nguyễn Minh Đức Lớp 10A2</p>
+                    </div>
+                </div>
+            </div>
+            <div class="dots">
+                <span class="dot active"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Facilities -->
+    <section class="section-padding container">
+        <h2 class="section-title text-center">CÁC CƠ SỞ CỦA BMS</h2>
+        <div class="facilities-carousel">
+            <div class="carousel-arrow"><i class="fas fa-chevron-left"></i></div>
+            <div class="fac-card">
+                <div class="fac-img"></div>
+                <p class="fac-title">BMS Hà Nội - Trường THCS - THPT Ban Mai</p>
+            </div>
+            <div class="fac-card">
+                <div class="fac-img"></div>
+                <p class="fac-title">BMS Hưng Yên - Trường Tiểu học - THCS - THPT Hồng Đức</p>
+            </div>
+            <div class="carousel-arrow"><i class="fas fa-chevron-right"></i></div>
+        </div>
+    </section>
+
+    <!-- Partners -->
+    <section class="section-padding partners-section">
+        <div class="container">
+            <h2 class="section-title text-center">CÁC ĐỐI TÁC CỦA BMS</h2>
+            <div class="partners-logos">
+                <div class="carousel-arrow" style="width: 30px; height: 30px;"><i class="fas fa-chevron-left"></i></div>
+                <div class="partner-logo">Cambridge Assessment</div>
+                <div class="partner-logo" style="color: red; font-size: 20px;">Leader in Me</div>
+                <div class="partner-logo" style="border: 2px solid yellow; color: black;">NATIONAL GEOGRAPHIC</div>
+                <div class="partner-logo" style="color: blue; font-style: italic; font-size: 24px;">IIG VIET NAM</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-logo">
+                        <i class="fas fa-sun" style="color: var(--orange);"></i> BMS
+                        <span>A member of IGC</span>
+                    </div>
+                </div>
+                
+                <div class="footer-contact">
+                    <h4>HỆ THỐNG TRƯỜNG LIÊN CẤP BMS</h4>
+                    <ul class="contact-list">
+                        <li><i class="fas fa-map-marker-alt"></i> BMS Kiddy Hà Nội: Trường Mầm non Ban Mai, KĐT Văn Quán, Hà Đông.</li>
+                        <li><i class="fas fa-phone"></i> 0966 694 869</li>
+                        <li><i class="fas fa-map-marker-alt"></i> BMS Hà Nội: Trường Tiểu học Ban Mai, KĐT Văn Quán, Hà Đông.</li>
+                        <li><i class="fas fa-phone"></i> 0969 028 066</li>
+                        <li><i class="fas fa-map-marker-alt"></i> BMS Hà Nội: Trường THCS - THPT Ban Mai, KĐT Văn Phú, Kiến Hưng.<br>THCS: 0906 190 468 | THPT: 0862 421 468</li>
+                        <li><i class="fas fa-map-marker-alt"></i> BMS Hưng Yên: Trường Tiểu học - THCS - THPT Hồng Đức, Số 102 Đường Nguyễn Bình, Mỹ Hào.<br>TH: 0978 096 088 | THCS - THPT: 0969 073 088</li>
+                        <li><i class="fas fa-envelope"></i> Liên hệ hợp tác: info@banmaischool.edu.vn</li>
+                    </ul>
+                </div>
+
+                <div class="footer-right">
+                    <a href="#" class="btn btn-orange">ĐĂNG KÝ TUYỂN SINH</a>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                     <div class="social-icons" style="margin-top: 10px;">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            Copyright © 2023 Ban Mai School. All Right Reserved. Privacy Policy
+        </div>
+    </footer>
+
+    <!-- Floating Zalo Icon -->
+    <a href="#" class="floating-zalo">
+        <span>Zalo</span> <!-- Thay bằng icon Zalo thực tế nếu có -->
+    </a>
+
+</body>
+</html>
