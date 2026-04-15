@@ -935,6 +935,14 @@
             }
         }
 
+        /* SLIDER dùng chung */
+        /* Hiệu ứng ẩn/hiện nút mượt mà, không làm xô lệch layout */
+        .slider-arrow-disabled {
+            opacity: 0 !important;
+            visibility: hidden !important;
+            pointer-events: none !important; /* Vô hiệu hóa click khi bị ẩn */
+        }
+
         /* --- FACILITIES SLIDER --- */
         .fac-slider-wrapper {
             display: flex;
@@ -951,7 +959,7 @@
         .fac-track {
             display: flex;
             gap: 30px;
-            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+            transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         /* Hiển thị 2 thẻ trên Desktop */
@@ -1045,10 +1053,84 @@
             .fac-arrow { width: 35px; height: 35px; font-size: 14px; margin-bottom: 40px;}
         }
 
-        /* --- PARTNERS --- */
-        .partners-section { background-color: var(--light-blue); }
-        .partners-logos { display: flex; justify-content: center; gap: 40px; align-items: center; flex-wrap: wrap;}
-        .partner-logo { height: 50px; background: #fff; padding: 10px 20px; border-radius: 5px; color: var(--text-light); font-weight: bold; display: flex; align-items: center;}
+        /* --- PARTNERS SLIDER --- */
+        .partners-section { 
+            background-color: transparent; /* Xóa nền cũ */
+        }
+
+        /* Khung bo góc màu xanh nhạt (#EEF4FF) theo thiết kế */
+        .partners-box {
+            background-color: #EEF4FF;
+            border-radius: 20px;
+            padding: 50px 30px;
+        }
+
+        .partner-slider-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            position: relative;
+        }
+
+        .partner-track-container {
+            flex-grow: 1;
+            overflow: hidden; /* Cắt phần lòi ra ngoài */
+        }
+
+        .partner-track {
+            display: flex;
+            gap: 20px; /* Khoảng cách giữa các logo */
+            transition: transform 1.2s ease-in-out;
+        }
+
+        /* Hiển thị 4 thẻ trên Desktop (100% / 4 trừ đi khoảng gap) */
+        .partner-slide {
+            flex: 0 0 calc(25% - 15px); 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .partner-slide a {
+            display: block;
+            width: 100%;
+            text-align: center;
+        }
+
+        /* Sử dụng object-fit: contain để logo không bị méo */
+        .partner-slide img {
+            max-width: 100%;
+            height: 70px; /* Cố định chiều cao logo */
+            object-fit: contain; 
+            mix-blend-mode: multiply; /* Giúp lọc bỏ nền trắng của logo nếu có */
+            transition: transform 0.3s ease;
+        }
+
+        .partner-slide a:hover img {
+            transform: scale(1.1); /* Phóng to nhẹ khi hover */
+        }
+
+        /* Nút điều hướng */
+        .partner-arrow {
+            width: 40px; height: 40px;
+            background-color: var(--primary-blue);
+            color: white;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            border: none; cursor: pointer; font-size: 16px;
+            transition: all 0.3s;
+            flex-shrink: 0;
+        }
+        .partner-arrow:hover { background-color: var(--orange); }
+
+        /* Responsive cho thiết bị di động */
+        @media (max-width: 992px) {
+            .partner-slide { flex: 0 0 calc(50% - 10px); } /* Tablet hiện 2 logo */
+        }
+        @media (max-width: 576px) {
+            .partner-slide { flex: 0 0 100%; } /* Điện thoại hiện 1 logo */
+            .partners-box { padding: 40px 15px; }
+        }
 
         /* --- FOOTER --- */
         footer {
@@ -1620,16 +1702,62 @@
         </div>
     </section>
 
-    <!-- Partners -->
+    <!-- Partners Section -->
     <section class="section-padding partners-section">
         <div class="container">
-            <h2 class="section-title text-center">CÁC ĐỐI TÁC CỦA BMS</h2>
-            <div class="partners-logos">
-                <div class="carousel-arrow" style="width: 30px; height: 30px;"><i class="fas fa-chevron-left"></i></div>
-                <div class="partner-logo">Cambridge Assessment</div>
-                <div class="partner-logo" style="color: red; font-size: 20px;">Leader in Me</div>
-                <div class="partner-logo" style="border: 2px solid yellow; color: black;">NATIONAL GEOGRAPHIC</div>
-                <div class="partner-logo" style="color: blue; font-style: italic; font-size: 24px;">IIG VIET NAM</div>
+            <!-- Khối bọc ngoài màu xanh nhạt (#EEF4FF) -->
+            <div class="partners-box">
+                <h2 class="section-title text-center" style="color: var(--primary-blue); font-weight: 700; margin-bottom: 40px;">CÁC ĐỐI TÁC CỦA BMS</h2>
+                
+                <div class="partner-slider-wrapper">
+                    <!-- Nút Trái -->
+                    <button class="partner-arrow prev" onclick="movePartnerSlide(-1)"><i class="fas fa-chevron-left"></i></button>
+
+                    <!-- Khối chứa track trượt -->
+                    <div class="partner-track-container">
+                        <div class="partner-track" id="partnerTrack">
+                            
+                            <!-- Logo 1 -->
+                            <div class="partner-slide">
+                                <!-- Thẻ a gọi Fancybox để xem ảnh to -->
+                                <a href="images/partner/partner-logo-1.png" data-fancybox="partners">
+                                    <img src="images/partner/partner-logo-1.png" alt="Cambridge">
+                                </a>
+                            </div>
+
+                            <!-- Logo 2 -->
+                            <div class="partner-slide">
+                                <a href="images/partner/partner-logo-2.png" data-fancybox="partners">
+                                    <img src="images/partner/partner-logo-2.png" alt="Leader in Me">
+                                </a>
+                            </div>
+
+                            <!-- Logo 3 -->
+                            <div class="partner-slide">
+                                <a href="images/partner/partner-logo-3.png" data-fancybox="partners">
+                                    <img src="images/partner/partner-logo-3.png" alt="National Geographic">
+                                </a>
+                            </div>
+
+                            <!-- Logo 4 -->
+                            <div class="partner-slide">
+                                <a href="images/partner/partner-logo-4.png" data-fancybox="partners">
+                                    <img src="images/partner/partner-logo-4.png" alt="IIG Viet Nam">
+                                </a>
+                            </div>
+
+                            <!-- Logo 5 (Thêm vào để trượt) -->
+                            <div class="partner-slide">
+                                <a href="images/partner/partner-logo-5.png" data-fancybox="partners">
+                                    <img src="images/partner/partner-logo-5.png" alt="Partner 5">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Nút Phải -->
+                    <button class="partner-arrow next" onclick="movePartnerSlide(1)"><i class="fas fa-chevron-right"></i></button>
+                </div>
             </div>
         </div>
     </section>
@@ -1885,7 +2013,7 @@
 
         // Auto play mỗi 5 giây
         function startTestiTimer() {
-            testiTimer = setInterval(changeTestiSlide, 500000);
+            testiTimer = setInterval(changeTestiSlide, 5000);
         }
 
         function resetTestiTimer() {
@@ -1924,9 +2052,32 @@
         let facTimer;
         const facTrack = document.getElementById('facTrack');
         const facCards = document.querySelectorAll('.fac-card');
+        // Lấy các nút điều hướng của Facilities
+        const facPrevBtn = document.querySelector('.fac-slider-wrapper .prev');
+        const facNextBtn = document.querySelector('.fac-slider-wrapper .next');
 
         function getFacCardsPerView() {
             return window.innerWidth > 992 ? 2 : 1;
+        }
+
+        // HÀM MỚI: Kiểm tra và ẩn/hiện nút
+        function checkFacArrows() {
+            if(!facPrevBtn || !facNextBtn) return;
+            const maxIndex = facCards.length - getFacCardsPerView();
+
+            // Nếu đang ở thẻ đầu tiên (index = 0) -> Ẩn nút Trái
+            if (facIndex === 0) {
+                facPrevBtn.classList.add('slider-arrow-disabled');
+            } else {
+                facPrevBtn.classList.remove('slider-arrow-disabled');
+            }
+
+            // Nếu đang ở thẻ cuối cùng (index = maxIndex) -> Ẩn nút Phải
+            if (facIndex >= maxIndex) {
+                facNextBtn.classList.add('slider-arrow-disabled');
+            } else {
+                facNextBtn.classList.remove('slider-arrow-disabled');
+            }
         }
 
         function updateFacSlider() {
@@ -1935,21 +2086,34 @@
             const gap = 30;
             const moveAmount = (cardWidth + gap) * facIndex;
             facTrack.style.transform = `translateX(-${moveAmount}px)`;
+            
+            // Gọi hàm check nút mỗi khi slider di chuyển
+            checkFacArrows(); 
         }
 
         function moveFacSlide(direction) {
             const maxIndex = facCards.length - getFacCardsPerView();
             facIndex += direction;
             
-            if (facIndex > maxIndex) facIndex = 0;
-            else if (facIndex < 0) facIndex = maxIndex;
+            // Khi nhấn tới/lui, nếu vượt quá giới hạn thì ép nó đứng lại ở mốc cuối
+            if (facIndex > maxIndex) facIndex = maxIndex;
+            else if (facIndex < 0) facIndex = 0;
 
             updateFacSlider();
             resetFacTimer();
         }
 
         function startFacTimer() {
-            facTimer = setInterval(() => { moveFacSlide(1); }, 5000);
+            facTimer = setInterval(() => { 
+                // Xử lý auto-play: Khi đến cuối thì quay lại đầu
+                const maxIndex = facCards.length - getFacCardsPerView();
+                if(facIndex >= maxIndex) {
+                    facIndex = 0;
+                    updateFacSlider();
+                } else {
+                    moveFacSlide(1); 
+                }
+            }, 5000);
         }
 
         function resetFacTimer() {
@@ -1965,8 +2129,95 @@
         });
 
         window.addEventListener('resize', () => {
-            facIndex = 0; // Reset về đầu khi xoay màn hình điện thoại
+            facIndex = 0;
             updateFacSlider();
+        });
+
+        // ==========================================
+        // PARTNERS SLIDER LOGIC
+        // ==========================================
+        let partnerIndex = 0;
+        let partnerTimer;
+        const partnerTrack = document.getElementById('partnerTrack');
+        const partnerSlides = document.querySelectorAll('.partner-slide');
+        // Lấy các nút điều hướng của Partners
+        const partnerPrevBtn = document.querySelector('.partner-slider-wrapper .prev');
+        const partnerNextBtn = document.querySelector('.partner-slider-wrapper .next');
+
+        function getPartnerCardsPerView() {
+            if (window.innerWidth > 992) return 4;
+            if (window.innerWidth > 576) return 2;
+            return 1;
+        }
+
+        // HÀM MỚI: Kiểm tra và ẩn/hiện nút
+        function checkPartnerArrows() {
+            if(!partnerPrevBtn || !partnerNextBtn) return;
+            const maxIndex = partnerSlides.length - getPartnerCardsPerView();
+
+            if (partnerIndex === 0) {
+                partnerPrevBtn.classList.add('slider-arrow-disabled');
+            } else {
+                partnerPrevBtn.classList.remove('slider-arrow-disabled');
+            }
+
+            if (partnerIndex >= maxIndex) {
+                partnerNextBtn.classList.add('slider-arrow-disabled');
+            } else {
+                partnerNextBtn.classList.remove('slider-arrow-disabled');
+            }
+        }
+
+        function updatePartnerSlider() {
+            if(!partnerTrack || partnerSlides.length === 0) return;
+            const cardWidth = partnerSlides[0].offsetWidth;
+            const gap = 20; 
+            const moveAmount = (cardWidth + gap) * partnerIndex;
+            partnerTrack.style.transform = `translateX(-${moveAmount}px)`;
+            
+            // Gọi hàm check nút
+            checkPartnerArrows();
+        }
+
+        function movePartnerSlide(direction) {
+            const maxIndex = partnerSlides.length - getPartnerCardsPerView();
+            partnerIndex += direction;
+            
+            if (partnerIndex > maxIndex) partnerIndex = maxIndex; 
+            else if (partnerIndex < 0) partnerIndex = 0; 
+
+            updatePartnerSlider();
+            resetPartnerTimer();
+        }
+
+        function startPartnerTimer() {
+            partnerTimer = setInterval(() => { 
+                // Auto-play: Khi đến cuối thì quay lại đầu
+                const maxIndex = partnerSlides.length - getPartnerCardsPerView();
+                if(partnerIndex >= maxIndex) {
+                    partnerIndex = 0;
+                    updatePartnerSlider();
+                } else {
+                    movePartnerSlide(1); 
+                }
+            }, 5000);
+        }
+
+        function resetPartnerTimer() {
+            clearInterval(partnerTimer);
+            startPartnerTimer();
+        }
+
+        window.addEventListener('load', () => {
+            if(partnerSlides.length > 0) {
+                updatePartnerSlider();
+                startPartnerTimer();
+            }
+        });
+
+        window.addEventListener('resize', () => {
+            partnerIndex = 0;
+            updatePartnerSlider();
         });
     </script>
     
