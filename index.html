@@ -249,76 +249,107 @@
             transform: scale(0.85); /* Thu nhỏ logo còn 85% */
         }
 
-        /* --- HERO BANNER --- */
-        .hero {
-            background-color: var(--light-blue);
-            background-image: url('https://www.transparenttextures.com/patterns/cubes.png'); /* Pattern giả lập */
-            padding: 80px 0;
+        /* --- HERO SLIDER FULL WIDTH --- */
+        .hero-slider-section {
             position: relative;
+            width: 100%;
             overflow: hidden;
+            /* Đặt màu nền dự phòng trong lúc chờ load ảnh */
+            background-color: var(--light-blue); 
         }
 
-        .hero-content {
+        .slider-container {
             display: flex;
-            align-items: center;
-            justify-content: space-between;
+            width: 100%;
+            transition: transform 0.5s ease-in-out; /* Hiệu ứng trượt mượt mà */
         }
 
-        .hero-text { flex: 1; }
-        .hero-image { flex: 1; position: relative; min-height: 400px; display: flex; justify-content: center;}
-
-        .hero-badge-title {
-            background-color: var(--primary-blue);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 30px;
-            display: inline-block;
-            font-weight: bold;
-            margin-bottom: 10px;
+        .slide {
+            min-width: 100%; /* Mỗi slide chiếm 100% chiều rộng màn hình */
+            box-sizing: border-box;
         }
 
-        .hero-title {
-            font-size: 48px;
-            font-weight: 900;
+        .slide img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+        }
+
+        /* --- NÚT ĐIỀU HƯỚNG (ARROWS) --- */
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(255, 255, 255, 0.7);
             color: var(--primary-blue);
-            line-height: 1.2;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 0px white;
-        }
-
-        .scholarship-box {
-            background: linear-gradient(to right, #ffd700, #ff8c00);
-            padding: 15px 25px;
-            border-radius: 10px;
-            display: inline-block;
-            color: white;
-            font-weight: bold;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-        }
-
-        .scholarship-box span { font-size: 32px; }
-
-        .program-list {
-            background: white;
-            padding: 15px;
-            border-radius: 10px;
-            border-left: 5px solid var(--orange);
-            margin-bottom: 20px;
-            font-size: 14px;
-        }
-        
-        /* Placeholder cho hình ảnh phức tạp ở Hero */
-        .hero-mock-img {
-            width: 80%;
-            background: #ccc;
-            border-radius: 20px;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #666;
-            border: 10px solid white;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            z-index: 10;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .slider-btn:hover {
+            background-color: var(--orange);
+            color: white;
+        }
+
+        .slider-btn.prev { left: 30px; }
+        .slider-btn.next { right: 30px; }
+
+        /* --- DẤU CHẤM (DOTS) --- */
+        .slider-dots {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            z-index: 10;
+        }
+
+        .slider-dots .dot {
+            width: 12px;
+            height: 12px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border: 2px solid transparent;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .slider-dots .dot:hover { background-color: rgba(255, 255, 255, 1); }
+        
+        .slider-dots .dot.active {
+            background-color: transparent;
+            border-color: var(--orange);
+            position: relative;
+        }
+        
+        .slider-dots .dot.active::after {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 6px; height: 6px;
+            background-color: var(--orange);
+            border-radius: 50%;
+        }
+
+        /* Responsive cho Mobile */
+        @media (max-width: 768px) {
+            .slider-btn { width: 35px; height: 35px; font-size: 16px; }
+            .slider-btn.prev { left: 10px; }
+            .slider-btn.next { right: 10px; }
+            .slider-dots { bottom: 10px; }
         }
 
         /* --- ABOUT SECTION (Grid 12 Cột) --- */
@@ -374,16 +405,54 @@
             margin-top: 30px;
         }
         .cert-box {
-            flex: 1; padding: 15px 20px; text-align: center; color: white; font-weight: bold; border-radius: 5px; font-size: 13px;
+            position: relative;
+            flex: 1; 
+            padding: 15px 20px; 
+            text-align: center; 
+            color: white; 
+            font-weight: bold; 
+            border-radius: 5px; 
+            font-size: 13px;
         }
+        .cert-box::after {
+            content: '';
+            pointer-events: none;
+            position: absolute;
+            left: -16px;
+            top: -20px;
+            z-index: 10;
+            display: block;
+            height: 40px;
+            width: 32px;
+            -webkit-transition-property: color, background-color, border-color, fill, stroke, opacity, box-shadow, -webkit-text-decoration-color, -webkit-transform, -webkit-filter, -webkit-backdrop-filter;
+            transition-property: color, background-color, border-color, fill, stroke, opacity, box-shadow, -webkit-text-decoration-color, -webkit-transform, -webkit-filter, -webkit-backdrop-filter;
+            transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+            transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-transform, -webkit-filter, -webkit-backdrop-filter;
+            -webkit-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            -webkit-transition-duration: 150ms;
+            transition-duration: 150ms;
+            -webkit-transition: .4s all ease-in-out;
+            transition: .4s all ease-in-out;
+            background: url(images/icon/medal.png);
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+        }
+        
         .cert-bg-blue { background-color: var(--primary-blue); }
         .cert-bg-orange { background-color: var(--orange); }
 
         /* Responsive cho thiết bị di động: Đưa cả 2 khối về chiếm trọn 12 cột (xếp chồng lên nhau) */
+        /* --- RESPONSIVE CHO ĐIỆN THOẠI (Phần Tin Tức) --- */
         @media (max-width: 992px) {
-            .about-left-col, .about-right-col {
-                grid-column: span 12;
-            }
+            .news-flex-container { flex-direction: column; }
+            .news-main, .news-list { width: 100%; }
+            .section-header-flex { flex-direction: column; align-items: flex-start; gap: 15px; }
+            
+            /* Thu nhỏ khoảng cách khi ở màn hình nhỏ */
+            .filter-tabs { gap: 20px; flex-wrap: wrap; }
+            .filter-tabs li:not(:last-child)::after { right: -10px; } 
         }
 
         /* --- PROGRAMS SECTION --- */
@@ -492,37 +561,207 @@
         .section-header-flex {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--border-color);
+            align-items: flex-end; /* Căn đáy cho chữ tiêu đề và menu */
             margin-bottom: 30px;
-            padding-bottom: 10px;
         }
 
-        .filter-tabs { display: flex; gap: 20px; }
-        .filter-tabs span { font-size: 14px; font-weight: 500; cursor: pointer; color: var(--text-light);}
-        .filter-tabs span.active { color: var(--orange); border-bottom: 2px solid var(--orange); padding-bottom: 11px;}
-
-        .news-grid {
-            display: grid;
-            grid-template-columns: 1.5fr 1fr;
-            gap: 30px;
+        /* --- AD BANNER SECTION (TUYỂN SINH) --- */
+        .ad-banner-wrapper {
+            width: 100%;
+            border-radius: 12px; /* Bo góc viền ảnh */
+            overflow: hidden; /* Quan trọng: Cắt phần ảnh bị dư ra khi phóng to (zoom) */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
 
-        .news-main .news-img { height: 350px; background: #ddd; border-radius: 10px; margin-bottom: 15px; }
-        .news-date { font-size: 12px; color: var(--orange); margin-bottom: 5px; }
-        .news-title { font-size: 20px; font-weight: bold; margin-bottom: 10px; color: var(--primary-blue);}
-        .news-desc { font-size: 14px; color: var(--text-light); }
+        .ad-banner-img {
+            width: 100%;
+            display: block;
+            object-fit: cover;
+            /* Thêm transition để hiệu ứng phóng to diễn ra mượt mà trong 0.5 giây */
+            transition: transform 0.5s ease;
+        }
 
-        .news-list { display: flex; flex-direction: column; gap: 20px; }
-        .news-item-small { display: flex; gap: 15px; align-items: center;}
-        .news-item-small .news-img { width: 120px; height: 80px; background: #ddd; border-radius: 8px; flex-shrink: 0;}
-        .news-item-small .news-title { font-size: 15px; margin-bottom: 0;}
+        /* Hiệu ứng Zoom In khi hover chuột vào thẻ chứa ảnh */
+        .ad-banner-wrapper:hover .ad-banner-img {
+            transform: scale(1.03); /* Phóng to ảnh lên 3% */
+        }
+
+        /* --- BỘ LỌC TIN TỨC (UL LI) --- */
+        .filter-tabs { 
+            display: flex; 
+            list-style: none;
+            gap: 40px; /* Khoảng cách rộng giữa các phần tử (giống ảnh 2) */
+            margin: 0;
+            padding: 0;
+            align-items: center;
+        }
+
+        .filter-tabs li {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Tạo đường kẻ dọc mờ ngăn cách giữa các mục */
+        /* Trừ mục cuối cùng (:last-child) sẽ không có đường kẻ này */
+        .filter-tabs li:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            right: -20px; /* Đặt đường kẻ nằm đúng chính giữa khoảng gap 40px */
+            top: 50%;
+            transform: translateY(-50%);
+            height: 14px; /* Chiều cao của đường kẻ dọc */
+            width: 1px;
+            background-color: #ccc;
+        }
+
+        .filter-tabs a { 
+            font-size: 15px; /* Tăng kích thước chữ lên một chút cho dễ nhìn */
+            font-weight: 500; 
+            color: var(--text-dark);
+            text-transform: uppercase;
+            padding: 5px 0; /* Xóa padding ngang để gạch chân khít với chữ */
+            display: block;
+            position: relative;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        /* Hiệu ứng đổi màu chữ khi hover hoặc active */
+        .filter-tabs a:hover,
+        .filter-tabs a.active { 
+            color: var(--orange); 
+        }
+
+        /* Tạo đường gạch chân màu cam ẩn mặc định */
+        .filter-tabs a::after {
+            content: '';
+            position: absolute;
+            bottom: 0px; /* Đưa gạch chân sát vào chữ */
+            left: 0; 
+            width: 100%; /* Đường gạch chân sẽ rộng bằng đúng bề ngang của chữ */
+            height: 2px;
+            background-color: var(--orange);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        /* Hiện đường gạch chân khi hover hoặc thẻ đang active */
+        .filter-tabs a:hover::after,
+        .filter-tabs a.active::after {
+            transform: scaleX(1);
+        }
+
+        /* --- BỐ CỤC LƯỚI 50/50 --- */
+        .news-flex-container {
+            display: flex;
+            gap: 40px; /* Khoảng cách giữa 2 cột */
+            align-items: flex-start;
+        }
+
+        /* Chia mỗi bên chiếm 50% */
+        .news-main { flex: 1; width: 50%; }
+        .news-list { flex: 1; width: 50%; display: flex; flex-direction: column; gap: 25px; }
+
+        /* --- TIN CHÍNH (CỘT TRÁI) --- */
+        .news-main-img-wrapper {
+            width: 100%;
+            height: 350px;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .news-main .news-img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .news-main:hover .news-img { transform: scale(1.05); }
+
+        .news-meta {
+            font-size: 13px; 
+            margin-bottom: 10px; 
+            display: flex;
+            gap: 15px;
+        }
+
+        .news-date { color: #888; }
+        .news-category { color: var(--orange); font-weight: 500; }
+
+        .news-title { 
+            font-size: 22px; 
+            font-weight: 700; 
+            margin-bottom: 15px; 
+            color: var(--text-dark);
+            line-height: 1.4;
+        }
+        
+        .news-title a:hover { color: var(--primary-blue); }
+
+        .news-desc { font-size: 15px; color: var(--text-light); line-height: 1.6; }
+
+        /* --- TIN PHỤ (CỘT PHẢI) --- */
+        .news-item-small { 
+            display: flex; 
+            gap: 20px; 
+            align-items: flex-start;
+            group: hover;
+        }
+
+        .news-small-img { 
+            width: 220px; 
+            height: 140px; 
+            object-fit: cover;
+            border-radius: 8px; 
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+        }
+
+        /* Hiệu ứng hover cho ảnh tin phụ */
+        .news-item-small:hover .news-small-img {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .news-small-content {
+            display: flex;
+            flex-direction: column;
+            padding-top: 5px;
+        }
+
+        .news-small-title { 
+            font-size: 17px; 
+            font-weight: 700;
+            line-height: 1.4;
+            margin-bottom: 0;
+            color: var(--text-dark);
+        }
+
+        .news-small-title a:hover { color: var(--primary-blue); }
+
+        /* --- RESPONSIVE CHO ĐIỆN THOẠI --- */
+        @media (max-width: 992px) {
+            .news-flex-container { flex-direction: column; }
+            .news-main, .news-list { width: 100%; }
+            .section-header-flex { flex-direction: column; align-items: flex-start; gap: 15px; }
+            .filter-tabs { flex-wrap: wrap; }
+            .filter-tabs a { padding: 5px 10px; }
+        }
+
+        @media (max-width: 576px) {
+            .news-item-small { flex-direction: column; }
+            .news-small-img { width: 100%; height: 200px; }
+        }
 
         /* --- REGISTRATION FORM --- */
         .register-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 40px;
+            margin-bottom: 30px;
         }
 
         .reg-form {
@@ -537,6 +776,10 @@
             margin-bottom: 20px;
         }
 
+        .form-row-full {
+            grid-column: 1 / -1;
+        }
+
         .form-control {
             width: 100%;
             padding: 12px;
@@ -549,10 +792,15 @@
         .btn-full { width: 100%; padding: 15px; font-size: 16px; margin-top: 10px;}
 
         .reg-image {
-            background: #ccc;
-            border-radius: 10px;
-            min-height: 300px;
-            display: flex; align-items: center; justify-content: center;
+            width: 100%;
+            border-radius: 12px; /* Bo góc viền ảnh */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .reg-banner-img {
+            width: 100%;
+            display: block;
+            object-fit: cover;
         }
 
         /* --- TESTIMONIALS --- */
@@ -763,33 +1011,33 @@
         </div>
     </header>
 
-    <!-- Hero Banner -->
-    <section class="hero">
-        <div class="container hero-content">
-            <div class="hero-text">
-                <div class="hero-badge-title">HỆ THỐNG TRƯỜNG LIÊN CẤP BMS</div>
-                <h1 class="hero-title">THÔNG BÁO TUYỂN SINH<br>NĂM HỌC 2026 - 2027</h1>
-                
-                <div class="scholarship-box">
-                    HỌC BỔNG lên đến<br>
-                    <span>100%</span> HỌC PHÍ
-                </div>
-
-                <div class="program-list">
-                    <strong>TUYỂN SINH TỪ MẦM NON - LỚP 12</strong><br>
-                    • Chương trình Song ngữ Quốc tế Cambridge<br>
-                    • Chương trình Song ngữ Tài năng<br>
-                    • Chương trình Song ngữ Nâng cao
-                </div>
-
-                <a href="#" class="btn btn-orange" style="padding: 15px 30px; font-size: 18px;">ĐĂNG KÝ NGAY <i class="fas fa-arrow-right"></i></a>
+    <!-- Hero Slider Full Width -->
+    <section class="hero-slider-section">
+        <div class="slider-container" id="heroSlider">
+            <!-- Slide 1: Ảnh Banner chính -->
+            <div class="slide">
+                <img src="images\banner\banner-home.jpg" alt="Thông báo tuyển sinh BMS">
             </div>
-            <div class="hero-image">
-                <!-- Giữ chỗ cho hình ảnh học sinh cắt ghép phức tạp -->
-                <div class="hero-mock-img">
-                    Hình ảnh học sinh & Graphic
-                </div>
+            
+            <!-- Slide 2: Ảnh 2 -->
+            <div class="slide">
+                <img src="images\banner\banner-2.jpg" alt="Banner 2">
             </div>
+
+            <!-- Slide 3: Ảnh 3 -->
+            <div class="slide">
+                <img src="images\banner\banner-3.jpg" alt="Banner 3">
+            </div>
+        </div>
+
+        <!-- Nút điều hướng Trái/Phải -->
+        <button class="slider-btn prev" onclick="changeSlide(-1)"><i class="fas fa-chevron-left"></i></button>
+        <button class="slider-btn next" onclick="changeSlide(1)"><i class="fas fa-chevron-right"></i></button>
+
+        <!-- Dấu chấm chỉ mục (Dots) -->
+        <div class="slider-dots">
+            <span class="dot active" onclick="goToSlide(0)"></span>
+            <span class="dot" onclick="goToSlide(1)"></span>
         </div>
     </section>
 
@@ -855,7 +1103,7 @@
             <h2 class="section-title text-center">CHƯƠNG TRÌNH GIÁO DỤC</h2>
             <div class="program-grid">
                 <div class="program-card">
-                    <img src="https://via.placeholder.com/300x200/ddd/999?text=Mam+Non" alt="Mầm non">
+                    <img src="images/education/man-non.jpg" alt="Mầm non">
                     <div class="program-card-content bg-mam-non">
                         <div>
                             <p style="font-size:12px;">Chương trình</p>
@@ -866,7 +1114,7 @@
                     </div>
                 </div>
                 <div class="program-card">
-                    <img src="https://via.placeholder.com/300x200/ddd/999?text=Tieu+Hoc" alt="Tiểu học">
+                    <img src="images/education/tieu-hoc.jpg" alt="Tiểu học">
                     <div class="program-card-content bg-tieu-hoc">
                         <div>
                             <p style="font-size:12px;">Chương trình</p>
@@ -876,7 +1124,7 @@
                     </div>
                 </div>
                 <div class="program-card">
-                    <img src="https://via.placeholder.com/300x200/ddd/999?text=THCS" alt="THCS">
+                    <img src="images/education/thcs.png" alt="THCS">
                     <div class="program-card-content bg-thcs">
                         <div>
                             <p style="font-size:12px;">Chương trình</p>
@@ -886,7 +1134,7 @@
                     </div>
                 </div>
                 <div class="program-card">
-                    <img src="https://via.placeholder.com/300x200/ddd/999?text=THPT" alt="THPT">
+                    <img src="images/education/thpt.jpg" alt="THPT">
                     <div class="program-card-content bg-thpt">
                         <div>
                             <p style="font-size:12px;">Chương trình</p>
@@ -901,46 +1149,78 @@
 
     <!-- News Section -->
     <section class="section-padding container">
+        
+        <!-- Header & Bộ lọc tin tức -->
         <div class="section-header-flex">
             <h2 class="section-title" style="margin-bottom:0;">TIN TỨC BMS</h2>
-            <div class="filter-tabs">
-                <span class="active">TẤT CẢ</span>
-                <span>MẦM NON</span>
-                <span>TIỂU HỌC</span>
-                <span>THCS - THPT</span>
-            </div>
+            
+            <!-- Chuyển filter-tabs thành ul li -->
+            <ul class="filter-tabs">
+                <li><a href="#" class="active">TẤT CẢ</a></li>
+                <li><a href="#">MẦM NON</a></li>
+                <li><a href="#">TIỂU HỌC</a></li>
+                <li><a href="#">THCS - THPT</a></li>
+            </ul>
         </div>
 
-        <div class="news-grid">
+        <!-- Lưới bài viết chia 50/50 -->
+        <div class="news-flex-container">
+            
+            <!-- Cột trái (Tin chính) -->
             <div class="news-main">
-                <div class="news-img"></div> <!-- Placeholder Image -->
-                <p class="news-date">07/04/2026 - THCS - THPT</p>
-                <h3 class="news-title">Khám phá cơ thể người qua trải nghiệm đa giác quan trong tiết học Khoa học tự nhiên 8 tại BMS</h3>
-                <p class="news-desc">Tiết học Khoa học tự nhiên 8 tại Ban Mai trở nên sinh động với chuỗi trải nghiệm đa giác quan, giúp học sinh khám phá hệ tuần hoàn, hiểu đúng về sức khỏe và chủ động vận dụng kiến thức vào cuộc sống.</p>
+                <div class="news-main-img-wrapper">
+                    <img src="images/news/new-main.png" alt="Tin chính" class="news-img">
+                </div>
+                
+                <div class="news-meta">
+                    <span class="news-date">14/04/2026</span>
+                    <span class="news-category">THCS - THPT</span>
+                </div>
+                <h3 class="news-title"><a href="#">20 suất trải nghiệm miễn phí: Tự tin làm học sinh lớp 6</a></h3>
+                <p class="news-desc">Trải nghiệm miễn phí "Tự tin làm học sinh lớp 6" tại BMS dành cho học sinh 2015, giúp rèn kỹ năng và khám phá bản thân.</p>
             </div>
+
+            <!-- Cột phải (Danh sách tin phụ) -->
             <div class="news-list">
+                
+                <!-- Item tin phụ 1 -->
                 <div class="news-item-small">
-                    <div class="news-img"></div>
-                    <div>
-                        <p class="news-date">07/04/2026 - THCS - THPT</p>
-                        <h4 class="news-title">Cùng nhìn lại những khoảnh khắc đáng nhớ tại BMS Edu Fair 2026 – Ngày hội tuyển...</h4>
+                    <img src="images/news/new-sub.jpg" alt="Tin 1" class="news-small-img">
+                    <div class="news-small-content">
+                        <div class="news-meta">
+                            <span class="news-date">13/04/2026</span>
+                            <span class="news-category">THCS - THPT</span>
+                        </div>
+                        <h4 class="news-small-title"><a href="#">Hành trình tại Lò Bầu Cổ Bát Tràng cùng BMSers Khối 6</a></h4>
                     </div>
                 </div>
+
+                <!-- Item tin phụ 2 -->
                 <div class="news-item-small">
-                    <div class="news-img"></div>
-                    <div>
-                        <p class="news-date">07/04/2026 - THCS - THPT</p>
-                        <h4 class="news-title">Đoàn viên trường THPT Ban mai "Sẵn sàng cống hiến - Tự tin trưởng thành"</h4>
+                    <img src="images/news/new-sub-2.jpg" alt="Tin 2" class="news-small-img">
+                    <div class="news-small-content">
+                        <div class="news-meta">
+                            <span class="news-date">13/04/2026</span>
+                            <span class="news-category">THCS - THPT</span>
+                        </div>
+                        <h4 class="news-small-title"><a href="#">Amazing Adventure: Hành trình khám phá thiên nhiên qua lăng kính Toán học</a></h4>
                     </div>
                 </div>
+
+                <!-- Item tin phụ 3 -->
                 <div class="news-item-small">
-                    <div class="news-img"></div>
-                    <div>
-                        <p class="news-date">31/03/2026 - THCS - THPT</p>
-                        <h4 class="news-title">Trải nghiệm miễn phí: Tự tin làm học sinh lớp 6</h4>
+                    <img src="images/news/new-sub-3.jpg" alt="Tin 3" class="news-small-img">
+                    <div class="news-small-content">
+                        <div class="news-meta">
+                            <span class="news-date">09/04/2026</span>
+                            <span class="news-category">THCS - THPT</span>
+                        </div>
+                        <h4 class="news-small-title"><a href="#">Rèn tư duy, bứt phá thể lực: Dấu ấn trải nghiệm của học sinh Tiểu học Lê Hồng Phong tại...</a></h4>
                     </div>
                 </div>
+
             </div>
+            
         </div>
         
         <div class="text-center" style="margin-top: 40px;">
@@ -948,26 +1228,36 @@
         </div>
     </section>
 
-    <!-- Ad Banner (Placeholder for middle Tuyển Sinh banner) -->
+    <!-- Tuyển Sinh Banner Section -->
     <section class="container" style="margin-bottom: 60px;">
+        
         <div class="section-header-flex">
             <h2 class="section-title" style="margin-bottom:0;">TUYỂN SINH</h2>
-            <div class="filter-tabs">
-                <span class="active">HỆ THỐNG</span>
-                <span>MẦM NON</span>
-                <span>TIỂU HỌC</span>
-                <span>THCS - THPT</span>
-            </div>
+            
+            <!-- Sử dụng lại cấu trúc ul li và class filter-tabs của phần Tin tức -->
+            <ul class="filter-tabs">
+                <li><a href="#" class="active">HỆ THỐNG</a></li>
+                <li><a href="#">MẦM NON</a></li>
+                <li><a href="#">TIỂU HỌC</a></li>
+                <li><a href="#">THCS - THPT</a></li>
+            </ul>
         </div>
-        <div style="background: var(--light-blue); height: 250px; border-radius: 10px; display: flex; align-items: center; justify-content: center; border: 1px solid #ccc;">
-            <h3 style="color:var(--primary-blue);">[Banner Quảng Cáo Tuyển Sinh]</h3>
+
+        <!-- Khối chứa Banner (Có link và hiệu ứng zoom) -->
+        <div class="ad-banner-wrapper">
+            <!-- Thẻ a tạo link khi click vào ảnh -->
+            <a href="#">
+                <!-- Lưu ý: Thay đổi src thành đường dẫn file ảnh Banner Tuyển Sinh của bạn -->
+                <img src="images/admissions/banner-tuyen-sinh.jpg" alt="Banner Tuyển Sinh" class="ad-banner-img">
+            </a>
         </div>
+
     </section>
 
     <!-- Registration Form -->
     <section class="section-padding container">
-        <h2 class="section-title">ĐĂNG KÝ TUYỂN SINH</h2>
-        <a href="#" class="btn btn-orange" style="margin-bottom: 30px; font-size: 12px; padding: 5px 15px;">Năm học 2026 - 2027</a>
+        <h2 class="section-title">LIÊN HỆ</h2>
+        <span class="btn btn-orange" style="margin-bottom: 30px; font-size: 12px; padding: 5px 15px; border-radius: 5px;">Năm học 2026 - 2027</span>
 
         <div class="register-grid">
             <div class="reg-form">
@@ -986,12 +1276,16 @@
                             <option>Lớp dự tuyển *</option>
                         </select>
                     </div>
+                    <div class="form-row-full">
+                        <textarea class="form-control" placeholder="Nội dung *"></textarea>
+                    </div>
                     <button type="submit" class="btn btn-orange btn-full">ĐĂNG KÝ NGAY</button>
                 </form>
             </div>
-            <div class="reg-image">
-                <p style="color:#666;">[Video/Hình ảnh Học sinh thực hành khoa học]</p>
-            </div>
+            
+        </div>
+        <div class="reg-image">
+            <img src="images/contact/lien-he.png" alt="Banner Liên Hệ" class="reg-banner-img">
         </div>
     </section>
 
@@ -1176,6 +1470,66 @@
         if (counterSection) {
             observer.observe(counterSection);
         }
+
+        // ==========================================
+        // HERO SLIDER LOGIC
+        // ==========================================
+        let currentSlideIndex = 0;
+        let slideTimer;
+        const sliderContainer = document.getElementById('heroSlider');
+        const dots = document.querySelectorAll('.slider-dots .dot');
+        const totalSlides = document.querySelectorAll('.slide').length;
+
+        function updateSliderPosition() {
+            if (!sliderContainer) return;
+            // Dịch chuyển container sang trái dựa trên index hiện tại
+            sliderContainer.style.transform = `translateX(-${currentSlideIndex * 100}%)`;
+            
+            // Cập nhật trạng thái active cho dấu chấm
+            dots.forEach(dot => dot.classList.remove('active'));
+            if (dots.length > 0) {
+                dots[currentSlideIndex].classList.add('active');
+            }
+        }
+
+        function changeSlide(direction) {
+            currentSlideIndex += direction;
+            
+            // Quay vòng slider nếu vượt quá giới hạn
+            if (currentSlideIndex >= totalSlides) {
+                currentSlideIndex = 0;
+            } else if (currentSlideIndex < 0) {
+                currentSlideIndex = totalSlides - 1;
+            }
+            
+            updateSliderPosition();
+            resetSlideTimer(); // Reset hẹn giờ tự động chạy khi người dùng tự click
+        }
+
+        function goToSlide(index) {
+            currentSlideIndex = index;
+            updateSliderPosition();
+            resetSlideTimer();
+        }
+
+        // Tự động chuyển slide sau mỗi 5 giây (5000ms)
+        function startSlideTimer() {
+            slideTimer = setInterval(() => {
+                changeSlide(1);
+            }, 5000); 
+        }
+
+        function resetSlideTimer() {
+            clearInterval(slideTimer);
+            startSlideTimer();
+        }
+
+        // Khởi động slider khi trang load xong
+        document.addEventListener('DOMContentLoaded', () => {
+            if (sliderContainer && totalSlides > 0) {
+                startSlideTimer();
+            }
+        });
     </script>
 </body>
 </html>
