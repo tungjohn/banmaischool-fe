@@ -103,6 +103,28 @@
             transform-origin: left center;
         }
 
+        /* --- CSS CHO ẢNH LOGO --- */
+        .logo {
+            display: block; 
+            text-decoration: none;
+        }
+
+        .logo-img {
+            max-height: 70px; /* Chiều cao logo lúc bình thường */
+            width: auto;      
+            display: block;
+            /* Thêm transition cho max-height để co rút mượt mà */
+            transition: max-height 0.3s ease; 
+        }
+
+        /* Đảm bảo khung bọc logo tự căn giữa */
+        .logo-wrapper {
+            display: flex;
+            align-items: center; 
+            padding: 10px 0;
+            transition: padding 0.3s ease;
+        }
+
         /* --- CỘT PHẢI (Chứa Topbar và Nav) --- */
         .header-right {
             display: flex;
@@ -236,17 +258,21 @@
             max-height: 0;
             opacity: 0;
             padding-top: 0;
-            pointer-events: none; /* Không thể click khi đã ẩn */
+            pointer-events: none;
         }
 
-        /* 2. Thu nhỏ padding của main nav một chút để gọn hơn (tùy chọn) */
+        /* 2. Ép chiều cao menu mỏng lại */
         header.is-sticky .main-nav a {
-            padding: 15px 0;
+            padding: 15px 0; /* Giảm padding trên dưới của menu */
         }
 
-        /* 3. Thu nhỏ Logo */
-        header.is-sticky .logo {
-            transform: scale(0.85); /* Thu nhỏ logo còn 85% */
+        /* 3. Thu nhỏ KÍCH THƯỚC VẬT LÝ của Logo và khung chứa */
+        header.is-sticky .logo-wrapper {
+            padding: 5px 0; /* Thu nhỏ khoảng trống trên dưới của khung logo */
+        }
+
+        header.is-sticky .logo-img {
+            max-height: 35px; /* Ép chiều cao ảnh logo nhỏ lại bằng với chữ menu (bạn có thể chỉnh 35, 40 tùy ý) */
         }
 
         /* --- HERO SLIDER FULL WIDTH --- */
@@ -803,56 +829,110 @@
             object-fit: cover;
         }
 
-        /* --- TESTIMONIALS --- */
-        .testimonials { background-color: var(--white); }
+        /* --- TESTIMONIALS SLIDER --- */
+        .testimonials { background-color: #fafafa; }
         .testi-subtitle { text-align: center; color: var(--text-light); margin-bottom: 40px; font-size: 14px;}
 
-        .testi-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
+        /* Wrapper ẩn đi phần trượt ra ngoài */
+        .testi-slider-wrapper {
+            width: 100%;
+            overflow: hidden;
+            padding: 50px 0 20px 0; /* Padding để không bị cắt bóng đổ (box-shadow) */
         }
 
-        .testi-card {
-            background: white;
-            border: 1px solid #eee;
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        /* Track chứa tất cả các card, dùng flex để dàn ngang */
+        .testi-slider-track {
             display: flex;
-            gap: 20px;
+            gap: 30px; /* Khoảng cách giữa 2 thẻ */
+            transition: transform 1.2s ease-in-out; /* Hiệu ứng trượt mượt mà */
+        }
+
+        /* Thiết kế 1 thẻ Card */
+        .testi-card {
+            flex: 0 0 calc(50% - 15px); 
+            background: white;
+            border-radius: 20px;
+            /* ĐIỀU CHỈNH PADDING: Trên 60px, Phải 40px, Dưới 40px, Trái 30px */
+            /* Padding trên lớn để né dấu nháy kép */
+            padding: 60px 40px 40px 30px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: flex-start; /* Căn nội dung lên sát phía trên */
             position: relative;
         }
 
-        .quote-icon {
-            font-size: 60px;
-            color: var(--teal);
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            opacity: 0.2;
-            line-height: 1;
+        /* Cột Trái (Avatar + Tên) */
+        .testi-left {
+            width: 150px; /* Định hình lại chiều rộng cột trái */
+            text-align: center;
+            flex-shrink: 0;
+            z-index: 2; 
+            padding-top: 20px;
+            text-align: left;
         }
 
-        .testi-author-img {
-            width: 80px;
-            height: 80px;
+        .testi-avatar {
+            width: 110px; /* Tăng kích thước avatar lên một chút cho cân đối */
+            height: 110px;
             border-radius: 50%;
-            background: #ccc;
-            flex-shrink: 0;
+            object-fit: cover;
+            margin: 0 0 15px;
+            border: 3px solid white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .testi-role { font-size: 13px; color: var(--primary-blue); margin-bottom: 5px; }
+        .testi-name { font-weight: bold; font-size: 14px; color: var(--primary-blue); font-style: italic;}
+
+        /* Cột Phải (Nội dung Đánh giá) */
+        .testi-right {
+            flex-grow: 1;
+            z-index: 2;
+            /* ĐIỀU CHỈNH KHOẢNG CÁCH: Đây chính là vùng màu xanh lá trong ảnh 2 của bạn */
+            padding-left: 40px; 
+            padding-top: 10px; /* Đẩy khối chữ xuống một xíu cho ngang tầm với avatar */
+        }
+
+        .testi-headline { font-size: 17px; font-weight: 700; color: var(--text-dark); margin-bottom: 15px; line-height: 1.4;}
+        .testi-text { font-size: 14px; color: var(--text-light); line-height: 1.6; text-align: justify; }
+
+        /* Chỉnh lại vị trí dấu nháy kép do padding thẻ cha đã thay đổi */
+        .testi-quote-svg {
+            position: absolute;
+            top: -20px; /* Đẩy giá trị âm để nó nhô lên khỏi viền thẻ card */
+            left: 40px; 
+            width: 85px; /* Thu nhỏ SVG lại một chút cho đúng tỷ lệ ảnh mẫu */
+            height: auto;
             z-index: 1;
         }
 
-        .testi-content { z-index: 1; }
-        .testi-text { font-size: 14px; color: var(--text-light); margin-bottom: 15px; font-style: italic;}
-        .testi-name { font-weight: bold; font-size: 14px; color: var(--primary-blue);}
-        .testi-role { font-size: 12px; color: var(--text-light); }
-
+        /* Các dấu chấm phân trang */
         .dots {
             display: flex; justify-content: center; gap: 8px; margin-top: 30px;
         }
-        .dot { width: 10px; height: 10px; background: #ccc; border-radius: 50%; }
+        .dot { width: 12px; height: 12px; background: #ddd; border-radius: 50%; cursor: pointer; transition: 0.3s;}
         .dot.active { background: var(--orange); }
+
+        /* Responsive cho Mobile: Khi màn hình nhỏ, thẻ xếp dọc thì phải reset lại padding */
+        @media (max-width: 992px) {
+            .testi-card {
+                flex: 0 0 100%; 
+                flex-direction: column; 
+                align-items: center;
+                text-align: center;
+                padding: 50px 20px 30px 20px; /* Cân bằng lại padding cho mobile */
+            }
+            .testi-right {
+                padding-left: 0; /* Xóa khoảng cách bên trái khi chữ đã rớt xuống dưới avatar */
+                padding-top: 20px;
+            }
+            /* Căn giữa SVG Quote khi ở giao diện Mobile */
+            .testi-quote-svg { 
+                left: 50%; 
+                transform: translateX(-50%); 
+                top: -30px;
+            }
+        }
 
         /* --- FACILITIES --- */
         .facilities-carousel {
@@ -961,12 +1041,7 @@
             <!-- Cột Trái: LOGO -->
             <div class="logo-wrapper">
                 <a href="#" class="logo">
-                    <h1 style="font-size: 36px; font-weight: 900; color: var(--primary-blue); margin: 0; display: flex; flex-direction: column; line-height: 1;">
-                        <span style="display: flex; align-items: center; gap: 5px;">
-                            <i class="fas fa-sun" style="color: var(--orange); font-size: 28px;"></i> bms
-                        </span>
-                        <span style="font-size: 11px; font-weight: normal; color: #666; letter-spacing: 1px; margin-top: 5px;">A member of IGC</span>
-                    </h1>
+                    <img src="images/logo/logo.jpg" alt="BMS Logo" class="logo-img">
                 </a>
             </div>
 
@@ -1289,39 +1364,87 @@
         </div>
     </section>
 
-    <!-- Testimonials -->
+    <!-- Testimonials Slider -->
     <section class="section-padding testimonials">
         <div class="container">
             <h2 class="section-title text-center">CHA MẸ HỌC SINH NÓI VỀ BMS</h2>
             <p class="testi-subtitle">Trân trọng cảm ơn Quý Cha mẹ và các em học sinh đã đồng hành cùng BMS trên hành trình nuôi dưỡng công dân toàn cầu!</p>
 
-            <div class="testi-grid">
-                <div class="testi-card">
-                    <i class="fas fa-quote-left quote-icon"></i>
-                    <div class="testi-author-img"></div>
-                    <div class="testi-content">
-                        <p class="testi-text">"Con rất hào hứng và yêu thích đến trường mỗi ngày"</p>
-                        <p class="testi-text" style="font-style: normal; font-size: 13px;">Thầy cô ở trường thực sự là những người truyền cảm hứng, luôn khiến các con hào hứng đến trường và nuôi dưỡng đam mê, theo đuổi mục tiêu, nỗ lực phấn đấu mỗi ngày. Môi trường giáo dục rất thân thiện, cởi mở cho các con không gian sáng tạo và phát huy sở trường, thể hiện cá tính riêng.</p>
-                        <p class="testi-name">Chị Phạm Lan Anh</p>
-                        <p class="testi-role">Phụ huynh Học sinh Nguyễn Đăng Bảo Lớp 8T</p>
+            <div class="testi-slider-wrapper">
+                <div class="testi-slider-track" id="testiTrack">
+                    
+                    <!-- Card 1 -->
+                    <div class="testi-card">
+                        <!-- Icon Quote lớn phía sau -->
+                        <svg class="testi-quote-svg" width="126" height="100" viewBox="0 0 126 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0 100V71.2355C0 62.87 1.60305 54.2471 4.80916 45.3668C8.01527 36.4865 12.2473 28.121 17.5053 20.2703C22.7634 12.2909 28.5343 5.53411 34.8183 0L60.5954 15.0579C55.9786 22.7799 52.0031 31.0811 48.6687 39.9614C45.3344 48.8417 43.6672 59.2664 43.6672 71.2355V100H0ZM65.4046 100V71.2355C65.4046 62.87 67.0076 54.2471 70.2137 45.3668C73.4198 36.4865 77.6519 28.121 82.9099 20.2703C88.1679 12.2909 93.9389 5.53411 100.223 0L126 15.0579C121.383 22.7799 117.408 31.0811 114.073 39.9614C110.739 48.8417 109.072 59.2664 109.072 71.2355V100H65.4046Z" fill="#00B9AB"></path>
+                        </svg>
+                        <div class="testi-left">
+                            <img src="https://via.placeholder.com/100/ccc/fff?text=Avatar" alt="Avatar" class="testi-avatar">
+                            <p class="testi-role">Phụ huynh học sinh Minh Khôi tốt nghiệp 2021</p>
+                            <p class="testi-name">Chị Phương Linh</p>
+                        </div>
+                        <div class="testi-right">
+                            <h4 class="testi-headline">" Tôi rất tự hào vì con đã học tại BMS "</h4>
+                            <p class="testi-text">Con gái tôi đang học Đại học tại Singapore và con luôn tự hào khi kể về BMS, nơi con đã được học tập và rèn luyện trong suốt 12 năm học sinh. Tôi nhận thấy ở BMS, con được phát huy khả năng Tiếng Anh của mình nhờ việc học tập qua dự án và trải nghiệm rất thú vị.</p>
+                        </div>
+                        
                     </div>
-                </div>
-                <div class="testi-card">
-                    <i class="fas fa-quote-left quote-icon"></i>
-                    <div class="testi-author-img"></div>
-                    <div class="testi-content">
-                        <p class="testi-text">"Học tại BMS giúp con phát triển toàn diện"</p>
-                        <p class="testi-text" style="font-style: normal; font-size: 13px;">Là phụ huynh của con học dưới mái trường BMS tôi rất hài lòng với môi trường giáo dục của nhà trường, chương trình giáo dục và sự tận tâm của các Thầy Cô tôi thấy con mình tiến bộ từng ngày. Trường học không chỉ để học mà còn giúp con tôi rèn luyện đạo đức, tư tưởng và tình yêu thương.</p>
-                        <p class="testi-name">Chị Nguyễn Thị Thân</p>
-                        <p class="testi-role">Phụ huynh Học sinh Trần Nguyễn Minh Đức Lớp 10A2</p>
+
+                    <!-- Card 2 -->
+                    <div class="testi-card">
+                        <svg class="testi-quote-svg" width="126" height="100" viewBox="0 0 126 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0 100V71.2355C0 62.87 1.60305 54.2471 4.80916 45.3668C8.01527 36.4865 12.2473 28.121 17.5053 20.2703C22.7634 12.2909 28.5343 5.53411 34.8183 0L60.5954 15.0579C55.9786 22.7799 52.0031 31.0811 48.6687 39.9614C45.3344 48.8417 43.6672 59.2664 43.6672 71.2355V100H0ZM65.4046 100V71.2355C65.4046 62.87 67.0076 54.2471 70.2137 45.3668C73.4198 36.4865 77.6519 28.121 82.9099 20.2703C88.1679 12.2909 93.9389 5.53411 100.223 0L126 15.0579C121.383 22.7799 117.408 31.0811 114.073 39.9614C110.739 48.8417 109.072 59.2664 109.072 71.2355V100H65.4046Z" fill="#00B9AB"></path>
+                        </svg>
+                        <div class="testi-left">
+                            <img src="https://via.placeholder.com/100/ccc/fff?text=Avatar" alt="Avatar" class="testi-avatar">
+                            <p class="testi-role">Phụ huynh Học sinh Nguyễn Đăng Bảo Lớp 8T</p>
+                            <p class="testi-name">Chị Phạm Lan Anh</p>
+                        </div>
+                        <div class="testi-right">
+                            <h4 class="testi-headline">" Con rất hào hứng và yêu thích đến trường mỗi ngày "</h4>
+                            <p class="testi-text">Thầy cô ở trường thực sự là những người truyền cảm hứng, luôn khiến các con hào hứng đến trường và nuôi dưỡng đam mê, theo đuổi mục tiêu, nỗ lực phấn đấu mỗi ngày. Môi trường giáo dục rất thân thiện, cởi mở cho các con không gian sáng tạo và phát huy sở trường, thể hiện cá tính riêng.</p>
+                        </div>
                     </div>
+
+                    <!-- Card 3 -->
+                    <div class="testi-card">
+                        <svg class="testi-quote-svg" width="126" height="100" viewBox="0 0 126 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0 100V71.2355C0 62.87 1.60305 54.2471 4.80916 45.3668C8.01527 36.4865 12.2473 28.121 17.5053 20.2703C22.7634 12.2909 28.5343 5.53411 34.8183 0L60.5954 15.0579C55.9786 22.7799 52.0031 31.0811 48.6687 39.9614C45.3344 48.8417 43.6672 59.2664 43.6672 71.2355V100H0ZM65.4046 100V71.2355C65.4046 62.87 67.0076 54.2471 70.2137 45.3668C73.4198 36.4865 77.6519 28.121 82.9099 20.2703C88.1679 12.2909 93.9389 5.53411 100.223 0L126 15.0579C121.383 22.7799 117.408 31.0811 114.073 39.9614C110.739 48.8417 109.072 59.2664 109.072 71.2355V100H65.4046Z" fill="#00B9AB"></path>
+                        </svg>
+                        <div class="testi-left">
+                            <img src="https://via.placeholder.com/100/ccc/fff?text=Avatar" alt="Avatar" class="testi-avatar">
+                            <p class="testi-role">Phụ huynh Học sinh Trần Nguyễn Minh Đức Lớp 10A2</p>
+                            <p class="testi-name">Chị Nguyễn Thị Thân</p>
+                        </div>
+                        <div class="testi-right">
+                            <h4 class="testi-headline">" Học tại BMS giúp con phát triển toàn diện "</h4>
+                            <p class="testi-text">Là phụ huynh của con học dưới mái trường BMS tôi rất hài lòng với môi trường giáo dục của nhà trường, chương trình giáo dục và sự tận tâm của các Thầy Cô tôi thấy con mình tiến bộ từng ngày. Trường học không chỉ để học mà còn giúp con tôi rèn luyện đạo đức, tư tưởng và tình yêu thương.</p>
+                        </div>
+                    </div>
+
+                    <!-- Card 4 (Thêm để có thể trượt) -->
+                    <div class="testi-card">
+                        <svg class="testi-quote-svg" width="126" height="100" viewBox="0 0 126 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0 100V71.2355C0 62.87 1.60305 54.2471 4.80916 45.3668C8.01527 36.4865 12.2473 28.121 17.5053 20.2703C22.7634 12.2909 28.5343 5.53411 34.8183 0L60.5954 15.0579C55.9786 22.7799 52.0031 31.0811 48.6687 39.9614C45.3344 48.8417 43.6672 59.2664 43.6672 71.2355V100H0ZM65.4046 100V71.2355C65.4046 62.87 67.0076 54.2471 70.2137 45.3668C73.4198 36.4865 77.6519 28.121 82.9099 20.2703C88.1679 12.2909 93.9389 5.53411 100.223 0L126 15.0579C121.383 22.7799 117.408 31.0811 114.073 39.9614C110.739 48.8417 109.072 59.2664 109.072 71.2355V100H65.4046Z" fill="#00B9AB"></path>
+                        </svg>
+                        <div class="testi-left">
+                            <img src="https://via.placeholder.com/100/ccc/fff?text=Avatar" alt="Avatar" class="testi-avatar">
+                            <p class="testi-role">Phụ huynh Học sinh Gia Hân Lớp 6A1</p>
+                            <p class="testi-name">Anh Trần Văn A</p>
+                        </div>
+                        <div class="testi-right">
+                            <h4 class="testi-headline">" Môi trường tuyệt vời để con trưởng thành "</h4>
+                            <p class="testi-text">BMS mang lại cho con tôi không chỉ kiến thức mà còn là kỹ năng sống và sự tự tin. Cơ sở vật chất hiện đại cùng đội ngũ giáo viên tâm huyết là điều gia đình tôi đánh giá rất cao. Cảm ơn nhà trường đã luôn lắng nghe và đồng hành cùng phụ huynh.</p>
+                        </div>
+                    </div>
+
                 </div>
             </div>
-            <div class="dots">
-                <span class="dot active"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
-            </div>
+
+            <!-- Vùng chứa các dấu chấm điều hướng -->
+            <div class="dots" id="testiDotsContainer"></div>
+            
         </div>
     </section>
 
@@ -1411,11 +1534,12 @@
         window.addEventListener('scroll', function() {
             var header = document.getElementById('main-header');
             
-            // Nếu cuộn xuống quá 50px thì thêm class 'is-sticky'
-            if (window.scrollY > 50) {
+            // KHI CUỘN XUỐNG: Phải cuộn qua mốc 150px mới bắt đầu thu nhỏ
+            if (window.scrollY > 150) {
                 header.classList.add('is-sticky');
-            } else {
-                // Nếu cuộn lên trên cùng thì xóa class 'is-sticky'
+            } 
+            // KHI CUỘN LÊN: Phải cuộn lên gần sát trên cùng (nhỏ hơn 50px) mới phóng to lại
+            else if (window.scrollY < 50) {
                 header.classList.remove('is-sticky');
             }
         });
@@ -1529,6 +1653,102 @@
             if (sliderContainer && totalSlides > 0) {
                 startSlideTimer();
             }
+        });
+
+        // ==========================================
+        // TESTIMONIALS SLIDER LOGIC (Trượt từng thẻ một)
+        // ==========================================
+        let currentTestiIndex = 0;
+        let testiTimer;
+        const testiTrack = document.getElementById('testiTrack');
+        const testiCards = document.querySelectorAll('.testi-card');
+        const dotsContainer = document.getElementById('testiDotsContainer');
+        const totalTestiCards = testiCards.length;
+
+        // Xác định số thẻ hiển thị trên màn hình (Desktop: 2, Mobile: 1)
+        function getCardsPerView() {
+            return window.innerWidth > 992 ? 2 : 1;
+        }
+
+        // Tính toán số lần trượt tối đa có thể (để không bị trượt vào khoảng trắng)
+        function getMaxSlides() {
+            return totalTestiCards - getCardsPerView();
+        }
+
+        // Tạo dấu chấm (dots) động dựa trên số lần trượt
+        function createDots() {
+            if(!dotsContainer) return;
+            dotsContainer.innerHTML = '';
+            const max = getMaxSlides();
+            for (let i = 0; i <= max; i++) {
+                const dot = document.createElement('span');
+                dot.classList.add('dot');
+                if (i === 0) dot.classList.add('active');
+                dot.addEventListener('click', () => goToTestiSlide(i));
+                dotsContainer.appendChild(dot);
+            }
+        }
+
+        // Cập nhật vị trí Track và màu của Dot
+        function updateTestiSlider() {
+            if(!testiTrack || totalTestiCards === 0) return;
+            
+            // Tính toán khoảng cách trượt = (Chiều rộng 1 thẻ + Khoảng cách gap 30px) * index
+            const cardWidth = testiCards[0].offsetWidth;
+            const gap = 30; 
+            const moveAmount = (cardWidth + gap) * currentTestiIndex;
+            
+            testiTrack.style.transform = `translateX(-${moveAmount}px)`;
+
+            // Cập nhật class Active cho dấu chấm
+            const allDots = dotsContainer.querySelectorAll('.dot');
+            allDots.forEach(dot => dot.classList.remove('active'));
+            if(allDots[currentTestiIndex]) {
+                allDots[currentTestiIndex].classList.add('active');
+            }
+        }
+
+        // Hàm chuyển slide
+        function changeTestiSlide() {
+            const maxSlides = getMaxSlides();
+            currentTestiIndex++;
+            
+            // Nếu chạy hết thẻ thì quay lại từ đầu
+            if (currentTestiIndex > maxSlides) {
+                currentTestiIndex = 0;
+            }
+            updateTestiSlider();
+        }
+
+        // Nhảy đến slide khi click vào chấm
+        function goToTestiSlide(index) {
+            currentTestiIndex = index;
+            updateTestiSlider();
+            resetTestiTimer(); // Reset bộ đếm khi người dùng tự click
+        }
+
+        // Auto play mỗi 5 giây
+        function startTestiTimer() {
+            testiTimer = setInterval(changeTestiSlide, 500000);
+        }
+
+        function resetTestiTimer() {
+            clearInterval(testiTimer);
+            startTestiTimer();
+        }
+
+        // Khởi tạo slider khi load trang và khi resize màn hình
+        window.addEventListener('load', () => {
+            createDots();
+            updateTestiSlider();
+            startTestiTimer();
+        });
+
+        // Cập nhật lại dots và vị trí nếu người dùng thu phóng cửa sổ trình duyệt
+        window.addEventListener('resize', () => {
+            currentTestiIndex = 0; // Đưa về slide đầu tiên cho an toàn
+            createDots();
+            updateTestiSlider();
         });
     </script>
 </body>
