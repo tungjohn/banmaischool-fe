@@ -8,7 +8,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
-    
+    <!-- Fancyapps UI -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
     <style>
         /* --- RESET & VARIABLES --- */
         * {
@@ -934,18 +935,114 @@
             }
         }
 
-        /* --- FACILITIES --- */
-        .facilities-carousel {
+        /* --- FACILITIES SLIDER --- */
+        .fac-slider-wrapper {
             display: flex;
             align-items: center;
             gap: 20px;
+            position: relative;
         }
-        .fac-card { flex: 1; }
-        .fac-img { height: 250px; background: #ddd; border-radius: 10px; margin-bottom: 15px;}
-        .fac-title { font-weight: bold; text-align: center; }
-        .carousel-arrow {
-            width: 40px; height: 40px; background: var(--primary-blue); color: white; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center; cursor: pointer;
+
+        .fac-track-container {
+            flex-grow: 1;
+            overflow: hidden; /* Cắt bỏ phần thẻ bị trượt ra ngoài */
+        }
+
+        .fac-track {
+            display: flex;
+            gap: 30px;
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        /* Hiển thị 2 thẻ trên Desktop */
+        .fac-card {
+            flex: 0 0 calc(50% - 15px);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- XỬ LÝ ẢNH & HIỆU ỨNG HOVER --- */
+        .fac-img-box {
+            display: block;
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+
+        .fac-main-img {
+            width: 100%;
+            height: 350px; /* Chiều cao ảnh */
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        /* Lớp phủ màu đen trong suốt */
+        .fac-hover-overlay {
+            position: absolute;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0; /* Ẩn mặc định */
+            transition: opacity 0.3s ease;
+        }
+
+        /* Khung viền và icon bên trong lớp phủ */
+        .fac-hover-content {
+            border: 1px solid rgba(255,255,255,0.7);
+            padding: 15px 30px;
+            text-align: center;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        .fac-hover-content span { font-size: 16px; font-weight: 500;}
+        .fac-hover-content i { font-size: 40px; }
+
+        /* Hiệu ứng khi Hover vào card */
+        .fac-img-box:hover .fac-main-img { transform: scale(1.05); }
+        .fac-img-box:hover .fac-hover-overlay { opacity: 1; }
+        .fac-img-box:hover .fac-hover-content { transform: translateY(0); }
+
+        /* Tiêu đề bên dưới */
+        .fac-title {
+            font-size: 18px;
+            color: var(--text-dark);
+            font-weight: 700;
+            text-align: center;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        .fac-title:hover { color: var(--primary-blue); }
+
+        /* Nút điều hướng (Arrows) */
+        .fac-arrow {
+            width: 45px; height: 45px;
+            background-color: var(--primary-blue);
+            color: white;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            border: none; cursor: pointer; font-size: 18px;
+            transition: all 0.3s;
+            flex-shrink: 0;
+            margin-bottom: 50px; /* Đẩy nút lên ngang hàng với trung tâm ảnh */
+        }
+        .fac-arrow:hover { background-color: var(--orange); }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .fac-card { flex: 0 0 100%; }
+            .fac-main-img { height: 250px; }
+            .fac-arrow { width: 35px; height: 35px; font-size: 14px; margin-bottom: 40px;}
         }
 
         /* --- PARTNERS --- */
@@ -1448,20 +1545,78 @@
         </div>
     </section>
 
-    <!-- Facilities -->
+    <!-- Facilities Section -->
     <section class="section-padding container">
-        <h2 class="section-title text-center">CÁC CƠ SỞ CỦA BMS</h2>
-        <div class="facilities-carousel">
-            <div class="carousel-arrow"><i class="fas fa-chevron-left"></i></div>
-            <div class="fac-card">
-                <div class="fac-img"></div>
-                <p class="fac-title">BMS Hà Nội - Trường THCS - THPT Ban Mai</p>
+        <h2 class="section-title text-center" style="color: var(--primary-blue); font-weight: 700; margin-bottom: 40px;">CÁC CƠ SỞ CỦA BMS</h2>
+        
+        <div class="fac-slider-wrapper">
+            <!-- Nút Trái -->
+            <button class="fac-arrow prev" onclick="moveFacSlide(-1)"><i class="fas fa-chevron-left"></i></button>
+
+            <!-- Vùng chứa Slider -->
+            <div class="fac-track-container">
+                <div class="fac-track" id="facTrack">
+                    
+                    <!-- CƠ SỞ 1 -->
+                    <div class="fac-card">
+                        <!-- Ảnh chính (Có thuộc tính data-fancybox để mở gallery) -->
+                        <!-- Đặt tên data-fancybox="gallery1" để nhóm các ảnh của cơ sở 1 lại với nhau -->
+                        <a href="https://via.placeholder.com/1200x800/2B3583/fff?text=Anh+To+Co+So+1" data-fancybox="gallery1" class="fac-img-box">
+                            <img src="https://via.placeholder.com/600x400/ddd/999?text=BMS+Hà+Nội" alt="BMS Hà Nội" class="fac-main-img">
+                            
+                            <!-- Hiệu ứng Overlay khi Hover -->
+                            <div class="fac-hover-overlay">
+                                <div class="fac-hover-content">
+                                    <span>BMS Hà Nội - Trường Tiểu học Ban Mai</span>
+                                    <i class="far fa-image"></i>
+                                </div>
+                            </div>
+                        </a>
+                        <!-- Các ảnh phụ (Bị ẩn đi, chỉ hiện trong Gallery) -->
+                        <a href="https://via.placeholder.com/1200x800/orange/fff?text=Anh+Phu+1+Co+So+1" data-fancybox="gallery1" style="display:none;"></a>
+                        <a href="https://via.placeholder.com/1200x800/teal/fff?text=Anh+Phu+2+Co+So+1" data-fancybox="gallery1" style="display:none;"></a>
+
+                        <!-- Text bên dưới (Dùng JS để click thay cho ảnh) -->
+                        <h4 class="fac-title" onclick="document.querySelector('[data-fancybox=\'gallery1\']').click()">BMS Hà Nội - Trường Tiểu học Ban Mai</h4>
+                    </div>
+
+                    <!-- CƠ SỞ 2 -->
+                    <div class="fac-card">
+                        <a href="https://via.placeholder.com/1200x800/00C1D5/fff?text=Anh+To+Co+So+2" data-fancybox="gallery2" class="fac-img-box">
+                            <img src="https://via.placeholder.com/600x400/ddd/999?text=BMS+Hà+Nội+THPT" alt="BMS THPT" class="fac-main-img">
+                            <div class="fac-hover-overlay">
+                                <div class="fac-hover-content">
+                                    <span>BMS Hà Nội - Trường THCS - THPT Ban Mai</span>
+                                    <i class="far fa-image"></i>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="https://via.placeholder.com/1200x800/2B3583/fff?text=Anh+Phu+1+Co+So+2" data-fancybox="gallery2" style="display:none;"></a>
+                        
+                        <h4 class="fac-title" onclick="document.querySelector('[data-fancybox=\'gallery2\']').click()">BMS Hà Nội - Trường THCS - THPT Ban Mai</h4>
+                    </div>
+
+                    <!-- CƠ SỞ 3 (Thêm vào để trượt) -->
+                    <div class="fac-card">
+                        <a href="https://via.placeholder.com/1200x800/F19F30/fff?text=Anh+To+Co+So+3" data-fancybox="gallery3" class="fac-img-box">
+                            <img src="https://via.placeholder.com/600x400/ddd/999?text=BMS+Hưng+Yên" alt="BMS Hưng Yên" class="fac-main-img">
+                            <div class="fac-hover-overlay">
+                                <div class="fac-hover-content">
+                                    <span>BMS Hưng Yên - Trường Liên cấp Hồng Đức</span>
+                                    <i class="far fa-image"></i>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="https://via.placeholder.com/1200x800/ccc/333?text=Anh+Phu+1+Co+So+3" data-fancybox="gallery3" style="display:none;"></a>
+                        
+                        <h4 class="fac-title" onclick="document.querySelector('[data-fancybox=\'gallery3\']').click()">BMS Hưng Yên - Trường Tiểu học - THCS - THPT Hồng Đức</h4>
+                    </div>
+
+                </div>
             </div>
-            <div class="fac-card">
-                <div class="fac-img"></div>
-                <p class="fac-title">BMS Hưng Yên - Trường Tiểu học - THCS - THPT Hồng Đức</p>
-            </div>
-            <div class="carousel-arrow"><i class="fas fa-chevron-right"></i></div>
+
+            <!-- Nút Phải -->
+            <button class="fac-arrow next" onclick="moveFacSlide(1)"><i class="fas fa-chevron-right"></i></button>
         </div>
     </section>
 
@@ -1529,6 +1684,7 @@
     </a>
 
     <!-- JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
     <script>
         // Lắng nghe sự kiện cuộn trang
         window.addEventListener('scroll', function() {
@@ -1750,6 +1906,70 @@
             createDots();
             updateTestiSlider();
         });
+
+        // ==========================================
+        // KHỞI TẠO FANCYBOX (Thư viện xem ảnh)
+        // ==========================================
+        Fancybox.bind("[data-fancybox]", {
+            // Tùy chỉnh (có thể xem thêm trên trang chủ Fancybox)
+            Thumbs: {
+                autoStart: true, // Tự động hiện danh sách ảnh thu nhỏ bên dưới
+            },
+        });
+
+        // ==========================================
+        // FACILITIES SLIDER LOGIC
+        // ==========================================
+        let facIndex = 0;
+        let facTimer;
+        const facTrack = document.getElementById('facTrack');
+        const facCards = document.querySelectorAll('.fac-card');
+
+        function getFacCardsPerView() {
+            return window.innerWidth > 992 ? 2 : 1;
+        }
+
+        function updateFacSlider() {
+            if(!facTrack || facCards.length === 0) return;
+            const cardWidth = facCards[0].offsetWidth;
+            const gap = 30;
+            const moveAmount = (cardWidth + gap) * facIndex;
+            facTrack.style.transform = `translateX(-${moveAmount}px)`;
+        }
+
+        function moveFacSlide(direction) {
+            const maxIndex = facCards.length - getFacCardsPerView();
+            facIndex += direction;
+            
+            if (facIndex > maxIndex) facIndex = 0;
+            else if (facIndex < 0) facIndex = maxIndex;
+
+            updateFacSlider();
+            resetFacTimer();
+        }
+
+        function startFacTimer() {
+            facTimer = setInterval(() => { moveFacSlide(1); }, 5000);
+        }
+
+        function resetFacTimer() {
+            clearInterval(facTimer);
+            startFacTimer();
+        }
+
+        window.addEventListener('load', () => {
+            if(facCards.length > 0) {
+                updateFacSlider();
+                startFacTimer();
+            }
+        });
+
+        window.addEventListener('resize', () => {
+            facIndex = 0; // Reset về đầu khi xoay màn hình điện thoại
+            updateFacSlider();
+        });
     </script>
+    
+
 </body>
 </html>
