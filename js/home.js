@@ -403,3 +403,51 @@ window.addEventListener('resize', () => {
     partnerIndex = 0;
     updatePartnerSlider();
 });
+
+// ==========================================
+// TOGGLE SEARCH BAR
+// ==========================================
+const searchToggleBtn = document.getElementById('searchToggleBtn');
+const searchDropdown = document.getElementById('searchDropdown');
+
+if (searchToggleBtn && searchDropdown) {
+    searchToggleBtn.addEventListener('click', function(e) {
+        e.preventDefault(); // Ngăn trình duyệt nhảy trang khi click vào thẻ <a>
+        
+        // Bật/tắt class active để xổ xuống hoặc thu lại thanh tìm kiếm
+        searchDropdown.classList.toggle('active');
+        
+        // Tùy chọn: Tự động focus vào ô nhập chữ khi thanh search mở ra
+        if (searchDropdown.classList.contains('active')) {
+            const searchInput = searchDropdown.querySelector('input');
+            setTimeout(() => { searchInput.focus(); }, 300); // Đợi hiệu ứng trượt xong mới focus
+        }
+    });
+}
+
+// ==========================================
+// MODAL ĐĂNG KÝ TUYỂN SINH (FOOTER)
+// ==========================================
+const openContactBtn = document.getElementById('openContactModal');
+const contactModal = document.getElementById('contactModal');
+const closeContactBtn = document.getElementById('closeContactModal');
+
+if(openContactBtn && contactModal && closeContactBtn) {
+    // Mở modal
+    openContactBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        contactModal.classList.add('active');
+    });
+
+    // Đóng modal khi bấm dấu X
+    closeContactBtn.addEventListener('click', () => {
+        contactModal.classList.remove('active');
+    });
+
+    // Đóng modal khi click ra lớp phủ nền đen bên ngoài
+    contactModal.addEventListener('click', (e) => {
+        if(e.target === contactModal) {
+            contactModal.classList.remove('active');
+        }
+    });
+}

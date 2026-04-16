@@ -125,24 +125,60 @@ header {
 .top-bar {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 20px; /* Khoảng cách rộng rãi giữa các mục */
     font-size: 13px;
     color: var(--text-light);
-    padding-top: 15px;
     
-    /* Thuộc tính để làm hiệu ứng ẩn đi mượt mà */
-    max-height: 50px; 
+    /* Điều chỉnh padding để chừa không gian cho nút pulse bung ra không bị cắt */
+    padding-top: 15px;
+    padding-bottom: 5px; 
+    padding-right: 5px;  
+    
+    max-height: 60px; /* Tăng một chút để chứa đủ padding */
     opacity: 1;
     overflow: hidden;
     transition: all 0.3s ease;
 }
 
-.top-bar span, .top-bar a:not(.btn) {
-    padding: 0 10px; 
-    border-right: 1px solid #ddd;
+.top-bar a.top-link, .top-bar .search-icon {
+    color: var(--text-light);
+    transition: color 0.3s;
 }
-.top-bar span:last-child, .top-bar a:last-child { border: none; }
-.top-bar a:hover { color: var(--orange); }
+
+.top-bar a.top-link:hover, .top-bar .search-icon:hover { 
+    color: var(--orange); 
+}
+
+/* Fix lỗi nút bị cắt góc do overflow: hidden */
+.top-bar .top-btn {
+    margin: 2px 3px 2px 2px; /* Đẩy nút vào trong một xíu để có không gian bung ra */
+}
+
+/* --- BỘ CHUYỂN ĐỔI NGÔN NGỮ (VN | EN) --- */
+.lang-switch {
+    display: flex;
+    align-items: center;
+}
+
+/* Chữ VN */
+.lang-switch .lang-active {
+    color: var(--primary-blue); /* Màu xanh */
+    font-weight: 700;
+    cursor: default; /* Tắt hiệu ứng bàn tay (pointer) */
+    padding-right: 12px;
+    border-right: 1.5px solid #ccc; /* Đường kẻ sọc bên phải VN */
+}
+
+/* Chữ EN */
+.lang-switch a {
+    padding-left: 12px;
+    color: var(--text-light);
+    transition: color 0.3s;
+}
+
+.lang-switch a:hover {
+    color: var(--orange);
+}
 
 /* --- MAIN NAV --- */
 .main-nav { margin-top: auto; } /* Đẩy nav xuống sát đáy của cột phải */
@@ -190,7 +226,7 @@ header {
     transform: scaleX(1);
 }
 
-/* --- MENU DROPDOWN (Giữ nguyên cấu trúc dọc) --- */
+/* --- MENU DROPDOWN --- */
 .dropdown-menu {
     position: absolute;
     top: 100%;
@@ -233,6 +269,84 @@ header {
 }
 .dropdown-menu a::after { display: none; }
 
+/* =========================================
+   SEARCH DROPDOWN BAR 
+   ========================================= */
+.search-dropdown {
+    width: 100%;
+    background-color: #ffffff;
+    /* ĐÃ BỎ border-top theo yêu cầu */
+    
+    /* Thiết lập ẩn mặc định bằng opacity và visibility thay vì max-height */
+    opacity: 0;
+    visibility: hidden;
+    position: absolute; /* Đưa form nổi lên trên, không đẩy nội dung xuống */
+    left: 0;
+    top: 100%; /* Nằm ngay dưới mép header */
+    z-index: 999;
+    
+    /* Padding cố định (chỉ ảnh hưởng thị giác khi hiện ra) */
+    padding: 45px 0; 
+    
+    /* Hiệu ứng Scale và Fade-in nhanh hơn */
+    transform: translateY(-10px); /* Bắt đầu từ vị trí hơi cao một chút */
+    transition: opacity 0.2s ease-out, transform 0.2s ease-out, visibility 0.2s;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05); /* Bóng đổ cho cả vùng dropdown nếu cần */
+}
+
+/* Class active được JS gọi khi click chuột */
+.search-dropdown.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0); /* Bật xuống vị trí gốc */
+}
+
+/* Định dạng Form Tìm kiếm theo thiết kế mới */
+.search-form {
+    display: flex;
+    width: 100%; 
+}
+
+/* Định dạng ô nhập chữ (Input) - GIẢM CHIỀU CAO */
+.search-form input {
+    flex-grow: 1; 
+    /* Đã giảm padding trên/dưới để input lùn lại */
+    padding: 10px 20px; 
+    border: none;
+    outline: none;
+    background-color: #ffffff; 
+    font-size: 14px; /* Giảm cỡ chữ xuống 1 chút nếu cần cân đối */
+    color: var(--text-dark);
+    
+    border-radius: 4px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06); /* Bóng đổ mềm xung quanh */
+    margin-right: -4px; 
+    z-index: 1; 
+    position: relative;
+}
+
+/* Định dạng Nút Search (Button) - GIẢM CHIỀU CAO TƯƠNG ỨNG */
+.search-form button {
+    background-color: #5558D8; 
+    color: white;
+    border: none;
+    
+    width: 40px; 
+    flex-shrink: 0; 
+    
+    cursor: pointer;
+    font-size: 16px; 
+    transition: background 0.3s;
+    
+    border-radius: 0 4px 4px 0; 
+    z-index: 2; 
+    position: relative;
+}
+
+.search-form button:hover {
+    background-color: var(--primary-blue); 
+}
+
 
 /* =========================================
     HIỆU ỨNG KHI CUỘN TRANG (STICKY HEADER) 
@@ -241,7 +355,7 @@ header.is-sticky {
     box-shadow: 0 5px 20px rgba(0,0,0,0.1);
 }
 
-/* 1. Ẩn Top bar */
+/* Ẩn Top bar */
 header.is-sticky .top-bar {
     max-height: 0;
     opacity: 0;
@@ -249,18 +363,24 @@ header.is-sticky .top-bar {
     pointer-events: none;
 }
 
-/* 2. Ép chiều cao menu mỏng lại */
 header.is-sticky .main-nav a {
-    padding: 15px 0; /* Giảm padding trên dưới của menu */
+    padding: 15px 0; 
 }
 
-/* 3. Thu nhỏ KÍCH THƯỚC VẬT LÝ của Logo và khung chứa */
 header.is-sticky .logo-wrapper {
-    padding: 5px 0; /* Thu nhỏ khoảng trống trên dưới của khung logo */
+    padding: 5px 0;
 }
 
 header.is-sticky .logo-img {
-    max-height: 35px; /* Ép chiều cao ảnh logo nhỏ lại bằng với chữ menu (bạn có thể chỉnh 35, 40 tùy ý) */
+    max-height: 35px; 
+}
+
+/* Ẩn Search Dropdown khi cuộn trang */
+header.is-sticky .search-dropdown.active {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transform: translateY(-10px) !important; /* Đẩy ngược lên một chút để tạo hiệu ứng thu lại */
+    pointer-events: none; /* Tránh tình trạng form tàng hình nhưng vẫn click trúng input */
 }
 
 /* --- HERO SLIDER FULL WIDTH --- */
@@ -529,26 +649,30 @@ header.is-sticky .logo-img {
     z-index: 1;
 }
 
-/* 2. Tạo hiệu ứng uốn lượn (Wave) bằng CSS Mask và SVG */
+/* 2. Tạo hiệu ứng uốn lượn (Wave) */
 .program-card-content::before {
     content: '';
+    background: inherit;
+    pointer-events: none;
     position: absolute;
-    top: -20px; /* Kéo khối uốn lượn trùm lên phần dưới của ảnh */
-    left: 0;
+    left: 0 /* 0px */;
+    top: -24px;
+    z-index: 9999;
+    display: block;
+    height: 25px;
     width: 100%;
-    height: 21px; /* Chiều cao của gợn sóng */
-    
-    /* Lệnh này tự động hút màu nền (Đỏ, Vàng, Xanh) của thẻ cha */
-    background-color: inherit; 
-    z-index: -1;
-    
-    /* Dùng mask cắt khối chữ nhật thành hình uốn lượn S-curve */
-    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 20' preserveAspectRatio='none'%3E%3Cpath d='M0,20 C30,0 70,25 100,5 L100,20 L0,20 Z'/%3E%3C/svg%3E");
-    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 20' preserveAspectRatio='none'%3E%3Cpath d='M0,20 C30,0 70,25 100,5 L100,20 L0,20 Z'/%3E%3C/svg%3E");
-    -webkit-mask-size: 100% 100%;
-    mask-size: 100% 100%;
-    -webkit-mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
+    -webkit-transition-property: color, background-color, border-color, fill, stroke, opacity, box-shadow, -webkit-text-decoration-color, -webkit-transform, -webkit-filter, -webkit-backdrop-filter;
+    transition-property: color, background-color, border-color, fill, stroke, opacity, box-shadow, -webkit-text-decoration-color, -webkit-transform, -webkit-filter, -webkit-backdrop-filter;
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-transform, -webkit-filter, -webkit-backdrop-filter;
+    -webkit-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    -webkit-transition-duration: 150ms;
+    transition-duration: 150ms;
+    -webkit-transition: .4s all ease-in-out;
+    transition: .4s all ease-in-out;
+    -webkit-clip-path: polygon(100% 100%, 0% 100%, 0% 28.35%, 2% 24.97%, 4% 21.76%, 6% 18.74%, 8% 15.94%, 10% 13.37%, 12% 11.07%, 14% 9.03%, 16% 7.29%, 18% 5.85%, 20% 4.73%, 22% 3.94%, 24% 3.47%, 26% 3.34%, 28% 3.54%, 30% 4.07%, 32% 4.94%, 34% 6.13%, 36% 7.63%, 38% 9.43%, 40% 11.52%, 42% 13.88%, 44% 16.5%, 46% 19.35%, 48% 22.41%, 50% 25.66%, 52% 29.07%, 54% 32.62%, 56% 36.27%, 58% 40.01%, 60% 43.79%, 62% 47.6%, 64% 51.41%, 66% 55.17%, 68% 58.87%, 70% 62.48%, 72% 65.96%, 74% 69.3%, 76% 72.45%, 78% 75.41%, 80% 78.15%, 82% 80.65%, 84% 82.88%, 86% 84.83%, 88% 86.48%, 90% 87.83%, 92% 88.86%, 94% 89.57%, 96% 89.94%, 98% 89.97%, 100% 89.68%);
+    clip-path: polygon(100% 100%, 0% 100%, 0% 28.35%, 2% 24.97%, 4% 21.76%, 6% 18.74%, 8% 15.94%, 10% 13.37%, 12% 11.07%, 14% 9.03%, 16% 7.29%, 18% 5.85%, 20% 4.73%, 22% 3.94%, 24% 3.47%, 26% 3.34%, 28% 3.54%, 30% 4.07%, 32% 4.94%, 34% 6.13%, 36% 7.63%, 38% 9.43%, 40% 11.52%, 42% 13.88%, 44% 16.5%, 46% 19.35%, 48% 22.41%, 50% 25.66%, 52% 29.07%, 54% 32.62%, 56% 36.27%, 58% 40.01%, 60% 43.79%, 62% 47.6%, 64% 51.41%, 66% 55.17%, 68% 58.87%, 70% 62.48%, 72% 65.96%, 74% 69.3%, 76% 72.45%, 78% 75.41%, 80% 78.15%, 82% 80.65%, 84% 82.88%, 86% 84.83%, 88% 86.48%, 90% 87.83%, 92% 88.86%, 94% 89.57%, 96% 89.94%, 98% 89.97%, 100% 89.68%);
 }
 
 .program-card h4 { font-size: 24px; margin-bottom: 10px; }
@@ -1164,6 +1288,7 @@ footer {
     align-items: center;
     justify-content: center;
     transition: all 0.3s ease; /* Hiệu ứng mượt mà khi hover */
+    transition: border-color 0.4s ease-in-out;
 }
 
 /* Chỉnh kích thước cho icon Zalo (ảnh svg) */
@@ -1179,7 +1304,7 @@ footer {
 
 /* HIỆU ỨNG HOVER: Ẩn viền xanh đi (đổi màu viền trùng với màu nền trắng) */
 .social-icons a:hover .icon-circle {
-    border-color: white; 
+    border-color: transparent; 
 }
 
 /* Tùy chọn thêm: Làm mờ icon một xíu khi hover để sinh động hơn */
@@ -1193,6 +1318,115 @@ footer {
     padding: 15px 0;
     font-size: 12px;
     color: white;
+}
+
+/* =========================================
+   MODAL ĐĂNG KÝ TUYỂN SINH (FOOTER)
+   ========================================= */
+
+/* Lớp phủ màn hình màu đen mờ */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; 
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 10000; /* Nổi lên trên tất cả mọi thứ */
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    opacity: 0; 
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+/* Hiển thị modal khi được JS gắn class active */
+.modal-overlay.active { 
+    opacity: 1; 
+    visibility: visible; 
+}
+
+/* Khung nội dung Modal màu xanh đậm */
+.modal-container {
+    background: #313575; /* Màu xanh tím khớp với thiết kế */
+    width: 90%; 
+    max-width: 600px;
+    padding: 40px 50px; 
+    border-radius: 12px;
+    position: relative;
+    /* Hiệu ứng trượt nhẹ từ trên xuống khi mở */
+    transform: translateY(-30px); 
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.modal-overlay.active .modal-container { 
+    transform: translateY(0); 
+}
+
+/* Nút tắt (X) ở góc phải */
+.modal-close {
+    position: absolute; 
+    top: 20px; right: 25px;
+    color: white; 
+    font-size: 24px; 
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+
+.modal-close:hover { opacity: 0.7; }
+
+/* Tiêu đề & Badge */
+.modal-title { 
+    color: white; 
+    text-align: center; 
+    margin-bottom: 15px; 
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.modal-badge {
+    background: #ECA344; /* Màu vàng cam */
+    color: white;
+    padding: 8px 25px; 
+    border-radius: 4px;
+    display: block; 
+    width: fit-content;
+    margin: 0 auto 30px auto;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+/* Form Inputs - Style Underline trong suốt */
+.modal-form input, 
+.modal-form select {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(255,255,255,0.4);
+    padding: 15px 0; 
+    margin-bottom: 15px;
+    color: white; 
+    font-size: 16px; 
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.modal-form input:focus, 
+.modal-form select:focus {
+    border-bottom: 1px solid rgba(255,255,255,1);
+}
+
+/* Đổi màu chữ placeholder thành màu trắng mờ */
+.modal-form input::placeholder { color: rgba(255,255,255,0.8); }
+.modal-form select { color: rgba(255,255,255,0.8); cursor: pointer;}
+.modal-form select option { background: #313575; color: white; } /* Fix màu option trên các trình duyệt */
+
+.modal-form .btn-full { margin-top: 15px; }
+
+/* Responsive cho điện thoại */
+@media (max-width: 576px) {
+    .modal-container { padding: 30px 20px; }
+    .modal-title { font-size: 22px; }
+    .modal-badge { font-size: 14px; }
 }
 
 /* Floating Zalo */
