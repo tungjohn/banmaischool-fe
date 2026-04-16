@@ -1017,7 +1017,6 @@
         .fac-hover-content i { font-size: 40px; }
 
         /* Hiệu ứng khi Hover vào card */
-        .fac-img-box:hover .fac-main-img { transform: scale(1.05); }
         .fac-img-box:hover .fac-hover-overlay { opacity: 1; }
         .fac-img-box:hover .fac-hover-content { transform: translateY(0); }
 
@@ -1106,10 +1105,6 @@
             transition: transform 0.3s ease;
         }
 
-        .partner-slide a:hover img {
-            transform: scale(1.1); /* Phóng to nhẹ khi hover */
-        }
-
         /* Nút điều hướng */
         .partner-arrow {
             width: 40px; height: 40px;
@@ -1145,17 +1140,13 @@
             gap: 30px;
             margin-bottom: 40px;
         }
-
-        .footer-logo { font-size: 32px; font-weight: 900; margin-bottom: 10px;}
-        .footer-logo span { display: block; font-size: 12px; font-weight: normal;}
-
+        
         .footer-contact h4 { font-size: 18px; margin-bottom: 20px; text-transform: uppercase;}
         .contact-list li { margin-bottom: 10px; font-size: 13px; display: flex; gap: 10px;}
         .contact-list i { margin-top: 4px; }
 
-        .footer-right { text-align: right; }
-        .footer-right .btn { margin-bottom: 20px; }
-        .social-icons { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;}
+        .footer-right { text-align: left; }
+        .social-icons { display: flex; justify-content: flex-start; gap: 10px; margin-top: 20px;}
         .social-icons a { width: 35px; height: 35px; background: white; color: var(--primary-blue); border-radius: 50%; display: flex; align-items: center; justify-content: center;}
 
         .footer-bottom {
@@ -1209,6 +1200,23 @@
             .carousel-arrow { display: none; }
         }
 
+        /* Hiệu ứng phóng to thu nhỏ button */
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .pulse-btn {
+            animation: pulse 1s infinite ease-in-out;
+        }
+
     </style>
 </head>
 <body>
@@ -1231,9 +1239,9 @@
                 <div class="top-bar">
                     <a href="#">Tuyển dụng</a>
                     <a href="#">Liên hệ</a>
-                    <span>VN | EN</span>
+                    <span><a href="#">VN</a><a href="#">EN</a></span>
                     <a href="#"><i class="fas fa-search"></i></a>
-                    <a href="#" class="btn btn-orange" style="padding: 6px 18px; font-size: 13px; border-radius: 20px; color: white;">ĐĂNG KÝ TUYỂN SINH</a>
+                    <a href="#" class="btn btn-orange pulse-btn" style="padding: 6px 18px; font-size: 13px; border-radius: 20px; color: white;">ĐĂNG NHẬP</a>
                 </div>
 
                 <!-- Hàng dưới: Main Nav -->
@@ -1478,7 +1486,7 @@
         </div>
         
         <div class="text-center" style="margin-top: 40px;">
-            <a href="#" class="btn btn-orange">XEM TẤT CẢ</a>
+            <a href="#" class="btn btn-orange pulse-btn">XEM TẤT CẢ</a>
         </div>
     </section>
 
@@ -1533,7 +1541,7 @@
                     <div class="form-row-full">
                         <textarea class="form-control" placeholder="Nội dung *"></textarea>
                     </div>
-                    <button type="submit" class="btn btn-orange btn-full">ĐĂNG KÝ NGAY</button>
+                    <button type="submit" class="btn btn-orange btn-full pulse-btn">GỬI ĐI</button>
                 </form>
             </div>
             
@@ -1767,11 +1775,13 @@
         <div class="container">
             <div class="footer-grid">
                 <div>
-                    <div class="footer-logo">
-                        <i class="fas fa-sun" style="color: var(--orange);"></i> BMS
-                        <span>A member of IGC</span>
+                    <div class="logo-footer-box">
+                        <a href="#" class="logo-footer-link">
+                            <img src="images/logo/logo-footer.svg" alt="BMS Logo" class="logo-footer-img">
+                        </a>
                     </div>
                 </div>
+                
                 
                 <div class="footer-contact">
                     <h4>HỆ THỐNG TRƯỜNG LIÊN CẤP BMS</h4>
@@ -1787,16 +1797,26 @@
                 </div>
 
                 <div class="footer-right">
-                    <a href="#" class="btn btn-orange">ĐĂNG KÝ TUYỂN SINH</a>
+                    <a href="#" class="btn btn-orange pulse-btn">LIÊN HỆ</a>
                     <div class="social-icons">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
-                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                        <a href="#"><img src="images/social/zalo.svg" alt="Zalo"></a>
+                        <a href="#"><em class="fa-brands fa-facebook-f"></em></a>
+                        <a href="#"><em class="fa-brands fa-youtube"></em></a>
                     </div>
-                     <div class="social-icons" style="margin-top: 10px;">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
-                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                    <div class="social-icons" >
+                        <a href="#"><img src="images/social/zalo.svg" alt="Zalo"></a>
+                        <a href="#"><em class="fa-brands fa-facebook-f"></em></a>
+                        <a href="#"><em class="fa-brands fa-youtube"></em></a>
+                    </div>
+                    <div class="social-icons" >
+                        <a href="#"><img src="images/social/zalo.svg" alt="Zalo"></a>
+                        <a href="#"><em class="fa-brands fa-facebook-f"></em></a>
+                        <a href="#"><em class="fa-brands fa-youtube"></em></a>
+                    </div>
+                    <div class="social-icons" >
+                        <a href="#"><img src="images/social/zalo.svg" alt="Zalo"></a>
+                        <a href="#"><em class="fa-brands fa-facebook-f"></em></a>
+                        <a href="#"><em class="fa-brands fa-youtube"></em></a>
                     </div>
                 </div>
             </div>
