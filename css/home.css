@@ -1347,10 +1347,10 @@ footer {
 
 /* Khung nội dung Modal màu xanh đậm */
 .modal-container {
-    background: #313575; /* Màu xanh tím khớp với thiết kế */
+    background: #2A337A; Màu xanh tím khớp với thiết kế
     width: 90%; 
-    max-width: 600px;
-    padding: 40px 50px; 
+    padding: 60px;
+    max-width: 46.875rem !important;
     border-radius: 12px;
     position: relative;
     /* Hiệu ứng trượt nhẹ từ trên xuống khi mở */
