@@ -451,3 +451,26 @@ if(openContactBtn && contactModal && closeContactBtn) {
         }
     });
 }
+
+// Lắng nghe sự kiện cuộn trang (Cho cả Header và nút BackToTop)
+window.addEventListener('scroll', function() {
+    var header = document.getElementById('main-header');
+    var backToTopBtn = document.getElementById('backToTopBtn'); // Gọi nút Scroll Top
+    
+    // --- Xử lý Header Sticky ---
+    if (window.scrollY > 150) {
+        header.classList.add('is-sticky');
+    } else if (window.scrollY < 50) {
+        header.classList.remove('is-sticky');
+    }
+
+    // --- Xử lý hiện nút Back To Top ---
+    // Nếu cuộn xuống quá 300px thì hiện nút mũi tên lên
+    if (backToTopBtn) {
+        if (window.scrollY > 300) {
+            backToTopBtn.classList.add('show-btn');
+        } else {
+            backToTopBtn.classList.remove('show-btn');
+        }
+    }
+});

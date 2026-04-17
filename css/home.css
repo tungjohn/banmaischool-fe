@@ -1345,15 +1345,14 @@ footer {
     visibility: visible; 
 }
 
-/* Khung nội dung Modal màu xanh đậm */
+/* TĂNG KÍCH THƯỚC MODAL */
 .modal-container {
-    background: #2A337A; Màu xanh tím khớp với thiết kế
+    background: #313575; 
     width: 90%; 
-    padding: 60px;
-    max-width: 46.875rem !important;
+    max-width: 750px; /* Tăng từ 600px lên 750px để Modal to ra */
+    padding: 50px 70px; /* Tăng padding cho rộng rãi hơn */
     border-radius: 12px;
     position: relative;
-    /* Hiệu ứng trượt nhẹ từ trên xuống khi mở */
     transform: translateY(-30px); 
     transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 }
@@ -1374,12 +1373,12 @@ footer {
 
 .modal-close:hover { opacity: 0.7; }
 
-/* Tiêu đề & Badge */
+/* TĂNG KÍCH THƯỚC TIÊU ĐỀ */
 .modal-title { 
     color: white; 
     text-align: center; 
     margin-bottom: 15px; 
-    font-size: 28px;
+    font-size: 32px; /* Tăng từ 28px lên 32px */
     font-weight: 700;
 }
 
@@ -1395,17 +1394,17 @@ footer {
     font-size: 16px;
 }
 
-/* Form Inputs - Style Underline trong suốt */
+/* TĂNG KÍCH THƯỚC CHỮ Ở CÁC Ô NHẬP LIỆU */
 .modal-form input, 
 .modal-form select {
     width: 100%;
     background: transparent;
     border: none;
     border-bottom: 1px solid rgba(255,255,255,0.4);
-    padding: 15px 0; 
+    padding: 18px 0; /* Tăng padding trên/dưới để form thoáng hơn */
     margin-bottom: 15px;
     color: white; 
-    font-size: 16px; 
+    font-size: 17px; /* Tăng cỡ chữ từ 16px lên 17px */
     outline: none;
     transition: border-color 0.3s;
 }
@@ -1422,11 +1421,98 @@ footer {
 
 .modal-form .btn-full { margin-top: 15px; }
 
-/* Responsive cho điện thoại */
+/* =======================================
+   CSS THÊM MỚI CHO Ô NGÀY THÁNG VÀ ICON 
+   ======================================= */
+.input-icon-wrap {
+    position: relative;
+    width: 100%;
+}
+
+.input-icon-wrap i {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 20px;
+    pointer-events: none; /* Để click chuột có thể xuyên qua icon chạm vào ô input */
+}
+
+/* Ẩn hoàn toàn cái icon lịch mặc định mờ mờ của trình duyệt */
+.input-icon-wrap input[type="date"]::-webkit-calendar-picker-indicator {
+    background: transparent;
+    color: transparent;
+    cursor: pointer;
+    height: auto;
+    width: auto;
+    position: absolute;
+    /* Dàn trải bộ bắt sự kiện click ra toàn bộ ô input */
+    left: 0; right: 0; top: 0; bottom: 0; 
+}
+
+/* Responsive cho điện thoại (Giữ Modal không bị tràn) */
 @media (max-width: 576px) {
-    .modal-container { padding: 30px 20px; }
-    .modal-title { font-size: 22px; }
-    .modal-badge { font-size: 14px; }
+    .modal-container { padding: 40px 25px; } /* Căn chỉnh lại padding di động */
+    .modal-title { font-size: 24px; }
+    .modal-form input, .modal-form select { font-size: 15px; padding: 15px 0;}
+}
+
+/* =========================================
+   FLOATING SIDEBAR (CÁC NÚT DÍNH BÊN PHẢI)
+   ========================================= */
+.floating-sidebar {
+    position: fixed;
+    right: 0; /* Nằm sát mép phải */
+    top: 50%; /* Căn giữa màn hình theo chiều dọc */
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 5px; /* Khoảng cách giữa các nút */
+    z-index: 9998; /* Đảm bảo luôn nằm trên cùng (dưới Modal một chút) */
+}
+
+/* Định dạng chung cho 1 nút */
+.float-btn {
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 20px;
+    text-decoration: none;
+    border-radius: 4px 0 0 4px; /* Bo tròn 2 góc bên trái */
+    transition: all 0.3s ease;
+    box-shadow: -2px 2px 10px rgba(0,0,0,0.1);
+}
+
+/* Màu nền của các nút */
+.bg-dark-blue { background-color: #383B7B; } /* Màu xanh tím giống trong ảnh */
+.bg-grey { background-color: #888888; } /* Màu xám cho nút lên đầu trang */
+
+/* Hiệu ứng khi rê chuột vào (Hover) */
+.float-btn:hover {
+    color: white;
+    width: 50px; /* Thò dài ra một chút khi hover tạo sự tương tác */
+    background-color: var(--orange); /* Đổi sang màu cam cho nổi bật */
+}
+
+/* --- XỬ LÝ RIÊNG CHO NÚT SCROLL TO TOP --- */
+#backToTopBtn {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px); /* Ẩn đi và tụt xuống một xíu */
+    transition: all 0.4s ease;
+    pointer-events: none; /* Không nhận click khi đang ẩn */
+}
+
+/* Class được JS gọi khi cuộn chuột xuống */
+#backToTopBtn.show-btn {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0); /* Trồi lên đúng vị trí */
+    pointer-events: auto;
 }
 
 /* Floating Zalo */

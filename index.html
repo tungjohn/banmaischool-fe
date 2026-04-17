@@ -619,22 +619,22 @@
                     <!-- Hàng icon 2 -->
                     <div class="social-icons">
                         <a href="#"><span class="icon-circle"><img src="images/social/zalo.svg" alt="Zalo"></span></a>
-                        <a href="#"><span class="icon-circle"><i class="fa-brands fa-facebook-f"></i></span></a>
-                        <a href="#"><span class="icon-circle"><i class="fa-brands fa-youtube"></i></span></a>
+                        <a href="#"><span class="icon-circle"><em class="fa-brands fa-facebook-f"></em></span></a>
+                        <a href="#"><span class="icon-circle"><em class="fa-brands fa-youtube"></em></span></a>
                     </div>
                     
                     <!-- Hàng icon 3 -->
                     <div class="social-icons">
                         <a href="#"><span class="icon-circle"><img src="images/social/zalo.svg" alt="Zalo"></span></a>
-                        <a href="#"><span class="icon-circle"><i class="fa-brands fa-facebook-f"></i></span></a>
-                        <a href="#"><span class="icon-circle"><i class="fa-brands fa-youtube"></i></span></a>
+                        <a href="#"><span class="icon-circle"><em class="fa-brands fa-facebook-f"></em></i></span></a>
+                        <a href="#"><span class="icon-circle"><em class="fa-brands fa-youtube"></em></span></a>
                     </div>
                     
                     <!-- Hàng icon 4 -->
                     <div class="social-icons">
                         <a href="#"><span class="icon-circle"><img src="images/social/zalo.svg" alt="Zalo"></span></a>
-                        <a href="#"><span class="icon-circle"><i class="fa-brands fa-facebook-f"></i></span></a>
-                        <a href="#"><span class="icon-circle"><i class="fa-brands fa-youtube"></i></span></a>
+                        <a href="#"><span class="icon-circle"><em class="fa-brands fa-facebook-f"></em></span></a>
+                        <a href="#"><span class="icon-circle"><em class="fa-brands fa-youtube"></em></span></a>
                     </div>
                 </div>
             </div>
@@ -644,23 +644,49 @@
         </div>
     </footer>
 
+    <!-- ========================================== -->
+    <!-- FLOATING SIDEBAR (Nút dính bên phải) -->
+    <!-- ========================================== -->
+    <div class="floating-sidebar">
+        <!-- 3 Nút luôn hiển thị -->
+        <a href="#" class="float-btn bg-dark-blue" title="Đăng ký">
+            <i class="fas fa-pen"></i>
+        </a>
+        <a href="#" class="float-btn bg-dark-blue" title="Tư vấn">
+            <i class="far fa-comment-alt"></i>
+        </a>
+        <a href="#" class="float-btn bg-dark-blue" title="Messenger">
+            <i class="fab fa-facebook-messenger"></i>
+        </a>
+        
+        <!-- Nút Cuộn lên đầu trang (Ẩn mặc định) -->
+        <a href="#" class="float-btn bg-grey" id="backToTopBtn" title="Lên đầu trang">
+            <i class="fas fa-arrow-up"></i>
+        </a>
+    </div>
+
     <!-- Floating Zalo Icon -->
     <a href="#" class="floating-zalo">
         <span>Zalo</span> <!-- Thay bằng icon Zalo thực tế nếu có -->
     </a>
 
-    <!-- Modal Đăng Ký Tuyển Sinh -->
+    <!-- Modal Liên Hệ -->
     <div class="modal-overlay" id="contactModal">
         <div class="modal-container">
             <!-- Nút tắt (X) -->
             <span class="modal-close" id="closeContactModal"><i class="fas fa-times"></i></span>
             
-            <h2 class="modal-title">ĐĂNG KÝ TUYỂN SINH</h2>
+            <h2 class="modal-title">LIÊN HỆ</h2>
             <div class="modal-badge">Năm học 2026 - 2027</div>
             
             <form class="modal-form" action="#">
                 <input type="text" placeholder="Họ và tên Học sinh *">
-                <input type="text" placeholder="Ngày tháng năm sinh *" onfocus="(this.type='date')" onblur="(this.type='text')">
+                <div class="input-icon-wrap">
+                    <!-- Thêm đoạn JS nhỏ onblur để nếu người dùng chưa chọn ngày, nó quay lại dạng text -->
+                    <input type="text" placeholder="Ngày tháng năm sinh (dd/mm/yyyy) *" onfocus="(this.type='date')" onblur="if(!this.value) this.type='text'">
+                    <!-- Icon Lịch FontAwesome -->
+                    <i class="far fa-calendar-alt"></i>
+                </div>
                 <input type="text" placeholder="Trường Học sinh đang học *">
                 <input type="text" placeholder="Số điện thoại CMHS *">
                 <input type="email" placeholder="Email CMHS *">
@@ -670,7 +696,7 @@
                     <option value="6">Lớp 6</option>
                     <option value="10">Lớp 10</option>
                 </select>
-                <button type="submit" class="btn btn-orange btn-full" style="border-radius: 8px;">ĐĂNG KÝ NGAY</button>
+                <button type="submit" class="btn btn-orange btn-full pulse-btn">GỬI ĐI</button>
             </form>
         </div>
     </div>
