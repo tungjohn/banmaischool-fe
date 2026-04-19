@@ -7,9 +7,9 @@
 }
 
 :root {
-    --primary-blue: #2B3583;
+    --primary-blue: #2A337A;
     --light-blue: #e8f4fa;
-    --orange: #F19F30;
+    --orange: #F9AE3B;
     --teal: #00C1D5;
     --text-dark: #333333;
     --text-light: #666666;
@@ -149,9 +149,43 @@ header {
     color: var(--orange); 
 }
 
-/* Fix lỗi nút bị cắt góc do overflow: hidden */
+/* =========================================
+   HIỆU ỨNG NÚT TOP-BAR (Trượt màu nền)
+   ========================================= */
 .top-bar .top-btn {
-    margin: 2px 3px 2px 2px; /* Đẩy nút vào trong một xíu để có không gian bung ra */
+    margin: 2px 3px 2px 2px;
+    position: relative;
+    overflow: hidden; /* Rất quan trọng: Dùng để cắt phần nền cam khi nó trượt ra ngoài */
+    background-color: white !important; /* Nền thật của nút là màu trắng */
+    color: white !important; /* Chữ lúc đầu là màu trắng */
+    border: 1px solid var(--orange); /* Thêm viền cam để khi nền trắng lộ ra vẫn giữ được hình dáng nút */
+    z-index: 1; /* Đảm bảo chữ luôn nằm trên cùng */
+    transition: color 0.4s ease; /* Hiệu ứng chuyển màu chữ mượt mà */
+}
+
+/* Lớp nền màu cam (phần tử giả) che lấp lớp nền trắng */
+.top-bar .top-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--orange);
+    z-index: -1; /* Nằm dưới lớp chữ */
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); /* Hiệu ứng trượt mượt */
+}
+
+/* KHI HOVER VÀO NÚT */
+
+/* 1. Lớp nền cam trượt đi 100% sang bên phải */
+.top-bar .top-btn:hover::before {
+    transform: translateX(100%); 
+}
+
+/* 2. Chữ đổi sang màu cam */
+.top-bar .top-btn:hover {
+    color: var(--orange) !important; 
 }
 
 /* --- BỘ CHUYỂN ĐỔI NGÔN NGỮ (VN | EN) --- */
@@ -1463,40 +1497,41 @@ footer {
    ========================================= */
 .floating-sidebar {
     position: fixed;
-    right: 0; /* Nằm sát mép phải */
-    top: 50%; /* Căn giữa màn hình theo chiều dọc */
+    right: 0;
+    top: 50%;
     transform: translateY(-50%);
     display: flex;
     flex-direction: column;
-    gap: 5px; /* Khoảng cách giữa các nút */
-    z-index: 9998; /* Đảm bảo luôn nằm trên cùng (dưới Modal một chút) */
+    gap: 15px; /* SỬA TỪ 5px THÀNH 15px để các nút cách xa nhau hơn */
+    z-index: 9998;
 }
 
 /* Định dạng chung cho 1 nút */
+/* Định dạng chung cho 1 nút */
 .float-btn {
-    width: 45px;
-    height: 45px;
+    width: 55px; /* SỬA TỪ 45px THÀNH 55px để nút to ra */
+    height: 55px; /* SỬA TỪ 45px THÀNH 55px để nút vuông vức */
     display: flex;
     align-items: center;
     justify-content: center;
     color: white;
-    font-size: 20px;
+    font-size: 24px; /* SỬA TỪ 20px THÀNH 24px để icon to lên cân đối với nút */
     text-decoration: none;
-    border-radius: 4px 0 0 4px; /* Bo tròn 2 góc bên trái */
+    border-radius: 6px 0 0 6px; /* Tăng độ bo góc lên một chút cho đẹp */
     transition: all 0.3s ease;
-    box-shadow: -2px 2px 10px rgba(0,0,0,0.1);
+    box-shadow: -2px 2px 10px rgba(0,0,0,0.15); /* Tăng bóng đổ nhẹ để nút nổi hơn */
+}
+
+/* Hiệu ứng khi rê chuột vào (Hover) */
+.float-btn:hover {
+    color: white;
+    width: 65px; /* Cập nhật lại độ dài khi hover cho cân xứng với chiều rộng mới (55px) */
+    background-color: var(--orange);
 }
 
 /* Màu nền của các nút */
 .bg-dark-blue { background-color: #383B7B; } /* Màu xanh tím giống trong ảnh */
 .bg-grey { background-color: #888888; } /* Màu xám cho nút lên đầu trang */
-
-/* Hiệu ứng khi rê chuột vào (Hover) */
-.float-btn:hover {
-    color: white;
-    width: 50px; /* Thò dài ra một chút khi hover tạo sự tương tác */
-    background-color: var(--orange); /* Đổi sang màu cam cho nổi bật */
-}
 
 /* --- XỬ LÝ RIÊNG CHO NÚT SCROLL TO TOP --- */
 #backToTopBtn {
