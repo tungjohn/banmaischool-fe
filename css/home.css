@@ -53,14 +53,13 @@ img { max-width: 100%; height: auto; display: block; }
 
 .section-title {
     color: var(--primary-blue);
-    font-size: 32px;
+    font-size: 40px;
     font-weight: 700;
-    margin-bottom: 20px;
     text-transform: uppercase;
 }
 
 .text-center { text-align: center; }
-.section-padding { padding: 60px 0; }
+.section-padding { padding: 30px 15px; }
 
 /* --- HEADER & NAVIGATION (Cấu trúc mới) --- */
 header {
@@ -98,7 +97,7 @@ header {
 }
 
 .logo-img {
-    max-height: 70px; /* Chiều cao logo lúc bình thường */
+    max-height: 75px; /* Chiều cao logo lúc bình thường */
     width: auto;      
     display: block;
     /* Thêm transition cho max-height để co rút mượt mà */
@@ -401,7 +400,7 @@ header.is-sticky .top-bar {
 }
 
 header.is-sticky .main-nav a {
-    padding: 15px 0; 
+    padding: 20px 0; 
 }
 
 header.is-sticky .logo-wrapper {
@@ -409,7 +408,7 @@ header.is-sticky .logo-wrapper {
 }
 
 header.is-sticky .logo-img {
-    max-height: 35px; 
+    max-height: 45px; 
 }
 
 /* Ẩn Search Dropdown khi cuộn trang */
@@ -529,11 +528,15 @@ header.is-sticky .search-dropdown.active {
     grid-template-columns: repeat(12, 1fr); /* Chia thành 12 cột bằng nhau */
     gap: 40px; /* Khoảng cách giữa 2 khối */
     align-items: stretch; /* Đảm bảo 2 khối có chiều cao tương đương nếu cần */
+    padding-bottom: 0 !important; 
 }
 
 /* Khối Trái chiếm 5 cột */
 .about-left-col {
     grid-column: span 5;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* Quan trọng: Đẩy bức ảnh xuống sát đáy cột */
 }
 
 /* Khối Phải chiếm 7 cột */
@@ -544,10 +547,11 @@ header.is-sticky .search-dropdown.active {
 
 .about-image {
     width: 100%;
-    height: 100%;
+    /* Bỏ height: 100% cũ đi để ảnh không bị kéo giãn sai tỷ lệ */
+    height: auto; 
     object-fit: cover;
-    border-radius: 10px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    border-radius: 10px 10px 0 0; /* Chỉ bo 2 góc trên, 2 góc dưới vuông vức để chạm khối xanh */
+    display: block; /* Tránh khoảng trắng nhỏ (khoảng 3-4px) dư thừa dưới đáy ảnh do thuộc tính inline mặc định */
 }
 
 .about-divider {
@@ -573,7 +577,7 @@ header.is-sticky .search-dropdown.active {
 .cert-boxes {
     display: flex;
     gap: 15px;
-    margin-top: 30px;
+    margin: 30px 0;
 }
 .cert-box {
     position: relative;
@@ -630,7 +634,7 @@ header.is-sticky .search-dropdown.active {
 .programs-section {
     background-color: transparent; /* Bỏ màu nền full màn hình */
     color: white;
-    padding: 60px 0; /* Đảm bảo có khoảng cách trên dưới */
+    padding: 0px 0px 20px 0px; /* Đảm bảo có khoảng cách trên dưới */
 }
 
 /* 1. Đưa màu nền xanh vào bên trong thẻ container */
@@ -764,7 +768,7 @@ header.is-sticky .search-dropdown.active {
 .filter-tabs { 
     display: flex; 
     list-style: none;
-    gap: 40px; /* Khoảng cách rộng giữa các phần tử (giống ảnh 2) */
+    gap: 40px; 
     margin: 0;
     padding: 0;
     align-items: center;
@@ -790,8 +794,8 @@ header.is-sticky .search-dropdown.active {
 }
 
 .filter-tabs a { 
-    font-size: 15px; /* Tăng kích thước chữ lên một chút cho dễ nhìn */
-    font-weight: 500; 
+    font-size: 20px; /* Tăng kích thước chữ lên một chút cho dễ nhìn */
+    font-weight: 400; 
     color: var(--text-dark);
     text-transform: uppercase;
     padding: 5px 0; /* Xóa padding ngang để gạch chân khít với chữ */
@@ -938,6 +942,12 @@ header.is-sticky .search-dropdown.active {
 }
 
 /* --- REGISTRATION FORM --- */
+.school-year {
+    padding: 5px 15px; 
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
 .register-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;

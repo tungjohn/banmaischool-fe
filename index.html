@@ -119,7 +119,7 @@
         <!-- Cột trái: Ảnh (Chiếm 5/12 cột) -->
         <div class="about-left-col">
             <!-- Thay src bằng đường dẫn ảnh thực tế của bạn -->
-            <img src="https://via.placeholder.com/600x800/e8f4fa/999999?text=Image+A+Bright+Future" alt="Students" class="about-image">
+            <img src="images/about/pupil.png" alt="Students" class="about-image">
         </div>
 
         <!-- Cột phải: Nội dung (Chiếm 7/12 cột) -->
@@ -301,7 +301,7 @@
     </section>
 
     <!-- Tuyển Sinh Banner Section -->
-    <section class="container" style="margin-bottom: 60px;">
+    <section class="container" >
         
         <div class="section-header-flex">
             <h2 class="section-title" style="margin-bottom:0;">TUYỂN SINH</h2>
@@ -329,10 +329,9 @@
     <!-- Registration Form -->
     <section class="section-padding container">
         <h2 class="section-title">LIÊN HỆ</h2>
-        <span class="btn btn-orange" style="margin-bottom: 30px; font-size: 12px; padding: 5px 15px; border-radius: 5px;">Năm học 2026 - 2027</span>
-
         <div class="register-grid">
             <div class="reg-form">
+                <span class="btn btn-orange school-year">Năm học 2026 - 2027</span>
                 <form action="#">
                     <div class="form-row">
                         <input type="text" class="form-control" placeholder="Họ và tên học sinh *">
@@ -461,8 +460,8 @@
                     <div class="fac-card">
                         <!-- Ảnh chính (Có thuộc tính data-fancybox để mở gallery) -->
                         <!-- Đặt tên data-fancybox="gallery1" để nhóm các ảnh của cơ sở 1 lại với nhau -->
-                        <a href="https://via.placeholder.com/1200x800/2B3583/fff?text=Anh+To+Co+So+1" data-fancybox="gallery1" class="fac-img-box">
-                            <img src="https://via.placeholder.com/600x400/ddd/999?text=BMS+Hà+Nội" alt="BMS Hà Nội" class="fac-main-img">
+                        <a href="images/facilities/mam-non-1.jpg" data-fancybox="gallery1" class="fac-img-box">
+                            <img src="images/facilities/mam-non-1.jpg" alt="BMS Hà Nội" class="fac-main-img">
                             
                             <!-- Hiệu ứng Overlay khi Hover -->
                             <div class="fac-hover-overlay">
@@ -473,7 +472,7 @@
                             </div>
                         </a>
                         <!-- Các ảnh phụ (Bị ẩn đi, chỉ hiện trong Gallery) -->
-                        <a href="https://via.placeholder.com/1200x800/orange/fff?text=Anh+Phu+1+Co+So+1" data-fancybox="gallery1" style="display:none;"></a>
+                        <a href="images/facilities/mam-non-2.png" data-fancybox="gallery1" style="display:none;"></a>
                         <a href="https://via.placeholder.com/1200x800/teal/fff?text=Anh+Phu+2+Co+So+1" data-fancybox="gallery1" style="display:none;"></a>
 
                         <!-- Text bên dưới (Dùng JS để click thay cho ảnh) -->
@@ -482,8 +481,8 @@
 
                     <!-- CƠ SỞ 2 -->
                     <div class="fac-card">
-                        <a href="https://via.placeholder.com/1200x800/00C1D5/fff?text=Anh+To+Co+So+2" data-fancybox="gallery2" class="fac-img-box">
-                            <img src="https://via.placeholder.com/600x400/ddd/999?text=BMS+Hà+Nội+THPT" alt="BMS THPT" class="fac-main-img">
+                        <a href="images/facilities/THCS.jpg" data-fancybox="gallery2" class="fac-img-box">
+                            <img src="images/facilities/THCS.jpg" alt="BMS THPT" class="fac-main-img">
                             <div class="fac-hover-overlay">
                                 <div class="fac-hover-content">
                                     <span>BMS Hà Nội - Trường THCS - THPT Ban Mai</span>
@@ -491,15 +490,15 @@
                                 </div>
                             </div>
                         </a>
-                        <a href="https://via.placeholder.com/1200x800/2B3583/fff?text=Anh+Phu+1+Co+So+2" data-fancybox="gallery2" style="display:none;"></a>
+                        <a href="images/facilities/thpt.png" data-fancybox="gallery2" style="display:none;"></a>
                         
                         <h4 class="fac-title" onclick="document.querySelector('[data-fancybox=\'gallery2\']').click()">BMS Hà Nội - Trường THCS - THPT Ban Mai</h4>
                     </div>
 
                     <!-- CƠ SỞ 3 (Thêm vào để trượt) -->
                     <div class="fac-card">
-                        <a href="https://via.placeholder.com/1200x800/F19F30/fff?text=Anh+To+Co+So+3" data-fancybox="gallery3" class="fac-img-box">
-                            <img src="https://via.placeholder.com/600x400/ddd/999?text=BMS+Hưng+Yên" alt="BMS Hưng Yên" class="fac-main-img">
+                        <a href="images/facilities/thpt.png" data-fancybox="gallery3" class="fac-img-box">
+                            <img src="images/facilities/thpt.png" alt="BMS Hưng Yên" class="fac-main-img">
                             <div class="fac-hover-overlay">
                                 <div class="fac-hover-content">
                                     <span>BMS Hưng Yên - Trường Liên cấp Hồng Đức</span>
@@ -507,7 +506,7 @@
                                 </div>
                             </div>
                         </a>
-                        <a href="https://via.placeholder.com/1200x800/ccc/333?text=Anh+Phu+1+Co+So+3" data-fancybox="gallery3" style="display:none;"></a>
+                        <a href="images/facilities/THCS.jpg" data-fancybox="gallery3" style="display:none;"></a>
                         
                         <h4 class="fac-title" onclick="document.querySelector('[data-fancybox=\'gallery3\']').click()">BMS Hưng Yên - Trường Tiểu học - THCS - THPT Hồng Đức</h4>
                     </div>
