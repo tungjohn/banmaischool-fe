@@ -1295,8 +1295,15 @@ footer {
     margin-bottom: 40px;
 }
 
-.footer-contact h4 { font-size: 18px; margin-bottom: 20px; text-transform: uppercase;}
-.contact-list li { margin-bottom: 10px; font-size: 13px; display: flex; gap: 10px;}
+.logo-footer-img {
+    max-width: 220px; /* Giới hạn chiều rộng của logo (bạn có thể tăng/giảm số này cho vừa mắt) */
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.footer-contact h4 { font-size: 20px; margin-bottom: 20px; text-transform: uppercase;}
+.contact-list li { font-size: 15px; display: flex; gap: 10px;}
 .contact-list i { margin-top: 4px; }
 
 .footer-right { text-align: left; }
