@@ -19,17 +19,17 @@
     <header id="main-header">
         <div class="container nav-container">
             
-            <!-- Cột Trái: LOGO -->
+            
             <div class="logo-wrapper">
                 <a href="#" class="logo">
                     <img src="images/logo/logo.jpg" alt="BMS Logo" class="logo-img">
                 </a>
             </div>
 
-            <!-- Cột Phải: Top Bar & Main Nav -->
+            
             <div class="header-right">
                 
-                <!-- Hàng trên: Top Bar -->
+                
                 <div class="top-bar">
                     <a href="#" class="top-link">Tuyển dụng</a>
                     <a href="#" class="top-link">Liên hệ</a>
@@ -46,7 +46,7 @@
                     <a href="#" class="btn btn-orange pulse-btn top-btn" style="padding: 6px 18px; font-size: 13px; border-radius: 20px; color: white;">ĐĂNG NHẬP</a>
                 </div>
 
-                <!-- Hàng dưới: Main Nav -->
+                
                 <nav class="main-nav">
                     <ul class="nav-list">
                         <li><a href="#" class="active">Trang chủ</a></li>
@@ -86,27 +86,24 @@
     <!-- Hero Slider Full Width -->
     <section class="hero-slider-section">
         <div class="slider-container" id="heroSlider">
-            <!-- Slide 1: Ảnh Banner chính -->
             <div class="slide">
                 <img src="images\banner\banner-home.jpg" alt="Thông báo tuyển sinh BMS">
             </div>
             
-            <!-- Slide 2: Ảnh 2 -->
             <div class="slide">
                 <img src="images\banner\banner-2.jpg" alt="Banner 2">
             </div>
 
-            <!-- Slide 3: Ảnh 3 -->
             <div class="slide">
                 <img src="images\banner\banner-3.jpg" alt="Banner 3">
             </div>
         </div>
 
-        <!-- Nút điều hướng Trái/Phải -->
+        <!-- Slider Navigation Buttons -->
         <button class="slider-btn prev" onclick="changeSlide(-1)"><i class="fas fa-chevron-left"></i></button>
         <button class="slider-btn next" onclick="changeSlide(1)"><i class="fas fa-chevron-right"></i></button>
 
-        <!-- Dấu chấm chỉ mục (Dots) -->
+        <!-- Slider Dots -->
         <div class="slider-dots">
             <span class="dot active" onclick="goToSlide(0)"></span>
             <span class="dot" onclick="goToSlide(1)"></span>
@@ -116,13 +113,12 @@
     <!-- About Section -->
     <section class="section-padding container about-section">
         
-        <!-- Cột trái: Ảnh (Chiếm 5/12 cột) -->
+        <!-- About Left Image -->
         <div class="about-left-col">
-            <!-- Thay src bằng đường dẫn ảnh thực tế của bạn -->
             <img src="images/about/pupil.png" alt="Students" class="about-image">
         </div>
 
-        <!-- Cột phải: Nội dung (Chiếm 7/12 cột) -->
+        <!-- About Right Content -->
         <div class="about-right-col">
             <h2 class="section-title">HỆ THỐNG TRƯỜNG<br>LIÊN CẤP BMS</h2>
             <p style="font-weight: 500; color: #444; margin-bottom: 20px;">Hệ thống Trường liên cấp BMS là hệ thống giáo dục tư thục hàng đầu tại Hà Đông có 4 cấp học từ Mầm Non đến Trung học Phổ thông.</p>
@@ -139,15 +135,13 @@
             <h3 style="color: var(--text-dark); font-size: 16px;">Sứ mệnh:</h3>
             <p style="margin-bottom: 25px;">Truyền cảm hứng, trao yêu thương, tôn trọng sự khác biệt, giúp học sinh khai mở tiềm năng, phát triển toàn diện, thành công và hạnh phúc trong một thế giới mở.</p>
 
-            <!-- Đường kẻ ngang -->
             <hr class="about-divider">
 
             <h3 style="color:var(--primary-blue); font-size: 16px; margin-bottom: 15px;">BMS qua những con số:</h3>
             
-            <!-- Vùng chứa các con số cần đếm -->
+            <!-- Stats Counter Section -->
             <div class="stats-row" id="counter-section">
                 <div class="stat-item">
-                    <!-- class="counter" và data-target="số đích" dùng cho Javascript -->
                     <h4><span class="counter" data-target="18">0</span>+</h4>
                     <p>Năm phát triển</p>
                 </div>
@@ -162,6 +156,7 @@
             </div>
 
             <div class="cert-boxes">
+                <!-- Certifications -->
                 <div class="cert-box cert-bg-blue">Thành viên Tập đoàn Giáo dục IGC</div>
                 <div class="cert-box cert-bg-orange">Trường Phổ thông Quốc tế Cambridge</div>
             </div>
@@ -222,11 +217,10 @@
     <!-- News Section -->
     <section class="section-padding container">
         
-        <!-- Header & Bộ lọc tin tức -->
+        <!-- News Header & Filter -->
         <div class="section-header-flex">
             <h2 class="section-title" style="margin-bottom:0;">TIN TỨC BMS</h2>
             
-            <!-- Chuyển filter-tabs thành ul li -->
             <ul class="filter-tabs">
                 <li><a href="#" class="active">TẤT CẢ</a></li>
                 <li><a href="#">MẦM NON</a></li>
@@ -235,10 +229,10 @@
             </ul>
         </div>
 
-        <!-- Lưới bài viết chia 50/50 -->
+        <!-- News Grid Layout -->
         <div class="news-flex-container">
             
-            <!-- Cột trái (Tin chính) -->
+            <!-- News Main Column -->
             <div class="news-main">
                 <div class="news-main-img-wrapper">
                     <img src="images/news/new-main.png" alt="Tin chính" class="news-img">
@@ -252,10 +246,9 @@
                 <p class="news-desc">Trải nghiệm miễn phí "Tự tin làm học sinh lớp 6" tại BMS dành cho học sinh 2015, giúp rèn kỹ năng và khám phá bản thân.</p>
             </div>
 
-            <!-- Cột phải (Danh sách tin phụ) -->
+            <!-- News Secondary List -->
             <div class="news-list">
                 
-                <!-- Item tin phụ 1 -->
                 <div class="news-item-small">
                     <img src="images/news/new-sub.jpg" alt="Tin 1" class="news-small-img">
                     <div class="news-small-content">
@@ -267,7 +260,6 @@
                     </div>
                 </div>
 
-                <!-- Item tin phụ 2 -->
                 <div class="news-item-small">
                     <img src="images/news/new-sub-2.jpg" alt="Tin 2" class="news-small-img">
                     <div class="news-small-content">
@@ -279,7 +271,6 @@
                     </div>
                 </div>
 
-                <!-- Item tin phụ 3 -->
                 <div class="news-item-small">
                     <img src="images/news/new-sub-3.jpg" alt="Tin 3" class="news-small-img">
                     <div class="news-small-content">
@@ -300,13 +291,12 @@
         </div>
     </section>
 
-    <!-- Tuyển Sinh Banner Section -->
+    <!-- Admissions Banner Section -->
     <section class="container" >
         
         <div class="section-header-flex">
             <h2 class="section-title" style="margin-bottom:0;">TUYỂN SINH</h2>
             
-            <!-- Sử dụng lại cấu trúc ul li và class filter-tabs của phần Tin tức -->
             <ul class="filter-tabs">
                 <li><a href="#" class="active">HỆ THỐNG</a></li>
                 <li><a href="#">MẦM NON</a></li>
@@ -315,11 +305,9 @@
             </ul>
         </div>
 
-        <!-- Khối chứa Banner (Có link và hiệu ứng zoom) -->
+        <!-- Admissions Banner Wrapper -->
         <div class="ad-banner-wrapper">
-            <!-- Thẻ a tạo link khi click vào ảnh -->
             <a href="#">
-                <!-- Lưu ý: Thay đổi src thành đường dẫn file ảnh Banner Tuyển Sinh của bạn -->
                 <img src="images/admissions/banner-tuyen-sinh.jpg" alt="Banner Tuyển Sinh" class="ad-banner-img">
             </a>
         </div>
@@ -368,10 +356,7 @@
 
             <div class="testi-slider-wrapper">
                 <div class="testi-slider-track" id="testiTrack">
-                    
-                    <!-- Card 1 -->
                     <div class="testi-card">
-                        <!-- Icon Quote lớn phía sau -->
                         <svg class="testi-quote-svg" width="126" height="100" viewBox="0 0 126 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M0 100V71.2355C0 62.87 1.60305 54.2471 4.80916 45.3668C8.01527 36.4865 12.2473 28.121 17.5053 20.2703C22.7634 12.2909 28.5343 5.53411 34.8183 0L60.5954 15.0579C55.9786 22.7799 52.0031 31.0811 48.6687 39.9614C45.3344 48.8417 43.6672 59.2664 43.6672 71.2355V100H0ZM65.4046 100V71.2355C65.4046 62.87 67.0076 54.2471 70.2137 45.3668C73.4198 36.4865 77.6519 28.121 82.9099 20.2703C88.1679 12.2909 93.9389 5.53411 100.223 0L126 15.0579C121.383 22.7799 117.408 31.0811 114.073 39.9614C110.739 48.8417 109.072 59.2664 109.072 71.2355V100H65.4046Z" fill="#00B9AB"></path>
                         </svg>
@@ -384,10 +369,8 @@
                             <h4 class="testi-headline">" Tôi rất tự hào vì con đã học tại BMS "</h4>
                             <p class="testi-text">Con gái tôi đang học Đại học tại Singapore và con luôn tự hào khi kể về BMS, nơi con đã được học tập và rèn luyện trong suốt 12 năm học sinh. Tôi nhận thấy ở BMS, con được phát huy khả năng Tiếng Anh của mình nhờ việc học tập qua dự án và trải nghiệm rất thú vị.</p>
                         </div>
-                        
                     </div>
 
-                    <!-- Card 2 -->
                     <div class="testi-card">
                         <svg class="testi-quote-svg" width="126" height="100" viewBox="0 0 126 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M0 100V71.2355C0 62.87 1.60305 54.2471 4.80916 45.3668C8.01527 36.4865 12.2473 28.121 17.5053 20.2703C22.7634 12.2909 28.5343 5.53411 34.8183 0L60.5954 15.0579C55.9786 22.7799 52.0031 31.0811 48.6687 39.9614C45.3344 48.8417 43.6672 59.2664 43.6672 71.2355V100H0ZM65.4046 100V71.2355C65.4046 62.87 67.0076 54.2471 70.2137 45.3668C73.4198 36.4865 77.6519 28.121 82.9099 20.2703C88.1679 12.2909 93.9389 5.53411 100.223 0L126 15.0579C121.383 22.7799 117.408 31.0811 114.073 39.9614C110.739 48.8417 109.072 59.2664 109.072 71.2355V100H65.4046Z" fill="#00B9AB"></path>
@@ -403,7 +386,6 @@
                         </div>
                     </div>
 
-                    <!-- Card 3 -->
                     <div class="testi-card">
                         <svg class="testi-quote-svg" width="126" height="100" viewBox="0 0 126 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M0 100V71.2355C0 62.87 1.60305 54.2471 4.80916 45.3668C8.01527 36.4865 12.2473 28.121 17.5053 20.2703C22.7634 12.2909 28.5343 5.53411 34.8183 0L60.5954 15.0579C55.9786 22.7799 52.0031 31.0811 48.6687 39.9614C45.3344 48.8417 43.6672 59.2664 43.6672 71.2355V100H0ZM65.4046 100V71.2355C65.4046 62.87 67.0076 54.2471 70.2137 45.3668C73.4198 36.4865 77.6519 28.121 82.9099 20.2703C88.1679 12.2909 93.9389 5.53411 100.223 0L126 15.0579C121.383 22.7799 117.408 31.0811 114.073 39.9614C110.739 48.8417 109.072 59.2664 109.072 71.2355V100H65.4046Z" fill="#00B9AB"></path>
@@ -419,7 +401,6 @@
                         </div>
                     </div>
 
-                    <!-- Card 4 (Thêm để có thể trượt) -->
                     <div class="testi-card">
                         <svg class="testi-quote-svg" width="126" height="100" viewBox="0 0 126 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M0 100V71.2355C0 62.87 1.60305 54.2471 4.80916 45.3668C8.01527 36.4865 12.2473 28.121 17.5053 20.2703C22.7634 12.2909 28.5343 5.53411 34.8183 0L60.5954 15.0579C55.9786 22.7799 52.0031 31.0811 48.6687 39.9614C45.3344 48.8417 43.6672 59.2664 43.6672 71.2355V100H0ZM65.4046 100V71.2355C65.4046 62.87 67.0076 54.2471 70.2137 45.3668C73.4198 36.4865 77.6519 28.121 82.9099 20.2703C88.1679 12.2909 93.9389 5.53411 100.223 0L126 15.0579C121.383 22.7799 117.408 31.0811 114.073 39.9614C110.739 48.8417 109.072 59.2664 109.072 71.2355V100H65.4046Z" fill="#00B9AB"></path>
@@ -438,7 +419,7 @@
                 </div>
             </div>
 
-            <!-- Vùng chứa các dấu chấm điều hướng -->
+            <!-- Testimonial Dots Navigation -->
             <div class="dots" id="testiDotsContainer"></div>
             
         </div>
@@ -449,21 +430,18 @@
         <h2 class="section-title text-center" style="color: var(--primary-blue); font-weight: 700; margin-bottom: 40px;">CÁC CƠ SỞ CỦA BMS</h2>
         
         <div class="fac-slider-wrapper">
-            <!-- Nút Trái -->
+            <!-- Facilities Left Arrow -->
             <button class="fac-arrow prev" onclick="moveFacSlide(-1)"><i class="fas fa-chevron-left"></i></button>
 
-            <!-- Vùng chứa Slider -->
+            <!-- Facilities Track Container -->
             <div class="fac-track-container">
                 <div class="fac-track" id="facTrack">
                     
-                    <!-- CƠ SỞ 1 -->
+                    <!-- Facility Card 1 -->
                     <div class="fac-card">
-                        <!-- Ảnh chính (Có thuộc tính data-fancybox để mở gallery) -->
-                        <!-- Đặt tên data-fancybox="gallery1" để nhóm các ảnh của cơ sở 1 lại với nhau -->
                         <a href="images/facilities/mam-non-1.jpg" data-fancybox="gallery1" class="fac-img-box">
                             <img src="images/facilities/mam-non-1.jpg" alt="BMS Hà Nội" class="fac-main-img">
                             
-                            <!-- Hiệu ứng Overlay khi Hover -->
                             <div class="fac-hover-overlay">
                                 <div class="fac-hover-content">
                                     <span>BMS Hà Nội - Trường Tiểu học Ban Mai</span>
@@ -471,15 +449,12 @@
                                 </div>
                             </div>
                         </a>
-                        <!-- Các ảnh phụ (Bị ẩn đi, chỉ hiện trong Gallery) -->
                         <a href="images/facilities/mam-non-2.png" data-fancybox="gallery1" style="display:none;"></a>
                         <a href="https://via.placeholder.com/1200x800/teal/fff?text=Anh+Phu+2+Co+So+1" data-fancybox="gallery1" style="display:none;"></a>
-
-                        <!-- Text bên dưới (Dùng JS để click thay cho ảnh) -->
                         <h4 class="fac-title" onclick="document.querySelector('[data-fancybox=\'gallery1\']').click()">BMS Hà Nội - Trường Tiểu học Ban Mai</h4>
                     </div>
 
-                    <!-- CƠ SỞ 2 -->
+                    <!-- Facility Card 2 -->
                     <div class="fac-card">
                         <a href="images/facilities/THCS.jpg" data-fancybox="gallery2" class="fac-img-box">
                             <img src="images/facilities/THCS.jpg" alt="BMS THPT" class="fac-main-img">
@@ -491,11 +466,10 @@
                             </div>
                         </a>
                         <a href="images/facilities/thpt.png" data-fancybox="gallery2" style="display:none;"></a>
-                        
                         <h4 class="fac-title" onclick="document.querySelector('[data-fancybox=\'gallery2\']').click()">BMS Hà Nội - Trường THCS - THPT Ban Mai</h4>
                     </div>
 
-                    <!-- CƠ SỞ 3 (Thêm vào để trượt) -->
+                    <!-- Facility Card 3 -->
                     <div class="fac-card">
                         <a href="images/facilities/thpt.png" data-fancybox="gallery3" class="fac-img-box">
                             <img src="images/facilities/thpt.png" alt="BMS Hưng Yên" class="fac-main-img">
@@ -507,14 +481,13 @@
                             </div>
                         </a>
                         <a href="images/facilities/THCS.jpg" data-fancybox="gallery3" style="display:none;"></a>
-                        
                         <h4 class="fac-title" onclick="document.querySelector('[data-fancybox=\'gallery3\']').click()">BMS Hưng Yên - Trường Tiểu học - THCS - THPT Hồng Đức</h4>
                     </div>
 
                 </div>
             </div>
 
-            <!-- Nút Phải -->
+            <!-- Facilities Right Arrow -->
             <button class="fac-arrow next" onclick="moveFacSlide(1)"><i class="fas fa-chevron-right"></i></button>
         </div>
     </section>
@@ -522,48 +495,47 @@
     <!-- Partners Section -->
     <section class="section-padding partners-section">
         <div class="container">
-            <!-- Khối bọc ngoài màu xanh nhạt (#EEF4FF) -->
+            <!-- Partners Box Container -->
             <div class="partners-box">
                 <h2 class="section-title text-center" style="color: var(--primary-blue); font-weight: 700; margin-bottom: 40px;">CÁC ĐỐI TÁC CỦA BMS</h2>
                 
                 <div class="partner-slider-wrapper">
-                    <!-- Nút Trái -->
+                    <!-- Partners Left Arrow -->
                     <button class="partner-arrow prev" onclick="movePartnerSlide(-1)"><i class="fas fa-chevron-left"></i></button>
 
-                    <!-- Khối chứa track trượt -->
+                    <!-- Partners Track Container -->
                     <div class="partner-track-container">
                         <div class="partner-track" id="partnerTrack">
                             
-                            <!-- Logo 1 -->
+                            <!-- Partner Logo 1 -->
                             <div class="partner-slide">
-                                <!-- Thẻ a gọi Fancybox để xem ảnh to -->
                                 <a href="images/partner/partner-logo-1.png" data-fancybox="partners">
                                     <img src="images/partner/partner-logo-1.png" alt="Cambridge">
                                 </a>
                             </div>
 
-                            <!-- Logo 2 -->
+                            <!-- Partner Logo 2 -->
                             <div class="partner-slide">
                                 <a href="images/partner/partner-logo-2.png" data-fancybox="partners">
                                     <img src="images/partner/partner-logo-2.png" alt="Leader in Me">
                                 </a>
                             </div>
 
-                            <!-- Logo 3 -->
+                            <!-- Partner Logo 3 -->
                             <div class="partner-slide">
                                 <a href="images/partner/partner-logo-3.png" data-fancybox="partners">
                                     <img src="images/partner/partner-logo-3.png" alt="National Geographic">
                                 </a>
                             </div>
 
-                            <!-- Logo 4 -->
+                            <!-- Partner Logo 4 -->
                             <div class="partner-slide">
                                 <a href="images/partner/partner-logo-4.png" data-fancybox="partners">
                                     <img src="images/partner/partner-logo-4.png" alt="IIG Viet Nam">
                                 </a>
                             </div>
 
-                            <!-- Logo 5 (Thêm vào để trượt) -->
+                            <!-- Partner Logo 5 -->
                             <div class="partner-slide">
                                 <a href="images/partner/partner-logo-5.png" data-fancybox="partners">
                                     <img src="images/partner/partner-logo-5.png" alt="Partner 5">
@@ -572,7 +544,7 @@
                         </div>
                     </div>
 
-                    <!-- Nút Phải -->
+                    <!-- Partners Right Arrow -->
                     <button class="partner-arrow next" onclick="movePartnerSlide(1)"><i class="fas fa-chevron-right"></i></button>
                 </div>
             </div>
@@ -584,6 +556,7 @@
         <div class="container">
             <div class="footer-grid">
                 <div>
+                    <!-- Footer Logo -->
                     <div class="logo-footer-box">
                         <a href="#" class="logo-footer-link">
                             <img src="images/logo/logo-footer.svg" alt="BMS Logo" class="logo-footer-img">
@@ -591,7 +564,7 @@
                     </div>
                 </div>
                 
-                
+                <!-- Footer Contact Info -->
                 <div class="footer-contact">
                     <h4>HỆ THỐNG TRƯỜNG LIÊN CẤP BMS</h4>
                     <ul class="contact-list">
@@ -605,31 +578,32 @@
                     </ul>
                 </div>
 
+                <!-- Footer Right Links -->
                 <div class="footer-right">
                     <a href="#" id="openContactModal" class="btn btn-orange pulse-btn">LIÊN HỆ</a>
                     
-                    <!-- Hàng icon 1 -->
+                    <!-- Social Icons Row 1 -->
                     <div class="social-icons">
                         <a href="#"><span class="icon-circle"><img src="images/social/zalo.svg" alt="Zalo"></span></a>
                         <a href="#"><span class="icon-circle"><i class="fa-brands fa-facebook-f"></i></span></a>
                         <a href="#"><span class="icon-circle"><i class="fa-brands fa-youtube"></i></span></a>
                     </div>
                     
-                    <!-- Hàng icon 2 -->
+                    <!-- Social Icons Row 2 -->
                     <div class="social-icons">
                         <a href="#"><span class="icon-circle"><img src="images/social/zalo.svg" alt="Zalo"></span></a>
                         <a href="#"><span class="icon-circle"><em class="fa-brands fa-facebook-f"></em></span></a>
                         <a href="#"><span class="icon-circle"><em class="fa-brands fa-youtube"></em></span></a>
                     </div>
                     
-                    <!-- Hàng icon 3 -->
+                    <!-- Social Icons Row 3 -->
                     <div class="social-icons">
                         <a href="#"><span class="icon-circle"><img src="images/social/zalo.svg" alt="Zalo"></span></a>
                         <a href="#"><span class="icon-circle"><em class="fa-brands fa-facebook-f"></em></i></span></a>
                         <a href="#"><span class="icon-circle"><em class="fa-brands fa-youtube"></em></span></a>
                     </div>
                     
-                    <!-- Hàng icon 4 -->
+                    <!-- Social Icons Row 4 -->
                     <div class="social-icons">
                         <a href="#"><span class="icon-circle"><img src="images/social/zalo.svg" alt="Zalo"></span></a>
                         <a href="#"><span class="icon-circle"><em class="fa-brands fa-facebook-f"></em></span></a>
@@ -666,13 +640,13 @@
 
     <!-- Floating Zalo Icon -->
     <a href="#" class="floating-zalo">
-        <span>Zalo</span> <!-- Thay bằng icon Zalo thực tế nếu có -->
+        <span>Zalo</span>
     </a>
 
-    <!-- Modal Liên Hệ -->
+    <!-- Contact Modal -->
     <div class="modal-overlay" id="contactModal">
         <div class="modal-container">
-            <!-- Nút tắt (X) -->
+            <!-- Modal Close Button -->
             <span class="modal-close" id="closeContactModal"><i class="fas fa-times"></i></span>
             
             <h2 class="modal-title">LIÊN HỆ</h2>
@@ -681,9 +655,7 @@
             <form class="modal-form" action="#">
                 <input type="text" placeholder="Họ và tên Học sinh *">
                 <div class="input-icon-wrap">
-                    <!-- Thêm đoạn JS nhỏ onblur để nếu người dùng chưa chọn ngày, nó quay lại dạng text -->
                     <input type="text" placeholder="Ngày tháng năm sinh (dd/mm/yyyy) *" onfocus="(this.type='date')" onblur="if(!this.value) this.type='text'">
-                    <!-- Icon Lịch FontAwesome -->
                     <i class="far fa-calendar-alt"></i>
                 </div>
                 <input type="text" placeholder="Trường Học sinh đang học *">

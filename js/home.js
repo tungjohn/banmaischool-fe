@@ -2,22 +2,18 @@
 window.addEventListener('scroll', function() {
     var header = document.getElementById('main-header');
     
-    // KHI CUỘN XUỐNG: Phải cuộn qua mốc 150px mới bắt đầu thu nhỏ
     if (window.scrollY > 150) {
         header.classList.add('is-sticky');
     } 
-    // KHI CUỘN LÊN: Phải cuộn lên gần sát trên cùng (nhỏ hơn 50px) mới phóng to lại
     else if (window.scrollY < 50) {
         header.classList.remove('is-sticky');
     }
 });
 
-// ==========================================
 // HIỆU ỨNG ĐẾM SỐ (COUNT UP) KHI CUỘN TRANG
-// ==========================================
 const counters = document.querySelectorAll('.counter');
 const counterSection = document.getElementById('counter-section');
-let hasAnimated = false; // Biến kiểm tra để chỉ chạy hiệu ứng 1 lần
+let hasAnimated = false; 
 
 // Hàm chạy đếm số
 const runCounterAnimation = () => {
@@ -28,7 +24,6 @@ const runCounterAnimation = () => {
             const target = +counter.getAttribute('data-target'); // Lấy số đích từ HTML
             const c = +counter.innerText;
             
-            // Tốc độ chạy (số càng lớn chạy càng chậm, có thể chỉnh sửa)
             const increment = target / 50; 
 
             if (c < target) {
@@ -42,10 +37,9 @@ const runCounterAnimation = () => {
     });
 };
 
-// Sử dụng Intersection Observer để phát hiện khi người dùng cuộn tới vùng chứa số
 const observerOptions = {
     root: null,
-    threshold: 0.5 // Kích hoạt khi 50% vùng chứa số xuất hiện trên màn hình
+    threshold: 0.5 
 };
 
 const observer = new IntersectionObserver((entries, observer) => {
@@ -58,7 +52,6 @@ const observer = new IntersectionObserver((entries, observer) => {
     });
 }, observerOptions);
 
-// Bắt đầu theo dõi section chứa các con số
 if (counterSection) {
     observer.observe(counterSection);
 }
@@ -74,7 +67,6 @@ const totalSlides = document.querySelectorAll('.slide').length;
 
 function updateSliderPosition() {
     if (!sliderContainer) return;
-    // Dịch chuyển container sang trái dựa trên index hiện tại
     sliderContainer.style.transform = `translateX(-${currentSlideIndex * 100}%)`;
     
     // Cập nhật trạng thái active cho dấu chấm
@@ -95,7 +87,7 @@ function changeSlide(direction) {
     }
     
     updateSliderPosition();
-    resetSlideTimer(); // Reset hẹn giờ tự động chạy khi người dùng tự click
+    resetSlideTimer(); 
 }
 
 function goToSlide(index) {
@@ -104,7 +96,6 @@ function goToSlide(index) {
     resetSlideTimer();
 }
 
-// Tự động chuyển slide sau mỗi 5 giây (5000ms)
 function startSlideTimer() {
     slideTimer = setInterval(() => {
         changeSlide(1);
@@ -124,7 +115,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ==========================================
-// TESTIMONIALS SLIDER LOGIC (Trượt từng thẻ một)
 // ==========================================
 let currentTestiIndex = 0;
 let testiTimer;
@@ -133,17 +123,14 @@ const testiCards = document.querySelectorAll('.testi-card');
 const dotsContainer = document.getElementById('testiDotsContainer');
 const totalTestiCards = testiCards.length;
 
-// Xác định số thẻ hiển thị trên màn hình (Desktop: 2, Mobile: 1)
 function getCardsPerView() {
     return window.innerWidth > 992 ? 2 : 1;
 }
 
-// Tính toán số lần trượt tối đa có thể (để không bị trượt vào khoảng trắng)
 function getMaxSlides() {
     return totalTestiCards - getCardsPerView();
 }
 
-// Tạo dấu chấm (dots) động dựa trên số lần trượt
 function createDots() {
     if(!dotsContainer) return;
     dotsContainer.innerHTML = '';
@@ -161,7 +148,6 @@ function createDots() {
 function updateTestiSlider() {
     if(!testiTrack || totalTestiCards === 0) return;
     
-    // Tính toán khoảng cách trượt = (Chiều rộng 1 thẻ + Khoảng cách gap 30px) * index
     const cardWidth = testiCards[0].offsetWidth;
     const gap = 30; 
     const moveAmount = (cardWidth + gap) * currentTestiIndex;
@@ -205,14 +191,12 @@ function resetTestiTimer() {
     startTestiTimer();
 }
 
-// Khởi tạo slider khi load trang và khi resize màn hình
 window.addEventListener('load', () => {
     createDots();
     updateTestiSlider();
     startTestiTimer();
 });
 
-// Cập nhật lại dots và vị trí nếu người dùng thu phóng cửa sổ trình duyệt
 window.addEventListener('resize', () => {
     currentTestiIndex = 0; // Đưa về slide đầu tiên cho an toàn
     createDots();
@@ -223,9 +207,8 @@ window.addEventListener('resize', () => {
 // KHỞI TẠO FANCYBOX (Thư viện xem ảnh)
 // ==========================================
 Fancybox.bind("[data-fancybox]", {
-    // Tùy chỉnh (có thể xem thêm trên trang chủ Fancybox)
     Thumbs: {
-        autoStart: true, // Tự động hiện danh sách ảnh thu nhỏ bên dưới
+        autoStart: true, 
     },
 });
 
@@ -244,19 +227,16 @@ function getFacCardsPerView() {
     return window.innerWidth > 992 ? 2 : 1;
 }
 
-// HÀM MỚI: Kiểm tra và ẩn/hiện nút
 function checkFacArrows() {
     if(!facPrevBtn || !facNextBtn) return;
     const maxIndex = facCards.length - getFacCardsPerView();
 
-    // Nếu đang ở thẻ đầu tiên (index = 0) -> Ẩn nút Trái
     if (facIndex === 0) {
         facPrevBtn.classList.add('slider-arrow-disabled');
     } else {
         facPrevBtn.classList.remove('slider-arrow-disabled');
     }
 
-    // Nếu đang ở thẻ cuối cùng (index = maxIndex) -> Ẩn nút Phải
     if (facIndex >= maxIndex) {
         facNextBtn.classList.add('slider-arrow-disabled');
     } else {
@@ -271,7 +251,6 @@ function updateFacSlider() {
     const moveAmount = (cardWidth + gap) * facIndex;
     facTrack.style.transform = `translateX(-${moveAmount}px)`;
     
-    // Gọi hàm check nút mỗi khi slider di chuyển
     checkFacArrows(); 
 }
 
@@ -279,7 +258,6 @@ function moveFacSlide(direction) {
     const maxIndex = facCards.length - getFacCardsPerView();
     facIndex += direction;
     
-    // Khi nhấn tới/lui, nếu vượt quá giới hạn thì ép nó đứng lại ở mốc cuối
     if (facIndex > maxIndex) facIndex = maxIndex;
     else if (facIndex < 0) facIndex = 0;
 
@@ -289,7 +267,6 @@ function moveFacSlide(direction) {
 
 function startFacTimer() {
     facTimer = setInterval(() => { 
-        // Xử lý auto-play: Khi đến cuối thì quay lại đầu
         const maxIndex = facCards.length - getFacCardsPerView();
         if(facIndex >= maxIndex) {
             facIndex = 0;
@@ -334,7 +311,6 @@ function getPartnerCardsPerView() {
     return 1;
 }
 
-// HÀM MỚI: Kiểm tra và ẩn/hiện nút
 function checkPartnerArrows() {
     if(!partnerPrevBtn || !partnerNextBtn) return;
     const maxIndex = partnerSlides.length - getPartnerCardsPerView();
@@ -376,7 +352,6 @@ function movePartnerSlide(direction) {
 
 function startPartnerTimer() {
     partnerTimer = setInterval(() => { 
-        // Auto-play: Khi đến cuối thì quay lại đầu
         const maxIndex = partnerSlides.length - getPartnerCardsPerView();
         if(partnerIndex >= maxIndex) {
             partnerIndex = 0;
@@ -412,12 +387,10 @@ const searchDropdown = document.getElementById('searchDropdown');
 
 if (searchToggleBtn && searchDropdown) {
     searchToggleBtn.addEventListener('click', function(e) {
-        e.preventDefault(); // Ngăn trình duyệt nhảy trang khi click vào thẻ <a>
+        e.preventDefault(); 
         
-        // Bật/tắt class active để xổ xuống hoặc thu lại thanh tìm kiếm
         searchDropdown.classList.toggle('active');
         
-        // Tùy chọn: Tự động focus vào ô nhập chữ khi thanh search mở ra
         if (searchDropdown.classList.contains('active')) {
             const searchInput = searchDropdown.querySelector('input');
             setTimeout(() => { searchInput.focus(); }, 300); // Đợi hiệu ứng trượt xong mới focus
@@ -444,7 +417,6 @@ if(openContactBtn && contactModal && closeContactBtn) {
         contactModal.classList.remove('active');
     });
 
-    // Đóng modal khi click ra lớp phủ nền đen bên ngoài
     contactModal.addEventListener('click', (e) => {
         if(e.target === contactModal) {
             contactModal.classList.remove('active');
@@ -452,7 +424,6 @@ if(openContactBtn && contactModal && closeContactBtn) {
     });
 }
 
-// Lắng nghe sự kiện cuộn trang (Cho cả Header và nút BackToTop)
 window.addEventListener('scroll', function() {
     var header = document.getElementById('main-header');
     var backToTopBtn = document.getElementById('backToTopBtn'); // Gọi nút Scroll Top
@@ -465,7 +436,6 @@ window.addEventListener('scroll', function() {
     }
 
     // --- Xử lý hiện nút Back To Top ---
-    // Nếu cuộn xuống quá 300px thì hiện nút mũi tên lên
     if (backToTopBtn) {
         if (window.scrollY > 300) {
             backToTopBtn.classList.add('show-btn');

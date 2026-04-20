@@ -68,25 +68,25 @@ header {
     position: sticky;
     top: 0;
     z-index: 1000;
-    transition: all 0.3s ease; /* Hiệu ứng mượt cho toàn header */
+    transition: all 0.3s ease;
 }
 
 .nav-container {
     display: flex;
-    justify-content: space-between; /* Đẩy Logo sang trái, Header-right sang phải */
-    align-items: stretch; /* Đảm bảo 2 cột cao bằng nhau */
+    justify-content: space-between;
+    align-items: stretch;
 }
 
 /* --- LOGO --- */
 .logo-wrapper {
     display: flex;
-    align-items: center; /* Căn giữa logo theo chiều dọc */
+    align-items: center;
     padding: 10px 0;
 }
 
 .logo {
     text-decoration: none;
-    transition: transform 0.3s ease; /* Hiệu ứng thu nhỏ logo */
+    transition: transform 0.3s ease;
     transform-origin: left center;
 }
 
@@ -97,10 +97,10 @@ header {
 }
 
 .logo-img {
-    max-height: 75px; /* Chiều cao logo lúc bình thường */
+    max-height: 75px;
     width: auto;      
     display: block;
-    /* Thêm transition cho max-height để co rút mượt mà */
+    
     transition: max-height 0.3s ease; 
 }
 
@@ -115,17 +115,17 @@ header {
 /* --- CỘT PHẢI (Chứa Topbar và Nav) --- */
 .header-right {
     display: flex;
-    flex-direction: column; /* Xếp top-bar nằm trên main-nav */
-    justify-content: flex-end; /* Đẩy main-nav xuống sát đáy */
-    align-items: flex-end; /* Căn lề phải cho toàn khối */
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
 }
 
 /* --- TOP BAR --- */
 .top-bar {
     display: flex;
     align-items: center;
-    gap: 30px; /* TĂNG KHOẢNG CÁCH: Từ 20px lên 30px để các link xa nhau ra */
-    font-size: 14px; /* TĂNG CỠ CHỮ: Từ 13px lên 14px */
+    gap: 30px; 
+    font-size: 14px; 
     color: var(--text-light);
     
     padding-top: 15px;
@@ -147,21 +147,19 @@ header {
     color: var(--orange); 
 }
 
-/* =========================================
-   HIỆU ỨNG NÚT TOP-BAR (Trượt màu nền)
-   ========================================= */
+
 .top-bar .top-btn {
     margin: 2px 3px 2px 2px;
     position: relative;
-    overflow: hidden; /* Rất quan trọng: Dùng để cắt phần nền cam khi nó trượt ra ngoài */
+    overflow: hidden; 
     background-color: white !important; /* Nền thật của nút là màu trắng */
     color: white !important; /* Chữ lúc đầu là màu trắng */
-    border: 1px solid var(--orange); /* Thêm viền cam để khi nền trắng lộ ra vẫn giữ được hình dáng nút */
+    border: 1px solid var(--orange); 
     z-index: 1; /* Đảm bảo chữ luôn nằm trên cùng */
     transition: color 0.4s ease; /* Hiệu ứng chuyển màu chữ mượt mà */
 }
 
-/* Lớp nền màu cam (phần tử giả) che lấp lớp nền trắng */
+
 .top-bar .top-btn::before {
     content: '';
     position: absolute;
@@ -176,7 +174,7 @@ header {
 
 /* KHI HOVER VÀO NÚT */
 
-/* 1. Lớp nền cam trượt đi 100% sang bên phải */
+
 .top-bar .top-btn:hover::before {
     transform: translateX(100%); 
 }
@@ -186,7 +184,7 @@ header {
     color: var(--orange) !important; 
 }
 
-/* --- BỘ CHUYỂN ĐỔI NGÔN NGỮ (VN | EN) --- */
+
 .lang-switch {
     display: flex;
     align-items: center;
@@ -226,12 +224,12 @@ header {
 .main-nav > ul > li { position: relative; }
 
 .main-nav a {
-    font-weight: 400; /* BỎ IN ĐẬM: Giảm từ 500 xuống 400 (bình thường) */
+    font-weight: 400; 
     font-size: 14.5px;
     color: var(--text-dark);
     display: block;
     
-    /* TĂNG PADDING: Từ 20px lên 28px để header cao và thoáng hơn giống thiết kế */
+    
     padding: 28px 0; 
     
     transition: color 0.3s;
@@ -313,15 +311,15 @@ header {
     background-color: #ffffff;
     /* ĐÃ BỎ border-top theo yêu cầu */
     
-    /* Thiết lập ẩn mặc định bằng opacity và visibility thay vì max-height */
+    
     opacity: 0;
     visibility: hidden;
-    position: absolute; /* Đưa form nổi lên trên, không đẩy nội dung xuống */
+    position: absolute; 
     left: 0;
     top: 100%; /* Nằm ngay dưới mép header */
     z-index: 999;
     
-    /* Padding cố định (chỉ ảnh hưởng thị giác khi hiện ra) */
+    
     padding: 45px 0; 
     
     /* Hiệu ứng Scale và Fade-in nhanh hơn */
@@ -330,28 +328,28 @@ header {
     box-shadow: 0 10px 20px rgba(0,0,0,0.05); /* Bóng đổ cho cả vùng dropdown nếu cần */
 }
 
-/* Class active được JS gọi khi click chuột */
+
 .search-dropdown.active {
     opacity: 1;
     visibility: visible;
     transform: translateY(0); /* Bật xuống vị trí gốc */
 }
 
-/* Định dạng Form Tìm kiếm theo thiết kế mới */
+
 .search-form {
     display: flex;
     width: 100%; 
 }
 
-/* Định dạng ô nhập chữ (Input) - GIẢM CHIỀU CAO */
+
 .search-form input {
     flex-grow: 1; 
-    /* Đã giảm padding trên/dưới để input lùn lại */
+    
     padding: 10px 20px; 
     border: none;
     outline: none;
     background-color: #ffffff; 
-    font-size: 14px; /* Giảm cỡ chữ xuống 1 chút nếu cần cân đối */
+    font-size: 14px; 
     color: var(--text-dark);
     
     border-radius: 4px;
@@ -361,7 +359,7 @@ header {
     position: relative;
 }
 
-/* Định dạng Nút Search (Button) - GIẢM CHIỀU CAO TƯƠNG ỨNG */
+
 .search-form button {
     background-color: #5558D8; 
     color: white;
@@ -384,9 +382,7 @@ header {
 }
 
 
-/* =========================================
-    HIỆU ỨNG KHI CUỘN TRANG (STICKY HEADER) 
-    ========================================= */
+
 header.is-sticky {
     box-shadow: 0 5px 20px rgba(0,0,0,0.1);
 }
@@ -415,8 +411,8 @@ header.is-sticky .logo-img {
 header.is-sticky .search-dropdown.active {
     opacity: 0 !important;
     visibility: hidden !important;
-    transform: translateY(-10px) !important; /* Đẩy ngược lên một chút để tạo hiệu ứng thu lại */
-    pointer-events: none; /* Tránh tình trạng form tàng hình nhưng vẫn click trúng input */
+    transform: translateY(-10px) !important; 
+    pointer-events: none; 
 }
 
 /* --- HERO SLIDER FULL WIDTH --- */
@@ -424,7 +420,7 @@ header.is-sticky .search-dropdown.active {
     position: relative;
     width: 100%;
     overflow: hidden;
-    /* Đặt màu nền dự phòng trong lúc chờ load ảnh */
+    
     background-color: var(--light-blue); 
 }
 
@@ -435,7 +431,7 @@ header.is-sticky .search-dropdown.active {
 }
 
 .slide {
-    min-width: 100%; /* Mỗi slide chiếm 100% chiều rộng màn hình */
+    min-width: 100%; 
     box-sizing: border-box;
 }
 
@@ -527,7 +523,7 @@ header.is-sticky .search-dropdown.active {
     display: grid;
     grid-template-columns: repeat(12, 1fr); /* Chia thành 12 cột bằng nhau */
     gap: 40px; /* Khoảng cách giữa 2 khối */
-    align-items: stretch; /* Đảm bảo 2 khối có chiều cao tương đương nếu cần */
+    align-items: stretch; 
     padding-bottom: 0 !important; 
 }
 
@@ -536,7 +532,7 @@ header.is-sticky .search-dropdown.active {
     grid-column: span 5;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end; /* Quan trọng: Đẩy bức ảnh xuống sát đáy cột */
+    justify-content: flex-end; 
 }
 
 /* Khối Phải chiếm 7 cột */
@@ -547,11 +543,11 @@ header.is-sticky .search-dropdown.active {
 
 .about-image {
     width: 100%;
-    /* Bỏ height: 100% cũ đi để ảnh không bị kéo giãn sai tỷ lệ */
+    
     height: auto; 
     object-fit: cover;
-    border-radius: 10px 10px 0 0; /* Chỉ bo 2 góc trên, 2 góc dưới vuông vức để chạm khối xanh */
-    display: block; /* Tránh khoảng trắng nhỏ (khoảng 3-4px) dư thừa dưới đáy ảnh do thuộc tính inline mặc định */
+    border-radius: 10px 10px 0 0; 
+    display: block; 
 }
 
 .about-divider {
@@ -618,8 +614,8 @@ header.is-sticky .search-dropdown.active {
 .cert-bg-blue { background-color: var(--primary-blue); }
 .cert-bg-orange { background-color: var(--orange); }
 
-/* Responsive cho thiết bị di động: Đưa cả 2 khối về chiếm trọn 12 cột (xếp chồng lên nhau) */
-/* --- RESPONSIVE CHO ĐIỆN THOẠI (Phần Tin Tức) --- */
+
+
 @media (max-width: 992px) {
     .news-flex-container { flex-direction: column; }
     .news-main, .news-list { width: 100%; }
@@ -637,10 +633,10 @@ header.is-sticky .search-dropdown.active {
     padding: 0px 0px 20px 0px; /* Đảm bảo có khoảng cách trên dưới */
 }
 
-/* 1. Đưa màu nền xanh vào bên trong thẻ container */
+
 .programs-section > .container {
     background-color: var(--primary-blue);
-    padding: 50px; /* Tạo khoảng cách từ viền xanh đến các card */
+    padding: 50px; 
     box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 }
 
@@ -724,7 +720,7 @@ header.is-sticky .search-dropdown.active {
 .bg-thcs { background-color: #16B8AD; }
 .bg-thpt { background-color: #384EB6; }
 
-/* Responsive thu gọn padding container khi ở Mobile */
+
 @media (max-width: 768px) {
     .programs-section > .container {
         padding: 30px 15px;
@@ -747,7 +743,7 @@ header.is-sticky .search-dropdown.active {
 .ad-banner-wrapper {
     width: 100%;
     border-radius: 12px; /* Bo góc viền ảnh */
-    overflow: hidden; /* Quan trọng: Cắt phần ảnh bị dư ra khi phóng to (zoom) */
+    overflow: hidden; 
     box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 }
 
@@ -755,11 +751,11 @@ header.is-sticky .search-dropdown.active {
     width: 100%;
     display: block;
     object-fit: cover;
-    /* Thêm transition để hiệu ứng phóng to diễn ra mượt mà trong 0.5 giây */
+    
     transition: transform 0.5s ease;
 }
 
-/* Hiệu ứng Zoom In khi hover chuột vào thẻ chứa ảnh */
+
 .ad-banner-wrapper:hover .ad-banner-img {
     transform: scale(1.03); /* Phóng to ảnh lên 3% */
 }
@@ -780,12 +776,12 @@ header.is-sticky .search-dropdown.active {
     align-items: center;
 }
 
-/* Tạo đường kẻ dọc mờ ngăn cách giữa các mục */
-/* Trừ mục cuối cùng (:last-child) sẽ không có đường kẻ này */
+
+
 .filter-tabs li:not(:last-child)::after {
     content: '';
     position: absolute;
-    right: -20px; /* Đặt đường kẻ nằm đúng chính giữa khoảng gap 40px */
+    right: -20px; 
     top: 50%;
     transform: translateY(-50%);
     height: 14px; /* Chiều cao của đường kẻ dọc */
@@ -794,18 +790,18 @@ header.is-sticky .search-dropdown.active {
 }
 
 .filter-tabs a { 
-    font-size: 20px; /* Tăng kích thước chữ lên một chút cho dễ nhìn */
+    font-size: 20px; 
     font-weight: 400; 
     color: var(--text-dark);
     text-transform: uppercase;
-    padding: 5px 0; /* Xóa padding ngang để gạch chân khít với chữ */
+    padding: 5px 0; 
     display: block;
     position: relative;
     cursor: pointer;
     text-decoration: none;
 }
 
-/* Hiệu ứng đổi màu chữ khi hover hoặc active */
+
 .filter-tabs a:hover,
 .filter-tabs a.active { 
     color: var(--orange); 
@@ -817,14 +813,14 @@ header.is-sticky .search-dropdown.active {
     position: absolute;
     bottom: 0px; /* Đưa gạch chân sát vào chữ */
     left: 0; 
-    width: 100%; /* Đường gạch chân sẽ rộng bằng đúng bề ngang của chữ */
+    width: 100%; 
     height: 2px;
     background-color: var(--orange);
     transform: scaleX(0);
     transition: transform 0.3s ease;
 }
 
-/* Hiện đường gạch chân khi hover hoặc thẻ đang active */
+
 .filter-tabs a:hover::after,
 .filter-tabs a.active::after {
     transform: scaleX(1);
@@ -837,7 +833,7 @@ header.is-sticky .search-dropdown.active {
     align-items: flex-start;
 }
 
-/* Chia cột: Cột trái (tin chính) rộng hơn một chút so với cột phải (tin phụ) */
+
 .news-main { flex: 1; width: 55%; } 
 .news-list { flex: 1; width: 45%; display: flex; flex-direction: column; gap: 25px; } 
 
@@ -889,11 +885,11 @@ header.is-sticky .search-dropdown.active {
 .news-item-small { 
     display: flex; 
     gap: 20px; 
-    align-items: center; /* ĐỔI TỪ flex-start THÀNH center ĐỂ CHỮ NẰM GIỮA ẢNH */
-    cursor: pointer; /* Thêm con trỏ chuột khi hover toàn bộ item */
+    align-items: center; 
+    cursor: pointer; 
 }
 
-/* Điều chỉnh lại kích thước ảnh phụ do khung đã hẹp lại */
+
 .news-small-img { 
     width: 200px; /* Thu nhỏ ảnh phụ một chút (từ 220px) */
     height: 130px; /* Thu nhỏ chiều cao tương ứng */
@@ -913,7 +909,7 @@ header.is-sticky .search-dropdown.active {
 .news-small-content {
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Giúp chữ tự canh giữa trong không gian của nó */
+    justify-content: center; 
     padding-top: 0; /* Xóa padding-top cũ */
 }
 
@@ -1002,10 +998,10 @@ header.is-sticky .search-dropdown.active {
 .testi-slider-wrapper {
     width: 100%;
     overflow: hidden;
-    padding: 50px 0 20px 0; /* Padding để không bị cắt bóng đổ (box-shadow) */
+    padding: 50px 0 20px 0; 
 }
 
-/* Track chứa tất cả các card, dùng flex để dàn ngang */
+
 .testi-slider-track {
     display: flex;
     gap: 30px; /* Khoảng cách giữa 2 thẻ */
@@ -1017,7 +1013,7 @@ header.is-sticky .search-dropdown.active {
     flex: 0 0 calc(50% - 15px); 
     background: white;
     border-radius: 20px;
-    /* ĐIỀU CHỈNH PADDING: Trên 60px, Phải 40px, Dưới 40px, Trái 30px */
+    
     /* Padding trên lớn để né dấu nháy kép */
     padding: 60px 40px 40px 30px; 
     box-shadow: 0 10px 30px rgba(0,0,0,0.05);
@@ -1037,7 +1033,7 @@ header.is-sticky .search-dropdown.active {
 }
 
 .testi-avatar {
-    width: 110px; /* Tăng kích thước avatar lên một chút cho cân đối */
+    width: 110px; 
     height: 110px;
     border-radius: 50%;
     object-fit: cover;
@@ -1053,20 +1049,20 @@ header.is-sticky .search-dropdown.active {
 .testi-right {
     flex-grow: 1;
     z-index: 2;
-    /* ĐIỀU CHỈNH KHOẢNG CÁCH: Đây chính là vùng màu xanh lá trong ảnh 2 của bạn */
+    
     padding-left: 40px; 
-    padding-top: 10px; /* Đẩy khối chữ xuống một xíu cho ngang tầm với avatar */
+    padding-top: 10px; 
 }
 
 .testi-headline { font-size: 17px; font-weight: 700; color: var(--text-dark); margin-bottom: 15px; line-height: 1.4;}
 .testi-text { font-size: 14px; color: var(--text-light); line-height: 1.6; text-align: justify; }
 
-/* Chỉnh lại vị trí dấu nháy kép do padding thẻ cha đã thay đổi */
+
 .testi-quote-svg {
     position: absolute;
-    top: -20px; /* Đẩy giá trị âm để nó nhô lên khỏi viền thẻ card */
+    top: -20px; 
     left: 40px; 
-    width: 85px; /* Thu nhỏ SVG lại một chút cho đúng tỷ lệ ảnh mẫu */
+    width: 85px; 
     height: auto;
     z-index: 1;
 }
@@ -1078,7 +1074,7 @@ header.is-sticky .search-dropdown.active {
 .dot { width: 12px; height: 12px; background: #ddd; border-radius: 50%; cursor: pointer; transition: 0.3s;}
 .dot.active { background: var(--orange); }
 
-/* Responsive cho Mobile: Khi màn hình nhỏ, thẻ xếp dọc thì phải reset lại padding */
+
 @media (max-width: 992px) {
     .testi-card {
         flex: 0 0 100%; 
@@ -1088,10 +1084,10 @@ header.is-sticky .search-dropdown.active {
         padding: 50px 20px 30px 20px; /* Cân bằng lại padding cho mobile */
     }
     .testi-right {
-        padding-left: 0; /* Xóa khoảng cách bên trái khi chữ đã rớt xuống dưới avatar */
+        padding-left: 0; 
         padding-top: 20px;
     }
-    /* Căn giữa SVG Quote khi ở giao diện Mobile */
+    
     .testi-quote-svg { 
         left: 50%; 
         transform: translateX(-50%); 
@@ -1100,7 +1096,7 @@ header.is-sticky .search-dropdown.active {
 }
 
 /* SLIDER dùng chung */
-/* Hiệu ứng ẩn/hiện nút mượt mà, không làm xô lệch layout */
+
 .slider-arrow-disabled {
     opacity: 0 !important;
     visibility: hidden !important;
@@ -1205,7 +1201,7 @@ header.is-sticky .search-dropdown.active {
     border: none; cursor: pointer; font-size: 18px;
     transition: all 0.3s;
     flex-shrink: 0;
-    margin-bottom: 50px; /* Đẩy nút lên ngang hàng với trung tâm ảnh */
+    margin-bottom: 50px; 
 }
 .fac-arrow:hover { background-color: var(--orange); }
 
@@ -1221,7 +1217,7 @@ header.is-sticky .search-dropdown.active {
     background-color: transparent; /* Xóa nền cũ */
 }
 
-/* Khung bo góc màu xanh nhạt (#EEF4FF) theo thiết kế */
+
 .partners-box {
     background-color: #EEF4FF;
     border-radius: 20px;
@@ -1246,7 +1242,7 @@ header.is-sticky .search-dropdown.active {
     transition: transform 1.2s ease-in-out;
 }
 
-/* Hiển thị 4 thẻ trên Desktop (100% / 4 trừ đi khoảng gap) */
+
 .partner-slide {
     flex: 0 0 calc(25% - 15px); 
     display: flex;
@@ -1260,7 +1256,7 @@ header.is-sticky .search-dropdown.active {
     text-align: center;
 }
 
-/* Sử dụng object-fit: contain để logo không bị méo */
+
 .partner-slide img {
     max-width: 100%;
     height: 70px; /* Cố định chiều cao logo */
@@ -1306,7 +1302,7 @@ footer {
 }
 
 .logo-footer-img {
-    max-width: 220px; /* Giới hạn chiều rộng của logo (bạn có thể tăng/giảm số này cho vừa mắt) */
+    max-width: 220px; 
     width: 100%;
     height: auto;
     display: block;
@@ -1338,9 +1334,9 @@ footer {
     text-decoration: none;
 }
 
-/* Định dạng vòng tròn chứa viền xanh (nằm bên trong thẻ a) */
+
 .icon-circle {
-    width: 28px; /* Nhỏ hơn thẻ a để tạo ra viền trắng bên ngoài */
+    width: 28px; 
     height: 28px;
     border-radius: 50%;
     border: 1px solid var(--primary-blue); /* Viền màu xanh lục */
@@ -1351,23 +1347,23 @@ footer {
     transition: border-color 0.4s ease-in-out;
 }
 
-/* Chỉnh kích thước cho icon Zalo (ảnh svg) */
+
 .icon-circle img {
     width: 14px;
     height: auto;
 }
 
-/* Chỉnh kích thước cho icon FontAwesome (Facebook, Youtube) */
+
 .icon-circle i {
     font-size: 14px;
 }
 
-/* HIỆU ỨNG HOVER: Ẩn viền xanh đi (đổi màu viền trùng với màu nền trắng) */
+
 .social-icons a:hover .icon-circle {
     border-color: transparent; 
 }
 
-/* Tùy chọn thêm: Làm mờ icon một xíu khi hover để sinh động hơn */
+
 .social-icons a:hover {
     opacity: 0.9;
 }
@@ -1380,9 +1376,7 @@ footer {
     color: white;
 }
 
-/* =========================================
-   MODAL ĐĂNG KÝ TUYỂN SINH (FOOTER)
-   ========================================= */
+
 
 /* Lớp phủ màn hình màu đen mờ */
 .modal-overlay {
@@ -1399,7 +1393,7 @@ footer {
     transition: all 0.3s ease;
 }
 
-/* Hiển thị modal khi được JS gắn class active */
+
 .modal-overlay.active { 
     opacity: 1; 
     visibility: visible; 
@@ -1461,7 +1455,7 @@ footer {
     background: transparent;
     border: none;
     border-bottom: 1px solid rgba(255,255,255,0.4);
-    padding: 18px 0; /* Tăng padding trên/dưới để form thoáng hơn */
+    padding: 18px 0; 
     margin-bottom: 15px;
     color: white; 
     font-size: 17px; /* Tăng cỡ chữ từ 16px lên 17px */
@@ -1474,16 +1468,14 @@ footer {
     border-bottom: 1px solid rgba(255,255,255,1);
 }
 
-/* Đổi màu chữ placeholder thành màu trắng mờ */
+
 .modal-form input::placeholder { color: rgba(255,255,255,0.8); }
 .modal-form select { color: rgba(255,255,255,0.8); cursor: pointer;}
 .modal-form select option { background: #313575; color: white; } /* Fix màu option trên các trình duyệt */
 
 .modal-form .btn-full { margin-top: 15px; }
 
-/* =======================================
-   CSS THÊM MỚI CHO Ô NGÀY THÁNG VÀ ICON 
-   ======================================= */
+
 .input-icon-wrap {
     position: relative;
     width: 100%;
@@ -1496,10 +1488,10 @@ footer {
     transform: translateY(-50%);
     color: rgba(255, 255, 255, 0.8);
     font-size: 20px;
-    pointer-events: none; /* Để click chuột có thể xuyên qua icon chạm vào ô input */
+    pointer-events: none; 
 }
 
-/* Ẩn hoàn toàn cái icon lịch mặc định mờ mờ của trình duyệt */
+
 .input-icon-wrap input[type="date"]::-webkit-calendar-picker-indicator {
     background: transparent;
     color: transparent;
@@ -1507,20 +1499,18 @@ footer {
     height: auto;
     width: auto;
     position: absolute;
-    /* Dàn trải bộ bắt sự kiện click ra toàn bộ ô input */
+    
     left: 0; right: 0; top: 0; bottom: 0; 
 }
 
-/* Responsive cho điện thoại (Giữ Modal không bị tràn) */
+
 @media (max-width: 576px) {
     .modal-container { padding: 40px 25px; } /* Căn chỉnh lại padding di động */
     .modal-title { font-size: 24px; }
     .modal-form input, .modal-form select { font-size: 15px; padding: 15px 0;}
 }
 
-/* =========================================
-   FLOATING SIDEBAR (CÁC NÚT DÍNH BÊN PHẢI)
-   ========================================= */
+
 .floating-sidebar {
     position: fixed;
     right: 0;
@@ -1528,7 +1518,7 @@ footer {
     transform: translateY(-50%);
     display: flex;
     flex-direction: column;
-    gap: 15px; /* SỬA TỪ 5px THÀNH 15px để các nút cách xa nhau hơn */
+    gap: 15px; 
     z-index: 9998;
 }
 
@@ -1541,7 +1531,7 @@ footer {
     align-items: center;
     justify-content: center;
     color: white;
-    font-size: 24px; /* SỬA TỪ 20px THÀNH 24px để icon to lên cân đối với nút */
+    font-size: 24px; 
     text-decoration: none;
     border-radius: 6px 0 0 6px; /* Tăng độ bo góc lên một chút cho đẹp */
     transition: all 0.3s ease;
@@ -1551,7 +1541,7 @@ footer {
 /* Hiệu ứng khi rê chuột vào (Hover) */
 .float-btn:hover {
     color: white;
-    width: 65px; /* Cập nhật lại độ dài khi hover cho cân xứng với chiều rộng mới (55px) */
+    width: 65px; 
     background-color: var(--orange);
 }
 
@@ -1559,7 +1549,7 @@ footer {
 .bg-dark-blue { background-color: #383B7B; } /* Màu xanh tím giống trong ảnh */
 .bg-grey { background-color: #888888; } /* Màu xám cho nút lên đầu trang */
 
-/* --- XỬ LÝ RIÊNG CHO NÚT SCROLL TO TOP --- */
+
 #backToTopBtn {
     opacity: 0;
     visibility: hidden;
@@ -1604,7 +1594,7 @@ footer {
     .hero-content { flex-direction: column; text-align: center; }
     .hero-badge-title { margin: 0 auto 15px;}
     .hero-image { margin-top: 30px; width: 100%;}
-    .main-nav { display: none; /* Hide nav on mobile for simplicity in this static mock */ }
+    .main-nav { display: none;  }
     .footer-right { text-align: left; margin-top: 20px;}
     .social-icons { justify-content: flex-start;}
     .section-header-flex { flex-direction: column; align-items: flex-start; gap: 10px;}

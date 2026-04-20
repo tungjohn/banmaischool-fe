@@ -1,0 +1,65 @@
+﻿📄 DETAILED CLEANUP REPORT
+================================
+
+✅ SCRIPT: clean_comments.py
+
+📊 PROCESSING RESULTS:
+────────────────────────
+
+1️⃣ index.html
+   ✓ Removed: 4 annotation comments
+   ✓ Kept: 60 section block markers
+   
+   Examples of REMOVED comments:
+   • 'Cột Trái: LOGO'
+   • 'Cột Phải: Top Bar & Main Nav'
+   • 'Hàng trên: Top Bar'
+   • 'Hàng dưới: Main Nav'
+   
+   Examples of KEPT markers:
+   • 'Font Awesome cho Icons'
+   • 'Google Fonts'
+   • 'Header Toàn Trang'
+
+2️⃣ css/home.css
+   ✓ Removed: 91 annotation/explanatory comments
+   ✓ Kept: 153 section block markers
+   
+   Examples of REMOVED comments:
+   • 'Thêm transition cho max-height để co rút mượt mà'
+   • 'TĂNG KHOẢNG CÁCH: Từ 20px lên 30px'
+   • 'Rất quan trọng: Dùng để cắt phần nền cam'
+   • '--- BỘ CHUYỂN ĐỔI NGÔN NGỮ ---'
+   
+   Examples of KEPT markers:
+   • '--- RESET & VARIABLES ---'
+   • '--- LOGO ---'
+   • '--- TOP BAR ---'
+
+3️⃣ js/home.js
+   ✓ Removed: 34 annotation/explanatory comments
+   ✓ Kept: 50 section block markers
+   
+   Examples of REMOVED comments:
+   • 'KHI CUỘN XUỐNG: Phải cuộn qua mốc 150px'
+   • 'HIỆU ỨNG ĐẾM SỐ (COUNT UP) KHI CUỘN TRANG'
+   • 'Biến kiểm tra để chỉ chạy hiệu ứng 1 lần'
+   
+   Examples of KEPT markers:
+   • 'Lắng nghe sự kiện cuộn trang'
+   • '=========================================='
+
+📈 TOTAL STATISTICS:
+────────────────────
+✅ Total annotation comments REMOVED: 129
+✏️  Total section block markers KEPT: 263
+
+✓ All files have been cleaned and saved successfully!
+✓ Timestamps verified - files were updated
+
+COMMENT REMOVAL STRATEGY:
+- Removed inline explanations (e.g., 'effect smoothing for header')
+- Removed detailed annotations with descriptions (e.g., 'Slide 1: Main banner')
+- Removed Vietnamese explanatory text
+- PRESERVED section dividers and markers (e.g., '--- HEADER ---', '/* --- RESET --- */')
+- PRESERVED functional comments necessary for code understanding
