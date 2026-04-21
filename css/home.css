@@ -616,16 +616,6 @@ header.is-sticky .search-dropdown.active {
 
 
 
-@media (max-width: 992px) {
-    .news-flex-container { flex-direction: column; }
-    .news-main, .news-list { width: 100%; }
-    .section-header-flex { flex-direction: column; align-items: flex-start; gap: 15px; }
-    
-    /* Thu nhỏ khoảng cách khi ở màn hình nhỏ */
-    .filter-tabs { gap: 20px; flex-wrap: wrap; }
-    .filter-tabs li:not(:last-child)::after { right: -10px; } 
-}
-
 /* --- PROGRAMS SECTION --- */
 .programs-section {
     background-color: transparent; /* Bỏ màu nền full màn hình */
@@ -645,13 +635,25 @@ header.is-sticky .search-dropdown.active {
     margin-bottom: 30px;
 }
 
-.program-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
+/* --- CẤU TRÚC SLIDER PROGRAMS --- */
+.program-slider-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.program-track-container {
+    overflow: hidden;
+    width: 100%;
+}
+
+.program-track {
+    display: flex;
     gap: 20px;
+    transition: transform 0.5s ease-in-out;
 }
 
 .program-card {
+    flex: 0 0 calc(25% - 15px); /* Desktop hiển thị 4 cột */
     border-radius: 12px;
     overflow: hidden;
     display: flex;
@@ -659,17 +661,36 @@ header.is-sticky .search-dropdown.active {
     background-color: #fff;
 }
 
+/* Nút điều hướng mũi tên */
+.program-arrows {
+    display: none; /* Mặc định ẩn trên Desktop vì đã hiện đủ 4 cột */
+    justify-content: center;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.prog-arrow {
+    width: 40px; height: 40px;
+    background-color: rgba(255, 255, 255, 0.15); /* Nền mờ giống ảnh 2 */
+    color: white;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    border: none; cursor: pointer; font-size: 16px;
+    transition: all 0.3s;
+}
+
+.prog-arrow:hover { background-color: var(--primary-blue); }
+
 .program-card img { 
-    height: 200px; /* Tăng chiều cao ảnh lên một chút */
+    height: 200px;
     object-fit: cover; 
     width: 100%; 
     background: #ccc;
-    /* Thêm transition zoom in trong 0.4 giây */
     transition: transform 0.4s ease; 
 }
 
 .program-card:hover img {
-    transform: scale(1.1); /* Phóng to ảnh lên 110% */
+    transform: scale(1.1); 
 }
 
 .program-card-content {
@@ -680,18 +701,16 @@ header.is-sticky .search-dropdown.active {
     justify-content: space-between;
     min-height: 150px;
     
-    /* Thêm relative để định vị đường uốn lượn */
     position: relative;
     z-index: 1;
 }
 
-/* 2. Tạo hiệu ứng uốn lượn (Wave) */
 .program-card-content::before {
     content: '';
     background: inherit;
     pointer-events: none;
     position: absolute;
-    left: 0 /* 0px */;
+    left: 0 ;
     top: -24px;
     z-index: 9999;
     display: block;
@@ -742,7 +761,7 @@ header.is-sticky .search-dropdown.active {
 /* --- AD BANNER SECTION (TUYỂN SINH) --- */
 .ad-banner-wrapper {
     width: 100%;
-    border-radius: 12px; /* Bo góc viền ảnh */
+    border-radius: 12px; 
     overflow: hidden; 
     box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 }
@@ -757,7 +776,7 @@ header.is-sticky .search-dropdown.active {
 
 
 .ad-banner-wrapper:hover .ad-banner-img {
-    transform: scale(1.03); /* Phóng to ảnh lên 3% */
+    transform: scale(1.03); 
 }
 
 /* --- BỘ LỌC TIN TỨC (UL LI) --- */
@@ -784,7 +803,7 @@ header.is-sticky .search-dropdown.active {
     right: -20px; 
     top: 50%;
     transform: translateY(-50%);
-    height: 14px; /* Chiều cao của đường kẻ dọc */
+    height: 14px; 
     width: 1px;
     background-color: #ccc;
 }
@@ -811,7 +830,7 @@ header.is-sticky .search-dropdown.active {
 .filter-tabs a::after {
     content: '';
     position: absolute;
-    bottom: 0px; /* Đưa gạch chân sát vào chữ */
+    bottom: 0px; 
     left: 0; 
     width: 100%; 
     height: 2px;
@@ -923,18 +942,73 @@ header.is-sticky .search-dropdown.active {
 
 .news-small-title a:hover { color: var(--primary-blue); }
 
-/* --- RESPONSIVE CHO ĐIỆN THOẠI --- */
 @media (max-width: 992px) {
-    .news-flex-container { flex-direction: column; }
-    .news-main, .news-list { width: 100%; }
-    .section-header-flex { flex-direction: column; align-items: flex-start; gap: 15px; }
-    .filter-tabs { flex-wrap: wrap; }
-    .filter-tabs a { padding: 5px 10px; }
+    /* --- RESPONSIVE CHO TIN TỨC TRÊN MOBILE/TABLET --- */
+    
+    /* 1. Căn giữa Tiêu đề và cho bộ lọc trượt ngang */
+    .section-header-flex { 
+        flex-direction: column; 
+        align-items: center; /* Căn giữa tiêu đề */
+        gap: 20px; 
+    }
+    
+    /* Cho phép cuộn ngang bộ lọc */
+    .filter-tabs { 
+        width: 100%;
+        gap: 20px; 
+        flex-wrap: nowrap; /* Cấm rớt dòng */
+        overflow-x: auto;  /* Bật thanh cuộn ngang */
+        padding-bottom: 10px; /* Chừa chỗ cho thanh cuộn (nếu hệ điều hành có hiện) */
+        
+        /* Ẩn thanh cuộn xấu xí trên một số trình duyệt (tuỳ chọn) */
+        -webkit-overflow-scrolling: touch; /* Trượt mượt trên iOS */
+        scrollbar-width: none; /* Firefox */
+    }
+    .filter-tabs::-webkit-scrollbar { display: none; } /* Chrome/Safari */
+    
+    .filter-tabs li { flex-shrink: 0; } /* Không cho các chữ bị ép nhỏ lại */
+    .filter-tabs li:not(:last-child)::after { right: -10px; }
+
+    /* 2. Đưa Tin Phụ xuống dưới Tin Chính */
+    .news-flex-container { 
+        flex-direction: column; 
+    }
+    .news-main, .news-list { 
+        width: 100%; 
+    }
+    
+    /* Thu nhỏ một chút chiều cao ảnh tin chính trên mobile */
+    .news-main-img-wrapper { height: 250px; }
+
+    /* 3. Bố cục Tin Phụ: Ảnh trái, Chữ phải */
+    .news-item-small { 
+        flex-direction: row; /* Ép nằm ngang */
+        align-items: flex-start; /* Căn lên trên cùng */
+        gap: 15px;
+    }
+    
+    .news-small-img { 
+        width: 120px; /* Ảnh nhỏ lại để nhường chỗ cho chữ */
+        height: 80px; 
+    }
+    
+    /* Điều chỉnh lại chữ tin phụ cho gọn */
+    .news-small-title { 
+        font-size: 14px; 
+        display: -webkit-box;
+        -webkit-line-clamp: 3; /* Giới hạn tối đa 3 dòng, dài quá hiện dấu ... */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    
+    .news-meta { margin-bottom: 5px; font-size: 11px; }
 }
 
 @media (max-width: 576px) {
-    .news-item-small { flex-direction: column; }
-    .news-small-img { width: 100%; height: 200px; }
+    
+    .section-title { 
+        font-size: 30px; 
+    }
 }
 
 /* --- REGISTRATION FORM --- */
@@ -1590,26 +1664,23 @@ footer {
     display: none;
 }
 
-/* --- RESPONSIVE --- */
+/* --- RESPONSIVE HEADER --- */
 @media (max-width: 992px) {
-    /* 1. XỬ LÝ HEADER (Như ảnh 2) */
     header .nav-container {
         position: relative;
         padding: 10px 15px;
         display: flex;
-        justify-content: center; /* Ép Logo ra chính giữa */
+        justify-content: center; 
         align-items: center;
     }
 
     .header-right { margin: 0; }
-    .main-nav { display: none; } /* Ẩn menu ngang */
+    .main-nav { display: none; } 
 
-    /* Ẩn các nút rườm rà ở top-bar, chỉ giữ lại Ngôn ngữ */
     .top-bar a.top-link, .top-bar .search-icon, .top-bar .top-btn { display: none; }
     
     .top-bar { padding: 0; max-height: none; gap: 0; }
 
-    /* Đẩy khối ngôn ngữ (VN | EN) bám sát mép trái */
     .lang-switch {
         position: absolute;
         left: 15px;
@@ -1618,7 +1689,6 @@ footer {
         z-index: 10;
     }
 
-    /* Đẩy nút Hamburger bám sát mép phải */
     .hamburger-menu {
         display: flex;
         position: absolute;
@@ -1630,13 +1700,10 @@ footer {
         z-index: 10;
     }
 
-    /* Căn giữa Logo */
     .logo-wrapper { padding: 5px 0; }
     header.is-sticky .logo-img { max-height: 40px; } 
 
-    /* Ẩn dropdown search khi ở mobile */
     .search-dropdown { display: none !important; }
-
 
     /* MOBILE MENU */
     
@@ -1658,7 +1725,7 @@ footer {
         flex-direction: column;
         position: fixed;
         top: 0; left: 0;
-        width: 85%; /* Chiếm 85% màn hình */
+        width: 85%; 
         max-width: 350px;
         height: 100%;
         background-color: white;
@@ -1768,21 +1835,20 @@ footer {
     
     .mobile-dropdown-menu li:last-child a { border-bottom: none; }
 
-    /* --- (Các CSS Grid Responsive cũ giữ nguyên) --- */
     .about-section, .news-grid, .register-grid, .testi-grid, .footer-grid { grid-template-columns: 1fr; }
-    .program-grid { grid-template-columns: repeat(2, 1fr); }
+    .program-card { flex: 0 0 calc(50% - 10px); } /* Tablet: Trượt 2 thẻ */
+    .program-arrows { display: flex; } /* Bật mũi tên trên Tablet/Mobile */
     .hero-content { flex-direction: column; text-align: center; }
     .hero-badge-title { margin: 0 auto 15px;}
     .hero-image { margin-top: 30px; width: 100%;}
     .footer-right { text-align: left; margin-top: 20px;}
     .social-icons { justify-content: flex-start;}
-    .section-header-flex { flex-direction: column; align-items: flex-start; gap: 10px;}
 
     /* =========================================
        TẮT HIỆU ỨNG THU NHỎ & ẨN TRÊN MOBILE
        ========================================= */
        
-    /* 1. Cố định kích thước logo không đổi khi cuộn */
+    /* Cố định kích thước logo không đổi khi cuộn */
     .logo-img,
     header.is-sticky .logo-img {
         max-height: 50px !important; /* Kích thước logo cố định trên mobile */
@@ -1793,7 +1859,7 @@ footer {
         padding: 8px 0 !important; /* Giữ nguyên khoảng trống trên dưới */
     }
 
-    /* 2. Ngăn không cho ẩn thanh top-bar (chứa VN | EN) khi cuộn trang */
+    /* Ngăn không cho ẩn thanh top-bar (chứa VN | EN) khi cuộn trang */
     header.is-sticky .top-bar {
         max-height: none !important;
         opacity: 1 !important;
@@ -1802,35 +1868,34 @@ footer {
 }
 
 @media (max-width: 768px) {
-    .program-grid { grid-template-columns: 1fr; }
+    .programs-section > .container { padding: 30px 15px; }
+    .program-card { flex: 0 0 100%; } 
     .form-row { grid-template-columns: 1fr; }
     .testi-card { flex-direction: column; text-align: center; align-items: center;}
     .quote-icon { left: 50%; transform: translateX(-50%); }
     .facilities-carousel { flex-direction: column;}
     .carousel-arrow { display: none; }
 
-    /* --- Căn lại BMS qua những con số --- */
     .stats-row {
-        flex-wrap: wrap; /* Cho phép các mục rớt dòng */
-        justify-content: center; /* Căn giữa các mục khi rớt dòng */
-        gap: 20px; /* Khoảng cách giữa các mục */
+        flex-wrap: wrap; 
+        justify-content: center; 
+        gap: 20px; 
     }
 
     .stat-item {
-        /* Cho 2 mục đầu tiên chiếm 45% (nằm 2 bên) */
+        
         flex: 0 0 45%; 
         text-align: center;
     }
 
-    /* Mục thứ 3 (Học sinh mỗi năm) chiếm 100% để nằm riêng 1 dòng ở dưới */
+    
     .stat-item:nth-child(3) {
         flex: 0 0 100%;
-        margin-top: 10px; /* Thêm chút khoảng trống phía trên */
+        margin-top: 10px; 
     }
 
-    /* --- Căn lại các nút Huy chương (cho chúng cách xa nhau ra một chút nếu bị dính) --- */
     .cert-boxes {
-        flex-direction: column; /* Xếp dọc các hộp huy chương trên mobile */
+        flex-direction: column; 
         gap: 25px;
     }
     

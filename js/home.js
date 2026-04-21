@@ -480,23 +480,88 @@ if(hamburgerMenu && mobileMenu) {
 
     mobileDropdownToggles.forEach(toggle => {
         toggle.addEventListener('click', function(e) {
-            e.preventDefault(); // Ngăn hành vi mặc định
+            e.preventDefault(); 
             
-            // Tìm thẻ <li> cha gần nhất chứa class mobile-has-dropdown
             const parentLi = this.closest('.mobile-has-dropdown');
             
-            // Bật/tắt class 'open' trên thẻ <li> đó
             parentLi.classList.toggle('open');
             
-            // Lựa chọn (Tùy ý): Chỉ cho phép mở 1 menu con tại 1 thời điểm (Accordion)
-            // Nếu bạn muốn mở nhiều menu cùng lúc thì có thể XÓA đoạn code từ đây...
+            // Chỉ cho phép mở 1 menu con tại 1 thời điểm (Accordion)
             const allParentLis = document.querySelectorAll('.mobile-has-dropdown');
             allParentLis.forEach(li => {
                 if(li !== parentLi) {
                     li.classList.remove('open');
                 }
             });
-            // ... đến đây.
         });
+    });
+
+    // ==========================================
+    // PROGRAMS SLIDER LOGIC (Cho Mobile/Tablet)
+    // ==========================================
+    let progIndex = 0;
+    const progTrack = document.getElementById('programTrack');
+    const progCards = document.querySelectorAll('.program-card');
+    const progPrevBtn = document.querySelector('.prog-arrow.prev');
+    const progNextBtn = document.querySelector('.prog-arrow.next');
+
+    // Tính toán số thẻ hiển thị
+    function getProgCardsPerView() {
+        if (window.innerWidth > 992) return 4;
+        if (window.innerWidth > 768) return 2;
+        return 1;
+    }
+
+    // Kiểm tra để làm mờ nút (dùng chung class .slider-arrow-disabled đã có)
+    function checkProgArrows() {
+        if(!progPrevBtn || !progNextBtn) return;
+        const maxIndex = progCards.length - getProgCardsPerView();
+
+        if (progIndex === 0) {
+            progPrevBtn.classList.add('slider-arrow-disabled');
+        } else {
+            progPrevBtn.classList.remove('slider-arrow-disabled');
+        }
+
+        if (progIndex >= maxIndex || maxIndex <= 0) {
+            progNextBtn.classList.add('slider-arrow-disabled');
+        } else {
+            progNextBtn.classList.remove('slider-arrow-disabled');
+        }
+    }
+
+    // Di chuyển Track
+    function updateProgSlider() {
+        if(!progTrack || progCards.length === 0) return;
+        const cardWidth = progCards[0].offsetWidth;
+        const gap = 20; 
+        const moveAmount = (cardWidth + gap) * progIndex;
+        progTrack.style.transform = `translateX(-${moveAmount}px)`;
+        
+        checkProgArrows();
+    }
+
+    // Xử lý Click mũi tên
+    function moveProgramSlide(direction) {
+        const maxIndex = progCards.length - getProgCardsPerView();
+        progIndex += direction;
+
+        if (progIndex > maxIndex) progIndex = maxIndex;
+        else if (progIndex < 0) progIndex = 0;
+
+        updateProgSlider();
+    }
+
+    // Khởi chạy
+    window.addEventListener('load', () => {
+        if(progCards.length > 0) {
+            updateProgSlider();
+        }
+    });
+
+    // Cập nhật khi xoay màn hình điện thoại
+    window.addEventListener('resize', () => {
+        progIndex = 0;
+        updateProgSlider();
     });
 }

@@ -173,49 +173,68 @@
     <section class="section-padding programs-section">
         <div class="container">
             <h2 class="section-title text-center">CHƯƠNG TRÌNH GIÁO DỤC</h2>
-            <div class="program-grid">
-                <div class="program-card">
-                    <img src="images/education/man-non.jpg" alt="Mầm non">
-                    <div class="program-card-content bg-mam-non">
-                        <div>
-                            <p style="font-size:12px;">Chương trình</p>
-                            <h4>MẦM NON</h4>
-                            <p style="font-size:12px;">(Tiền tiểu học)</p>
+            <!-- CẤU TRÚC SLIDER MỚI -->
+            <div class="program-slider-wrapper">
+                
+                <div class="program-track-container">
+                    <div class="program-track" id="programTrack">
+                        
+                        <div class="program-card">
+                            <img src="images/education/man-non.jpg" alt="Mầm non">
+                            <div class="program-card-content bg-mam-non">
+                                <div>
+                                    <p style="font-size:12px;">Chương trình</p>
+                                    <h4>MẦM NON</h4>
+                                    <p style="font-size:12px;">(Tiền tiểu học)</p>
+                                </div>
+                                <a href="#">Xem thêm <i class="fas fa-caret-right"></i></a>
+                            </div>
                         </div>
-                        <a href="#">Xem thêm <i class="fas fa-caret-right"></i></a>
+                        
+                        <div class="program-card">
+                            <img src="images/education/tieu-hoc.jpg" alt="Tiểu học">
+                            <div class="program-card-content bg-tieu-hoc">
+                                <div>
+                                    <p style="font-size:12px;">Chương trình</p>
+                                    <h4>TIỂU HỌC</h4>
+                                </div>
+                                <a href="#">Xem thêm <i class="fas fa-caret-right"></i></a>
+                            </div>
+                        </div>
+                        
+                        <div class="program-card">
+                            <img src="images/education/thcs.png" alt="THCS">
+                            <div class="program-card-content bg-thcs">
+                                <div>
+                                    <p style="font-size:12px;">Chương trình</p>
+                                    <h4>THCS</h4>
+                                </div>
+                                <a href="#">Xem thêm <i class="fas fa-caret-right"></i></a>
+                            </div>
+                        </div>
+                        
+                        <div class="program-card">
+                            <img src="images/education/thpt.jpg" alt="THPT">
+                            <div class="program-card-content bg-thpt">
+                                <div>
+                                    <p style="font-size:12px;">Chương trình</p>
+                                    <h4>THPT</h4>
+                                </div>
+                                <a href="#">Xem thêm <i class="fas fa-caret-right"></i></a>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
-                <div class="program-card">
-                    <img src="images/education/tieu-hoc.jpg" alt="Tiểu học">
-                    <div class="program-card-content bg-tieu-hoc">
-                        <div>
-                            <p style="font-size:12px;">Chương trình</p>
-                            <h4>TIỂU HỌC</h4>
-                        </div>
-                        <a href="#">Xem thêm <i class="fas fa-caret-right"></i></a>
-                    </div>
+
+                <!-- Thêm 2 nút mũi tên (Chỉ hiển thị trên Mobile/Tablet) -->
+                <div class="program-arrows">
+                    <button class="prog-arrow prev" onclick="moveProgramSlide(-1)"><i class="fas fa-chevron-left"></i></button>
+                    <button class="prog-arrow next" onclick="moveProgramSlide(1)"><i class="fas fa-chevron-right"></i></button>
                 </div>
-                <div class="program-card">
-                    <img src="images/education/thcs.png" alt="THCS">
-                    <div class="program-card-content bg-thcs">
-                        <div>
-                            <p style="font-size:12px;">Chương trình</p>
-                            <h4>THCS</h4>
-                        </div>
-                        <a href="#">Xem thêm <i class="fas fa-caret-right"></i></a>
-                    </div>
-                </div>
-                <div class="program-card">
-                    <img src="images/education/thpt.jpg" alt="THPT">
-                    <div class="program-card-content bg-thpt">
-                        <div>
-                            <p style="font-size:12px;">Chương trình</p>
-                            <h4>THPT</h4>
-                        </div>
-                        <a href="#">Xem thêm <i class="fas fa-caret-right"></i></a>
-                    </div>
-                </div>
+
             </div>
+            <!-- KẾT THÚC CẤU TRÚC SLIDER -->
         </div>
     </section>
 
