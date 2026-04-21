@@ -1155,17 +1155,30 @@ header.is-sticky .search-dropdown.active {
         flex-direction: column; 
         align-items: center;
         text-align: center;
-        padding: 50px 20px 30px 20px; /* Cân bằng lại padding cho mobile */
-    }
-    .testi-right {
-        padding-left: 0; 
-        padding-top: 20px;
+        padding: 50px 25px 30px 25px; 
     }
     
     .testi-quote-svg { 
         left: 50%; 
         transform: translateX(-50%); 
-        top: -30px;
+        top: -15px;
+        width: 50px; 
+    }
+
+    .testi-right {
+        padding-left: 0; 
+        order: 1; 
+    }
+
+    .testi-left {
+        width: 100%; 
+        padding-top: 25px; 
+        text-align: center;
+        order: 2; 
+    }
+
+    .testi-avatar {
+        margin: 0 auto 15px auto; 
     }
 }
 
@@ -1266,24 +1279,50 @@ header.is-sticky .search-dropdown.active {
 .fac-title:hover { color: var(--primary-blue); }
 
 /* Nút điều hướng (Arrows) */
+.fac-arrows-bottom {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 30px; /* Tạo khoảng trống với ảnh phía trên */
+}
+
+/* Định dạng cơ bản cho 2 nút (Dùng chung cho cả PC và Mobile) */
 .fac-arrow {
     width: 45px; height: 45px;
     background-color: var(--primary-blue);
     color: white;
     border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
-    border: none; cursor: pointer; font-size: 18px;
+    border: 1px solid var(--primary-blue); /* Thêm viền để chuẩn bị cho giao diện mobile */
+    cursor: pointer; font-size: 16px;
     transition: all 0.3s;
     flex-shrink: 0;
-    margin-bottom: 50px; 
+    /* Xóa thuộc tính margin-bottom: 50px cũ đi */
 }
-.fac-arrow:hover { background-color: var(--orange); }
 
-/* Responsive */
+.fac-arrow:hover { 
+    background-color: var(--orange); 
+    border-color: var(--orange);
+}
+
+/* Responsive Facilities */
 @media (max-width: 992px) {
     .fac-card { flex: 0 0 100%; }
     .fac-main-img { height: 250px; }
-    .fac-arrow { width: 35px; height: 35px; font-size: 14px; margin-bottom: 40px;}
+
+    /* Đổi kiểu dáng nút trên Mobile giống ảnh 2 (Nền trắng, viền xanh, chữ xanh) */
+    .fac-arrow { 
+        width: 35px; 
+        height: 35px; 
+        font-size: 14px; 
+        background-color: transparent; /* Nền trong suốt/trắng */
+        color: var(--primary-blue); /* Mũi tên màu xanh */
+    }
+
+    .fac-arrow:hover {
+        background-color: var(--primary-blue);
+        color: white;
+    }
 }
 
 /* --- PARTNERS SLIDER --- */
@@ -1917,4 +1956,55 @@ footer {
 
 .pulse-btn {
     animation: pulse 1s infinite ease-in-out;
+}
+
+/* =========================================
+   UTILITY CLASSES (Lớp tiện ích dùng chung)
+   ========================================= */
+.mb-0 { margin-bottom: 0 !important; }
+.mb-15 { margin-bottom: 15px; }
+.mb-20 { margin-bottom: 20px; }
+.mb-25 { margin-bottom: 25px; }
+.mt-40 { margin-top: 40px; }
+.fw-500 { font-weight: 500; }
+.text-orange { color: var(--orange); }
+.text-teal { color: var(--teal); }
+.d-none { display: none !important; }
+
+/* =========================================
+   COMPONENT STYLES (Thay thế inline CSS)
+   ========================================= */
+/* Nút đăng nhập trên Top Bar */
+.top-bar .top-btn {
+    padding: 6px 18px; 
+    font-size: 13px; 
+    border-radius: 20px; 
+}
+
+/* Các đoạn text trong phần About */
+.about-lead {
+    font-weight: 500; 
+    color: #444; 
+    margin-bottom: 20px;
+}
+
+.about-sub-title {
+    color: var(--text-dark); 
+    font-size: 16px;
+}
+
+.about-sub-title.text-blue {
+    color: var(--primary-blue);
+    margin-bottom: 15px;
+}
+
+/* Chữ "Chương trình" trong thẻ Program */
+.prog-label {
+    font-size: 12px;
+}
+
+/* Tiêu đề của Facilities & Partners */
+.section-title.title-spaced {
+    font-weight: 700; 
+    margin-bottom: 40px;
 }
