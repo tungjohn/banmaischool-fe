@@ -213,15 +213,22 @@ Fancybox.bind("[data-fancybox]", {
 });
 
 // ==========================================
-// FACILITIES SLIDER LOGIC
+// FACILITIES SLIDER LOGIC (Click & Drag/Swipe)
 // ==========================================
 let facIndex = 0;
 let facTimer;
 const facTrack = document.getElementById('facTrack');
+const facTrackContainer = document.querySelector('.fac-track-container');
 const facCards = document.querySelectorAll('.fac-card');
-// Lấy các nút điều hướng của Facilities
-const facPrevBtn = document.querySelector('.fac-slider-wrapper .prev');
-const facNextBtn = document.querySelector('.fac-slider-wrapper .next');
+const facPrevBtn = document.querySelector('.fac-arrows-group .prev') || document.querySelector('.fac-arrow.prev');
+const facNextBtn = document.querySelector('.fac-arrows-group .next') || document.querySelector('.fac-arrow.next');
+
+// --- CÁC BIẾN CHO TÍNH NĂNG KÉO THẢ ---
+let isDragging = false;
+let startPos = 0;
+let currentTranslate = 0;
+let prevTranslate = 0;
+let animationID;
 
 function getFacCardsPerView() {
     return window.innerWidth > 992 ? 2 : 1;
@@ -230,47 +237,120 @@ function getFacCardsPerView() {
 function checkFacArrows() {
     if(!facPrevBtn || !facNextBtn) return;
     const maxIndex = facCards.length - getFacCardsPerView();
-
-    if (facIndex === 0) {
-        facPrevBtn.classList.add('slider-arrow-disabled');
-    } else {
-        facPrevBtn.classList.remove('slider-arrow-disabled');
-    }
-
-    if (facIndex >= maxIndex) {
-        facNextBtn.classList.add('slider-arrow-disabled');
-    } else {
-        facNextBtn.classList.remove('slider-arrow-disabled');
-    }
+    if (facIndex === 0) facPrevBtn.classList.add('slider-arrow-disabled');
+    else facPrevBtn.classList.remove('slider-arrow-disabled');
+    if (facIndex >= maxIndex) facNextBtn.classList.add('slider-arrow-disabled');
+    else facNextBtn.classList.remove('slider-arrow-disabled');
 }
 
-function updateFacSlider() {
-    if(!facTrack || facCards.length === 0) return;
+function getMoveAmount() {
+    if (facCards.length === 0) return 0;
     const cardWidth = facCards[0].offsetWidth;
-    const gap = 30;
-    const moveAmount = (cardWidth + gap) * facIndex;
-    facTrack.style.transform = `translateX(-${moveAmount}px)`;
+    const gap = 30; // Trùng với gap trong CSS
+    return cardWidth + gap;
+}
+
+function updateFacSlider(animate = true) {
+    if(!facTrack) return;
+    // Bật tắt hiệu ứng mượt (khi đang kéo bằng tay thì phải tắt đi để nó bám theo chuột)
+    facTrack.style.transition = animate ? 'transform 0.6s cubic-bezier(0.25, 1, 0.5, 1)' : 'none';
     
-    checkFacArrows(); 
+    currentTranslate = -(getMoveAmount() * facIndex);
+    facTrack.style.transform = `translateX(${currentTranslate}px)`;
+    prevTranslate = currentTranslate; // Lưu lại vị trí để kéo thả tiếp
+    checkFacArrows();
 }
 
 function moveFacSlide(direction) {
     const maxIndex = facCards.length - getFacCardsPerView();
     facIndex += direction;
-    
     if (facIndex > maxIndex) facIndex = maxIndex;
     else if (facIndex < 0) facIndex = 0;
-
-    updateFacSlider();
+    updateFacSlider(true);
     resetFacTimer();
 }
 
+// --- LOGIC KÉO THẢ (DRAG/SWIPE) ---
+
+function touchStart(index) {
+    return function (event) {
+        isDragging = true;
+        startPos = getPositionX(event);
+        animationID = requestAnimationFrame(animation);
+        facTrack.style.cursor = 'grabbing';
+        clearInterval(facTimer); // Tạm dừng auto-play khi đang kéo
+    }
+}
+
+function touchMove(event) {
+    if (isDragging) {
+        const currentPosition = getPositionX(event);
+        // Tính toán khoảng cách đã kéo (kéo sang trái là số âm, sang phải là số dương)
+        currentTranslate = prevTranslate + currentPosition - startPos;
+    }
+}
+
+function touchEnd() {
+    isDragging = false;
+    cancelAnimationFrame(animationID);
+    facTrack.style.cursor = 'grab';
+
+    // Tính toán xem người dùng đã kéo đủ xa để chuyển slide chưa (kéo quá 100px thì chuyển)
+    const movedBy = currentTranslate - prevTranslate;
+    
+    if (movedBy < -100 && facIndex < facCards.length - getFacCardsPerView()) {
+        facIndex += 1; // Kéo sang trái -> Next slide
+    } else if (movedBy > 100 && facIndex > 0) {
+        facIndex -= 1; // Kéo sang phải -> Prev slide
+    }
+
+    updateFacSlider(true); // Trượt mượt về đúng vị trí
+    startFacTimer(); // Bật lại auto-play
+}
+
+function getPositionX(event) {
+    return event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
+}
+
+function animation() {
+    if(isDragging) {
+        facTrack.style.transform = `translateX(${currentTranslate}px)`;
+        requestAnimationFrame(animation);
+    }
+}
+
+// Ngăn chặn hành vi click (mở Fancybox) nếu người dùng thực ra đang muốn "kéo" thả
+facCards.forEach((card, index) => {
+    // Sự kiện cho Chuột (PC)
+    card.addEventListener('mousedown', touchStart(index));
+    card.addEventListener('mouseup', touchEnd);
+    card.addEventListener('mouseleave', () => { if(isDragging) touchEnd() });
+    card.addEventListener('mousemove', touchMove);
+
+    // Sự kiện cho Cảm ứng (Điện thoại)
+    card.addEventListener('touchstart', touchStart(index));
+    card.addEventListener('touchend', touchEnd);
+    card.addEventListener('touchmove', touchMove);
+
+    // CHỐNG LỖI CLICK: Chỉ mở Fancybox nếu người dùng CLICK nhanh, không mở nếu họ KÉO
+    const links = card.querySelectorAll('a, h4');
+    links.forEach(link => {
+        link.addEventListener('click', (e) => {
+            if(Math.abs(currentTranslate - prevTranslate) > 5) {
+                e.preventDefault(); // Hủy bỏ cú click nếu đang kéo chuột
+                e.stopPropagation();
+            }
+        });
+    });
+});
+
+// --- AUTO PLAY ---
 function startFacTimer() {
     facTimer = setInterval(() => { 
         const maxIndex = facCards.length - getFacCardsPerView();
         if(facIndex >= maxIndex) {
             facIndex = 0;
-            updateFacSlider();
+            updateFacSlider(true);
         } else {
             moveFacSlide(1); 
         }
@@ -284,14 +364,14 @@ function resetFacTimer() {
 
 window.addEventListener('load', () => {
     if(facCards.length > 0) {
-        updateFacSlider();
+        updateFacSlider(false); // Set vị trí ban đầu không cần hiệu ứng
         startFacTimer();
     }
 });
 
 window.addEventListener('resize', () => {
     facIndex = 0;
-    updateFacSlider();
+    updateFacSlider(false);
 });
 
 // ==========================================

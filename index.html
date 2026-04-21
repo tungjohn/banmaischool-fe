@@ -460,7 +460,6 @@
         <h2 class="section-title text-center title-spaced">CÁC CƠ SỞ CỦA BMS</h2>
         
         <div class="fac-slider-wrapper">
-
             <!-- Facilities Track Container -->
             <div class="fac-track-container">
                 <div class="fac-track" id="facTrack">
@@ -515,14 +514,12 @@
                 </div>
             </div>
 
+            <!-- GOM 2 NÚT VÀO ĐÂY (Vẫn nằm trong fac-slider-wrapper) -->
+            <div class="fac-arrows-group">
+                <button class="fac-arrow prev" onclick="moveFacSlide(-1)"><i class="fas fa-chevron-left"></i></button>
+                <button class="fac-arrow next" onclick="moveFacSlide(1)"><i class="fas fa-chevron-right"></i></button>
+            </div>
         </div>
-
-        <!-- THÊM MỚI: Khối chứa 2 nút mũi tên ở dưới cùng -->
-        <div class="fac-arrows-bottom">
-            <button class="fac-arrow prev" onclick="moveFacSlide(-1)"><i class="fas fa-chevron-left"></i></button>
-            <button class="fac-arrow next" onclick="moveFacSlide(1)"><i class="fas fa-chevron-right"></i></button>
-        </div>
-
     </section>
 
     <!-- Partners Section -->
@@ -533,9 +530,7 @@
                 <h2 class="section-title text-center title-spaced">CÁC ĐỐI TÁC CỦA BMS</h2>
                 
                 <div class="partner-slider-wrapper">
-                    <!-- Partners Left Arrow -->
-                    <button class="partner-arrow prev" onclick="movePartnerSlide(-1)"><i class="fas fa-chevron-left"></i></button>
-
+                    
                     <!-- Partners Track Container -->
                     <div class="partner-track-container">
                         <div class="partner-track" id="partnerTrack">
@@ -577,7 +572,10 @@
                         </div>
                     </div>
 
-                    <!-- Partners Right Arrow -->
+                    
+                </div>
+                <div class="partner-arrows-bottom">
+                    <button class="partner-arrow prev" onclick="movePartnerSlide(-1)"><i class="fas fa-chevron-left"></i></button>
                     <button class="partner-arrow next" onclick="movePartnerSlide(1)"><i class="fas fa-chevron-right"></i></button>
                 </div>
             </div>
