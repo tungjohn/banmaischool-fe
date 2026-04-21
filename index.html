@@ -70,6 +70,11 @@
                         <li><a href="#">Hệ thống Trường liên cấp BMS</a></li>
                     </ul>
                 </nav>
+
+                <!-- Icon Hamburger cho Mobile -->
+                <div class="hamburger-menu" id="hamburgerMenu">
+                    <i class="fas fa-bars" style="font-size: 26px;"></i>
+                </div>
             </div>
 
         </div>
@@ -669,6 +674,104 @@
                 </select>
                 <button type="submit" class="btn btn-orange btn-full pulse-btn">GỬI ĐI</button>
             </form>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- MOBILE MENU TRƯỢT TỪ TRÁI SANG -->
+    <!-- ========================================== -->
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+    <div class="mobile-menu" id="mobileMenu">
+        
+        <!-- Header của Menu (Nút đóng) -->
+        <div class="mobile-menu-header">
+            <span class="close-mobile-menu" id="closeMobileMenu"><i class="fas fa-times"></i> Đóng Menu</span>
+        </div>
+
+        <!-- Thanh tìm kiếm trong Mobile Menu -->
+        <div class="mobile-search">
+            <form action="#">
+                <input type="text" placeholder="Tìm kiếm">
+                <button type="submit"><i class="fas fa-search"></i></button>
+            </form>
+        </div>
+
+        <!-- Danh sách Link -->
+        <!-- Danh sách Link -->
+        <ul class="mobile-nav-list">
+            <li><a href="#" class="active">Trang chủ</a></li>
+            
+            <!-- Thêm class mobile-has-dropdown vào li cha -->
+            <li class="mobile-has-dropdown">
+                <div class="mobile-nav-item-flex">
+                    <a href="#">Giới thiệu</a>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <!-- Menu con bị ẩn mặc định -->
+                <ul class="mobile-dropdown-menu">
+                    <li><a href="#">Về chúng tôi</a></li>
+                    <li><a href="#">Tầm nhìn - Sứ mệnh</a></li>
+                    <li><a href="#">Cơ cấu tổ chức</a></li>
+                </ul>
+            </li>
+
+            <li class="mobile-has-dropdown">
+                <div class="mobile-nav-item-flex">
+                    <a href="#">Chương trình giáo dục</a>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <ul class="mobile-dropdown-menu">
+                    <li><a href="#">Chương trình Mầm non</a></li>
+                    <li><a href="#">Chương trình Tiền tiểu học</a></li>
+                    <li><a href="#">Chương trình Tiểu học</a></li>
+                    <li><a href="#">Chương trình THCS</a></li>
+                    <li><a href="#">Chương trình THPT</a></li>
+                </ul>
+            </li>
+            
+            <li><a href="#">Tin tức - Sự kiện</a></li>
+            
+            <li class="mobile-has-dropdown">
+                <div class="mobile-nav-item-flex">
+                    <a href="#">Tuyển sinh</a>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <ul class="mobile-dropdown-menu">
+                    <li><a href="#">Thông báo tuyển sinh</a></li>
+                    <li><a href="#">Chính sách học phí</a></li>
+                    <li><a href="#">Học bổng</a></li>
+                </ul>
+            </li>
+            
+            <li class="mobile-has-dropdown">
+                <div class="mobile-nav-item-flex">
+                    <a href="#">Cuộc sống học đường</a>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <ul class="mobile-dropdown-menu">
+                    <li><a href="#">Thời khóa biểu</a></li>
+                    <li><a href="#">Thực đơn</a></li>
+                    <li><a href="#">Câu lạc bộ</a></li>
+                </ul>
+            </li>
+            
+            <li class="mobile-has-dropdown">
+                <div class="mobile-nav-item-flex">
+                    <a href="#">Hệ thống Trường liên cấp BMS</a>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <ul class="mobile-dropdown-menu">
+                    <li><a href="#">BMS Hà Nội</a></li>
+                    <li><a href="#">BMS Hưng Yên</a></li>
+                </ul>
+            </li>
+            
+            <li><a href="#">Tuyển dụng</a></li>
+            <li><a href="#">Liên hệ</a></li>
+        </ul>
+
+        <div class="mobile-menu-btn-footer">
+            <a href="#" class="btn btn-orange btn-full pulse-btn">ĐĂNG NHẬP</a>
         </div>
     </div>
     <!-- JS -->

@@ -605,7 +605,7 @@ header.is-sticky .search-dropdown.active {
     transition-duration: 150ms;
     -webkit-transition: .4s all ease-in-out;
     transition: .4s all ease-in-out;
-    background: url(images/icon/medal.png);
+    background: url(../images/icon/medal.png);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -1585,19 +1585,220 @@ footer {
     border: 2px solid #0088FF;
 }
 
+/* Ẩn các thành phần Mobile khi ở Desktop */
+.hamburger-menu, .mobile-menu-overlay, .mobile-menu {
+    display: none;
+}
+
 /* --- RESPONSIVE --- */
 @media (max-width: 992px) {
-    .about-section, .news-grid, .register-grid, .testi-grid, .footer-grid {
-        grid-template-columns: 1fr;
+    /* 1. XỬ LÝ HEADER (Như ảnh 2) */
+    header .nav-container {
+        position: relative;
+        padding: 10px 15px;
+        display: flex;
+        justify-content: center; /* Ép Logo ra chính giữa */
+        align-items: center;
     }
+
+    .header-right { margin: 0; }
+    .main-nav { display: none; } /* Ẩn menu ngang */
+
+    /* Ẩn các nút rườm rà ở top-bar, chỉ giữ lại Ngôn ngữ */
+    .top-bar a.top-link, .top-bar .search-icon, .top-bar .top-btn { display: none; }
+    
+    .top-bar { padding: 0; max-height: none; gap: 0; }
+
+    /* Đẩy khối ngôn ngữ (VN | EN) bám sát mép trái */
+    .lang-switch {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 10;
+    }
+
+    /* Đẩy nút Hamburger bám sát mép phải */
+    .hamburger-menu {
+        display: flex;
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--primary-blue);
+        cursor: pointer;
+        z-index: 10;
+    }
+
+    /* Căn giữa Logo */
+    .logo-wrapper { padding: 5px 0; }
+    header.is-sticky .logo-img { max-height: 40px; } 
+
+    /* Ẩn dropdown search khi ở mobile */
+    .search-dropdown { display: none !important; }
+
+
+    /* MOBILE MENU */
+    
+    /* Lớp phủ đen mờ */
+    .mobile-menu-overlay {
+        display: block;
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0,0,0,0.6);
+        z-index: 10001;
+        opacity: 0; visibility: hidden;
+        transition: all 0.3s ease;
+    }
+    .mobile-menu-overlay.active { opacity: 1; visibility: visible; }
+
+    /* Khung Menu Trắng Trượt từ trái qua */
+    .mobile-menu {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: 0; left: 0;
+        width: 85%; /* Chiếm 85% màn hình */
+        max-width: 350px;
+        height: 100%;
+        background-color: white;
+        z-index: 10002;
+        padding: 20px;
+        overflow-y: auto; /* Cho phép cuộn nếu menu quá dài */
+        transform: translateX(-100%); /* Giấu sang bên trái */
+        transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        box-shadow: 5px 0 15px rgba(0,0,0,0.1);
+    }
+    .mobile-menu.active { transform: translateX(0); /* Trượt ra */ }
+
+    /* Nút đóng (X) */
+    .mobile-menu-header { margin-bottom: 20px; }
+    .close-mobile-menu {
+        font-size: 16px;
+        color: #999;
+        font-weight: 500;
+        cursor: pointer;
+        display: flex; gap: 8px; align-items: center;
+    }
+    .close-mobile-menu i { font-size: 20px; }
+
+    /* Ô tìm kiếm */
+    .mobile-search form {
+        display: flex;
+        border: 1px solid #eee;
+        border-radius: 4px;
+        overflow: hidden;
+        margin-bottom: 15px; 
+    }
+    .mobile-search input {
+        flex-grow: 1; padding: 12px 15px; border: none; outline: none; font-size: 14px;
+    }
+    .mobile-search button {
+        background-color: #444; color: white; border: none; padding: 0 15px; cursor: pointer;
+    }
+
+    /* Danh sách Link */
+    .mobile-nav-list { list-style: none; padding: 0; margin: 0; flex-grow: 1; }
+    
+    .mobile-nav-list li { 
+        border-bottom: none; 
+    }
+    
+    .mobile-nav-list a {
+        display: block; 
+        padding: 5px 0; 
+        color: #333; 
+        font-size: 16px; 
+        font-weight: 700; 
+        text-decoration: none;
+    }
+    
+    .mobile-nav-list a.active { color: var(--orange); }
+    
+    /* Mục có mũi tên xổ xuống */
+    .mobile-nav-item-flex {
+        display: flex; justify-content: space-between; align-items: center;
+    }
+    .mobile-nav-item-flex i { color: #aaa; font-size: 12px; }
+
+    /* --- CSS CHO DROPDOWN TRÊN MOBILE --- */
+    
+    /* Vùng bấm (Hitbox) của icon mũi tên to hơn để dễ chạm trên đt */
+    .mobile-nav-item-flex i { 
+        color: #aaa; 
+        font-size: 14px; 
+        padding: 10px; 
+        margin-right: -10px; /* Đẩy icon sát lề phải */
+        cursor: pointer;
+        transition: transform 0.3s ease; /* Hiệu ứng xoay mũi tên */
+    }
+
+    /* Xoay mũi tên lên khi menu con đang mở */
+    .mobile-has-dropdown.open i {
+        transform: rotate(180deg);
+        color: var(--orange);
+    }
+
+    /* Menu con (ẩn mặc định bằng max-height) */
+    .mobile-dropdown-menu {
+        list-style: none;
+        padding-left: 20px; /* Thụt lề cho menu con */
+        margin: 0;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease-in-out;
+        background-color: #f9f9f9; /* Đổi màu nền nhẹ để phân biệt với menu cha */
+        border-radius: 4px;
+    }
+
+    /* Hiển thị menu con khi có class .open */
+    /* Mẹo: Đặt max-height đủ lớn (vd: 500px) để nó chứa hết nội dung con */
+    .mobile-has-dropdown.open .mobile-dropdown-menu {
+        max-height: 500px; 
+        margin-bottom: 10px; /* Tạo khoảng trống phía dưới menu con khi mở */
+    }
+
+    /* Chữ của menu con mỏng hơn và nhỏ hơn một chút */
+    .mobile-dropdown-menu a {
+        font-weight: 400;
+        font-size: 15px;
+        padding: 12px 10px;
+        border-bottom: 1px solid #eee; /* Đường kẻ mờ phân cách menu con */
+    }
+    
+    .mobile-dropdown-menu li:last-child a { border-bottom: none; }
+
+    /* --- (Các CSS Grid Responsive cũ giữ nguyên) --- */
+    .about-section, .news-grid, .register-grid, .testi-grid, .footer-grid { grid-template-columns: 1fr; }
     .program-grid { grid-template-columns: repeat(2, 1fr); }
     .hero-content { flex-direction: column; text-align: center; }
     .hero-badge-title { margin: 0 auto 15px;}
     .hero-image { margin-top: 30px; width: 100%;}
-    .main-nav { display: none;  }
     .footer-right { text-align: left; margin-top: 20px;}
     .social-icons { justify-content: flex-start;}
     .section-header-flex { flex-direction: column; align-items: flex-start; gap: 10px;}
+
+    /* =========================================
+       TẮT HIỆU ỨNG THU NHỎ & ẨN TRÊN MOBILE
+       ========================================= */
+       
+    /* 1. Cố định kích thước logo không đổi khi cuộn */
+    .logo-img,
+    header.is-sticky .logo-img {
+        max-height: 50px !important; /* Kích thước logo cố định trên mobile */
+    }
+    
+    .logo-wrapper,
+    header.is-sticky .logo-wrapper {
+        padding: 8px 0 !important; /* Giữ nguyên khoảng trống trên dưới */
+    }
+
+    /* 2. Ngăn không cho ẩn thanh top-bar (chứa VN | EN) khi cuộn trang */
+    header.is-sticky .top-bar {
+        max-height: none !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+    }
 }
 
 @media (max-width: 768px) {
@@ -1607,6 +1808,33 @@ footer {
     .quote-icon { left: 50%; transform: translateX(-50%); }
     .facilities-carousel { flex-direction: column;}
     .carousel-arrow { display: none; }
+
+    /* --- Căn lại BMS qua những con số --- */
+    .stats-row {
+        flex-wrap: wrap; /* Cho phép các mục rớt dòng */
+        justify-content: center; /* Căn giữa các mục khi rớt dòng */
+        gap: 20px; /* Khoảng cách giữa các mục */
+    }
+
+    .stat-item {
+        /* Cho 2 mục đầu tiên chiếm 45% (nằm 2 bên) */
+        flex: 0 0 45%; 
+        text-align: center;
+    }
+
+    /* Mục thứ 3 (Học sinh mỗi năm) chiếm 100% để nằm riêng 1 dòng ở dưới */
+    .stat-item:nth-child(3) {
+        flex: 0 0 100%;
+        margin-top: 10px; /* Thêm chút khoảng trống phía trên */
+    }
+
+    /* --- Căn lại các nút Huy chương (cho chúng cách xa nhau ra một chút nếu bị dính) --- */
+    .cert-boxes {
+        flex-direction: column; /* Xếp dọc các hộp huy chương trên mobile */
+        gap: 25px;
+    }
+    
+    
 }
 
 /* Hiệu ứng phóng to thu nhỏ button */

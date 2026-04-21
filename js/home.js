@@ -444,3 +444,59 @@ window.addEventListener('scroll', function() {
         }
     }
 });
+
+// ==========================================
+// MOBILE MENU 
+// ==========================================
+const hamburgerMenu = document.getElementById('hamburgerMenu');
+const mobileMenu = document.getElementById('mobileMenu');
+const closeMobileMenu = document.getElementById('closeMobileMenu');
+const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+
+if(hamburgerMenu && mobileMenu) {
+    // Mở Menu
+    hamburgerMenu.addEventListener('click', () => {
+        mobileMenu.classList.add('active');
+        mobileMenuOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden'; // Khóa cuộn trang nền
+    });
+
+    // Đóng Menu bằng nút X
+    closeMobileMenu.addEventListener('click', () => {
+        mobileMenu.classList.remove('active');
+        mobileMenuOverlay.classList.remove('active');
+        document.body.style.overflow = ''; // Mở lại cuộn trang
+    });
+
+    // Đóng Menu khi click vào vùng tối
+    mobileMenuOverlay.addEventListener('click', () => {
+        mobileMenu.classList.remove('active');
+        mobileMenuOverlay.classList.remove('active');
+        document.body.style.overflow = ''; 
+    });
+
+    // --- XỬ LÝ CLICK ĐỂ MỞ/ĐÓNG MENU CON ---
+    const mobileDropdownToggles = document.querySelectorAll('.mobile-nav-item-flex i');
+
+    mobileDropdownToggles.forEach(toggle => {
+        toggle.addEventListener('click', function(e) {
+            e.preventDefault(); // Ngăn hành vi mặc định
+            
+            // Tìm thẻ <li> cha gần nhất chứa class mobile-has-dropdown
+            const parentLi = this.closest('.mobile-has-dropdown');
+            
+            // Bật/tắt class 'open' trên thẻ <li> đó
+            parentLi.classList.toggle('open');
+            
+            // Lựa chọn (Tùy ý): Chỉ cho phép mở 1 menu con tại 1 thời điểm (Accordion)
+            // Nếu bạn muốn mở nhiều menu cùng lúc thì có thể XÓA đoạn code từ đây...
+            const allParentLis = document.querySelectorAll('.mobile-has-dropdown');
+            allParentLis.forEach(li => {
+                if(li !== parentLi) {
+                    li.classList.remove('open');
+                }
+            });
+            // ... đến đây.
+        });
+    });
+}
