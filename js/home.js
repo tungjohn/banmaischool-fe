@@ -382,13 +382,14 @@ let partnerTimer;
 const partnerTrack = document.getElementById('partnerTrack');
 const partnerSlides = document.querySelectorAll('.partner-slide');
 // Lấy các nút điều hướng của Partners
-const partnerPrevBtn = document.querySelector('.partner-slider-wrapper .prev');
-const partnerNextBtn = document.querySelector('.partner-slider-wrapper .next');
+const partnerPrevBtn = document.querySelector('.partner-arrows-bottom .prev');
+const partnerNextBtn = document.querySelector('.partner-arrows-bottom .next');
 
+// Xác định số logo hiển thị dựa trên kích thước màn hình
 function getPartnerCardsPerView() {
-    if (window.innerWidth > 992) return 4;
-    if (window.innerWidth > 576) return 2;
-    return 1;
+    if (window.innerWidth > 992) return 4; /* Desktop: 4 logo */
+    if (window.innerWidth > 576) return 3; /* Tablet: 3 logo */
+    return 2; /* Mobile (<576px): 2 logo (SỬA TỪ 1 THÀNH 2 Ở ĐÂY) */
 }
 
 function checkPartnerArrows() {
